@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:53:42 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 17:50:11 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/04/08 21:21:48 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	update_env_elem(t_env *env, char *name, char *new_content)
 	t_env_variable *match;
 	char *new_pair;
 
-	(void)new_pair;
-	(void)new_content;
 	match = search_env_elem(env, name);
 	if (match)
 		delete_env_elem(env, match);
