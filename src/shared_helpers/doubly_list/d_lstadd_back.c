@@ -1,10 +1,11 @@
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	d_lstadd_back(t_doubly_lst **lst, t_doubly_lst *new)
 {
 	t_doubly_lst	*p;
 
+	printf("%p", lst);
 	if (!lst || !new)
 		return ;
 	p = *lst;

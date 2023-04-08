@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 03:33:55 by otait-ta         ###   ########.fr       */
+/*   Created: 2023/04/07 22:36:54 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/04/07 22:42:57 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-int	main(int ac, char const **av, char **env)
+void	free_matrix(char ***matrix)
 {
-	t_exec_context	exContext;
-	char			*input;
+	int	i;
 
-	(void)ac;
-	if (init_data(&exContext, (char **)av, env))
-		exit(1);
-	print_env(exContext.env, 1);
-	while (1)
+	i = 0;
+	if (matrix && matrix[0])
 	{
-		input = readline("minishell $ ");
-		// / pars_input();
+		while (matrix[0][i])
+		{
+			free(matrix[0][i]);
+			i++;
+		}
 	}
-	return (0);
+	if (matrix)
+	{
+		free(matrix[0]);
+		*matrix = NULL;
+	}
 }

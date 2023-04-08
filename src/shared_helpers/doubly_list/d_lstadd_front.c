@@ -1,6 +1,6 @@
 
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	d_lstadd_front(t_doubly_lst **lst, t_doubly_lst *new)
 {

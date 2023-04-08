@@ -15,6 +15,11 @@ typedef struct s_exec_context
 }					t_exec_context;
 
 /* fill the execContext with initial data*/
-int					init_data(t_exec_context *exContext, char **av, char **env);
+int					init_data(t_exec_context *exContext, char **av,
+						char **env_str);
+
+/*---MATRIX---*/
+/* iterate over a matrix and free every line */
+void				free_matrix(char ***matrix);
 
 #endif
