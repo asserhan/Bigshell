@@ -6,30 +6,11 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:18:39 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 03:35:50 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:34:35 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-t_env_variable	*str_to_env_elem(char *pair)
-{
-	t_env_variable	*new;
-	int				equal_index;
-
-	new = ft_calloc(sizeof(t_env_variable), 1);
-	if (!new)
-		return (NULL);
-	equal_index = ft_strchr(pair, '=') - pair;
-	new->name = ft_substr(pair, 0, equal_index);
-	if (!new->name)
-		return (NULL);
-	new->content = ft_substr(pair, equal_index + 1, ft_strlen(pair)
-			- equal_index);
-	if (!new->content)
-		return (free(new->name), NULL);
-	return (new);
-}
+#include "../../../includes/minishell.h"
 
 void	set_env_elem(t_env *env, t_env_variable *new_env)
 {
@@ -76,11 +57,24 @@ t_env	*env_to_list(char **str)
 	i = 0;
 	while (str[i])
 	{
-		tmp_env = str_to_env_elem(str[i]);
+		tmp_env = create_env_elem(str[i]);
 		if (!tmp_env)
 			return (NULL);
 		set_env_elem(env, tmp_env);
 		i++;
 	}
 	return (env);
+}
+
+char	*str_to_env_form(char *s1, char *s2)
+{
+	char	*p1;
+	char	*rtr;
+
+	p1 = ft_strjoin(s1, "=");
+	if (!p1)
+		return (NULL);
+	rtr = ft_strjoin(p1, s2);
+	free(p1);
+	return (rtr);
 }

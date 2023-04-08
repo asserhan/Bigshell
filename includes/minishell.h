@@ -22,4 +22,8 @@ int					init_data(t_exec_context *exContext, char **av,
 /* iterate over a matrix and free every line */
 void				free_matrix(char ***matrix);
 
+/*--STRING--*/
+/* 0 if equal 1 if not */
+int					ft_strcmp(char *str1, char *str2);
+
 #endif

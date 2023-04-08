@@ -19,10 +19,20 @@ typedef struct s_env
 }							t_env;
 /* convert env variables to a double linked list*/
 t_env						*env_to_list(char **str);
-/* convert pair in form "s1=s2" to env element*/
-t_env_variable				*str_to_env_elem(char *pair);
+/* Convert to string to env format "s1=s2"*/
+char						*str_to_env_form(char *s1, char *s2);
 /* add new env element to env list */
 void						set_env_elem(t_env *env, t_env_variable *new_env);
 /* print all env variables to the fd*/
 void						print_env(t_env *env, int fd);
+/* convert pair in form "s1=s2" to env element*/
+t_env_variable				*create_env_elem(char *pair);
+/* search an env element by the name and return it */
+t_env_variable				*search_env_elem(t_env *env, char *name);
+/* delete an env element from env list*/
+void						delete_env_elem(t_env *list, t_env_variable *elem);
+/*update an existing env element or creat new if not found*/
+void						update_env_elem(t_env *env, char *name,
+								char *new_content);
+
 #endif
