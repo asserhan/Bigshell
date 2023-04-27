@@ -48,13 +48,11 @@ static void	ft_nega(int n, char **rtr, int *limit, unsigned int *pnbr)
 char	*ft_itoa(int n)
 {
 	int				size;
-	int				i;
 	int				limit;
 	char			*rtr;
 	unsigned int	pnbr;
 
 	pnbr = n;
-	i = 0;
 	limit = 0;
 	size = ft_n_of_d(n);
 	rtr = (char *)malloc((size + 1) * sizeof(char));

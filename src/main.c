@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 16:33:30 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 01:47:22 by otait-ta         ###   ########.fr       */
+/*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/04/08 21:37:13 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+int	main(int ac, char const **av, char **env)
 {
-	t_list	*p;
+	t_exec_context	exContext;
+	char			*input;
 
-	ft_putstr_fd("inside", 1);
-	if (lst)
+	(void)ac;
+	if (init_data(&exContext, (char **)av, env))
+		exit(1);
+	print_env(exContext.env, 1);
+	while (1)
 	{
-		p = lst;
-		while (p->next)
+		input = readline("minishell $ ");
+		if (!input)
 		{
-			f(p->content);
-			p = p->next;
+			printf("exit\n");
+			return (1);
 		}
-		if (p->next == NULL)
-			f(p->content);
+		pars_input(&exContext, input);
 	}
+	return (0);
 }

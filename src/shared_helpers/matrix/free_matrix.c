@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 16:33:30 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 01:47:22 by otait-ta         ###   ########.fr       */
+/*   Created: 2023/04/07 22:36:54 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/04/07 22:42:57 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../includes/minishell.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	free_matrix(char ***matrix)
 {
-	t_list	*p;
+	int	i;
 
-	ft_putstr_fd("inside", 1);
-	if (lst)
+	i = 0;
+	if (matrix && matrix[0])
 	{
-		p = lst;
-		while (p->next)
+		while (matrix[0][i])
 		{
-			f(p->content);
-			p = p->next;
+			free(matrix[0][i]);
+			i++;
 		}
-		if (p->next == NULL)
-			f(p->content);
+	}
+	if (matrix)
+	{
+		free(matrix[0]);
+		*matrix = NULL;
 	}
 }
