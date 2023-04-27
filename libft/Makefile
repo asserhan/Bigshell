@@ -13,7 +13,7 @@
 NAME	=	libft.a
 HEADRS	=	libft.h
 AR		=	ar rc
-CC		=	CC
+CC		=	cc
 FLAGS	= 	-Wall -Werror -Wextra 
 RM		=	rm -rf
 

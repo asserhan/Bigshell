@@ -3,6 +3,7 @@
 # include "../libft/libft.h"
 # include "./doubly_lst.h"
 # include "./env_var.h"
+# include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
 
@@ -26,4 +27,8 @@ void				free_matrix(char ***matrix);
 /* 0 if equal 1 if not */
 int					ft_strcmp(char *str1, char *str2);
 
+/* Parsing*/
+/* TODO*/
+int					pars_input(t_exec_context *exContext, char *input);
+char				**split_space(char *line);
 #endif

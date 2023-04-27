@@ -24,7 +24,12 @@ int	main(int ac, char const **av, char **env)
 	while (1)
 	{
 		input = readline("minishell $ ");
-		// / pars_input();
+		if (!input)
+		{
+			printf("exit\n");
+			return (1);
+		}
+		pars_input(&exContext, input);
 	}
 	return (0);
 }
