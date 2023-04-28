@@ -23,12 +23,31 @@ int					init_data(t_exec_context *exContext, char **av,
 /* iterate over a matrix and free every line */
 void				free_matrix(char ***matrix);
 
+/* Counts the number of pointers in a `char **` array.
+ Assumes that the array is terminated by a NULL pointer.*/
+int					count_pointers(char **arr);
+
 /*--STRING--*/
 /* 0 if equal 1 if not */
 int					ft_strcmp(char *str1, char *str2);
+/* change the value of quote depanding on its place*/
+void				handle_quotes(int *s_quote, int *d_quote, char c);
 
-/* Parsing*/
+////////////////////////////////////* Parsing*////////////////////////////////////
+
 /* TODO*/
 int					pars_input(t_exec_context *exContext, char *input);
+/* split line given by new_line to multiple tokens*/
 char				**split_space(char *line);
+
+/*takes a string 'str' and splits it into multiple tokens based on the provided delimiters*/
+char				**line_to_tokens(char const *line, char *delimiters,
+						char **tokens);
+/* counts the number of words in a given string 'str' based on the provided 'delimiters'.*/
+int					words_number(const char *str, const char *delimiters);
+/*splite all tokens given by split_space() to sub tokens taking expand in consideration */
+char				**split_tokens(char **tokens, t_exec_context *exContext);
+/* checks if token have a $ if so it expnded if not it return the token  */
+char				*expand(char *token, t_exec_context *exContext);
+
 #endif

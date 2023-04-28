@@ -1,6 +1,4 @@
 #include "../../includes/minishell.h"
-#include <stdbool.h>
-#include <string.h>
 
 int	words_number(const char *str, const char *delimiters)
 {
@@ -33,7 +31,8 @@ int	words_number(const char *str, const char *delimiters)
 			if (in_quotes)
 				return (-1);
 		}
-		str++;
+		if (*str)
+			str++;
 	}
 	return (count);
 }
@@ -46,7 +45,7 @@ void	handle_quotes(int *s_quote, int *d_quote, char c)
 		*d_quote = !*d_quote;
 }
 
-static char	**str_to_tokens(char const *str, char *delimiters, char **tokens)
+char	**line_to_tokens(char const *line, char *delimiters, char **tokens)
 {
 	int		q[2];
 	size_t	i[3];
@@ -56,20 +55,21 @@ static char	**str_to_tokens(char const *str, char *delimiters, char **tokens)
 	i[2] = 0;
 	q[0] = 0;
 	q[1] = 0;
-	while (str[i[0]])
+	while (line[i[0]])
 	{
-		while (ft_strchr(delimiters, str[i[0]]) && str[i[0]] != '\0')
+		while (ft_strchr(delimiters, line[i[0]]) && line[i[0]] != '\0')
 			i[0]++;
 		i[1] = i[0];
-		while ((!ft_strchr(delimiters, str[i[0]]) || q[0] || q[1]) && str[i[0]])
+		while ((!ft_strchr(delimiters, line[i[0]]) || q[0] || q[1])
+			&& line[i[0]])
 		{
-			handle_quotes(&q[0], &q[1], str[i[0]]);
+			handle_quotes(&q[0], &q[1], line[i[0]]);
 			i[0]++;
 		}
-		if (i[1] >= ft_strlen(str))
-			tokens[i[2]++] = "\0";
+		if (i[1] >= ft_strlen(line))
+			tokens[i[2]++] = NULL;
 		else
-			tokens[i[2]++] = ft_substr(str, i[1], i[0] - i[1]);
+			tokens[i[2]++] = ft_substr(line, i[1], i[0] - i[1]);
 	}
 	return (tokens);
 }
@@ -77,16 +77,22 @@ static char	**str_to_tokens(char const *str, char *delimiters, char **tokens)
 char	**split_space(char *line)
 {
 	char **tokens;
-	int words = words_number(line, " ");
+	int words;
 
+	words = words_number(line, " ");
+	if (words < 0)
+	{
+		printf("err in quotes \n");
+		exit(1);
+	}
 	if (!line)
 		return (NULL);
 	tokens = malloc((words + 1) * sizeof(char *));
 	if (tokens == NULL)
 		return (NULL);
-	str_to_tokens(line, " ", tokens);
+	line_to_tokens(line, " ", tokens);
 	tokens[words] = NULL;
-	printf("this %s \n", tokens[0]);
-
+	if (!tokens)
+		free_matrix(&tokens);
 	return (tokens);
 }
