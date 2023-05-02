@@ -30,6 +30,9 @@ int					count_pointers(char **arr);
 /*--STRING--*/
 /* 0 if equal 1 if not */
 int					ft_strcmp(char *str1, char *str2);
+/*Searches for the index of the first character in `str` that matches any character in `set`.*/
+int					find_char_index(const char *str, const char *set);
+
 /* change the value of quote depanding on its place*/
 void				handle_quotes(int *s_quote, int *d_quote, char c);
 
@@ -49,5 +52,11 @@ int					words_number(const char *str, const char *delimiters);
 char				**split_tokens(char **tokens, t_exec_context *exContext);
 /* checks if token have a $ if so it expnded if not it return the token  */
 char				*expand(char *token, t_exec_context *exContext);
+/* * Retrieves the value of an environment variable by its name, from the
+ * environment list stored in the execution context.
+ * If the variable name is enclosed in curly braces, they will be removed before
+ * searching for the variable.*/
+char	*get_env_value(char *name,
+					t_exec_context *exContext);
 
 #endif
