@@ -1,10 +1,10 @@
 #include "../../includes/minishell.h"
 
-int	words_number(const char *str, const char *delimiters)
+int words_number(const char *str, const char *delimiters)
 {
-	int		count;
-	int		in_quotes;
-	char	quote_char;
+	int count;
+	int in_quotes;
+	char quote_char;
 
 	count = 0;
 	in_quotes = 0;
@@ -20,11 +20,11 @@ int	words_number(const char *str, const char *delimiters)
 				quote_char = *str;
 				str++;
 			}
-			else if (in_quotes && *str == quote_char)
+			else if (in_quotes && (*str == '\"' || *str == '\''))
 				in_quotes = 0;
 			while (*str != '\0' && (!ft_strchr(delimiters, *str) || in_quotes))
 			{
-				if (*str == quote_char)
+				if (*str == '\"' || *str == '\'')
 					in_quotes = !in_quotes;
 				str++;
 			}
@@ -37,7 +37,7 @@ int	words_number(const char *str, const char *delimiters)
 	return (count);
 }
 
-void	handle_quotes(int *s_quote, int *d_quote, char c)
+void handle_quotes(int *s_quote, int *d_quote, char c)
 {
 	if (c == '\'' && *d_quote == 0)
 		*s_quote = !*s_quote;
@@ -45,10 +45,10 @@ void	handle_quotes(int *s_quote, int *d_quote, char c)
 		*d_quote = !*d_quote;
 }
 
-char	**line_to_tokens(char const *line, char *delimiters, char **tokens)
+char **line_to_tokens(char const *line, char *delimiters, char **tokens)
 {
-	int		q[2];
-	size_t	i[3];
+	int q[2];
+	size_t i[3];
 
 	i[0] = 0;
 	i[1] = 0;
@@ -60,8 +60,7 @@ char	**line_to_tokens(char const *line, char *delimiters, char **tokens)
 		while (ft_strchr(delimiters, line[i[0]]) && line[i[0]] != '\0')
 			i[0]++;
 		i[1] = i[0];
-		while ((!ft_strchr(delimiters, line[i[0]]) || q[0] || q[1])
-			&& line[i[0]])
+		while ((!ft_strchr(delimiters, line[i[0]]) || q[0] || q[1]) && line[i[0]])
 		{
 			handle_quotes(&q[0], &q[1], line[i[0]]);
 			i[0]++;
@@ -74,7 +73,7 @@ char	**line_to_tokens(char const *line, char *delimiters, char **tokens)
 	return (tokens);
 }
 
-char	**split_space(char *line)
+char **split_space(char *line)
 {
 	char **tokens;
 	int words;

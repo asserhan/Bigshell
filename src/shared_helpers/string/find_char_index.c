@@ -9,7 +9,7 @@ int	find_char_index(const char *str, const char *set)
 	int i = 0;
 	while (str[i])
 	{
-		if (strchr(set, str[i]))
+		if (ft_strchr(set, str[i]))
 			return (i);
 		i++;
 	}
