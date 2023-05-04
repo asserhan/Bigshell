@@ -45,7 +45,7 @@ void handle_quotes(int *s_quote, int *d_quote, char c)
 		*d_quote = !*d_quote;
 }
 
-char **line_to_tokens(char const *line, char *delimiters, char **tokens)
+void line_to_tokens(char const *line, char *delimiters, char **tokens)
 {
 	int q[2];
 	size_t i[3];
@@ -70,7 +70,6 @@ char **line_to_tokens(char const *line, char *delimiters, char **tokens)
 		else
 			tokens[i[2]++] = ft_substr(line, i[1], i[0] - i[1]);
 	}
-	return (tokens);
 }
 
 char **split_space(char *line)
