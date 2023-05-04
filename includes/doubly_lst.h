@@ -3,7 +3,9 @@
 
 typedef struct s_doubly_lst
 {
-	void				*content;
+	char 				**str;
+	char				*hd_name;
+	void				*content; //??
 	struct s_doubly_lst	*next;
 	struct s_doubly_lst	*prev;
 }						t_doubly_lst;
