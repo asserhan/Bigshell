@@ -12,31 +12,30 @@
 
 #include "../../../includes/minishell.h"
 
-void matrix_push_back(char **final_tokens, char **sub_tokens)
+char **matrix_push_back(char **matrix, char **back)
 {
-	int		final_tokens_len;
-	int		sub_tokens_len;
-	char	**new_final_tokens;
+	int		matrix_len;
+	int		back_len;
+	char	**result;
 	int		i;
-	(void)sub_tokens;
-	// ft_putnbr_fd(1,1);
-	final_tokens_len = count_matrix(final_tokens);
-	sub_tokens_len = count_matrix(sub_tokens);
-	ft_putstr_fd(sub_tokens[1],1);
-	new_final_tokens = malloc(sizeof(char *) * (final_tokens_len + sub_tokens_len + 1));
+
+	matrix_len = count_matrix(matrix);
+	back_len = count_matrix(back);
+	result = malloc(sizeof(char *) * (matrix_len + back_len +1));
+	if (!result)
+		return (NULL);
 	i = 0;
-	while (i < final_tokens_len)
+	while(i < matrix_len)
 	{
-		new_final_tokens[i] = final_tokens[i];
+		result[i] = matrix[i];
+		i++;
+	}	
+	i = 0;
+	while(i < back_len)
+	{
+		result[matrix_len + i] = back[i];
 		i++;
 	}
-	i = 0;
-	while (i < sub_tokens_len)
-	{
-		new_final_tokens[final_tokens_len + i] = sub_tokens[i];
-		i++;
-	}
-	new_final_tokens[final_tokens_len + sub_tokens_len] = NULL;
-	free(final_tokens);
-	final_tokens = new_final_tokens;
+	result[matrix_len + back_len] = NULL;
+	return (result);
 }

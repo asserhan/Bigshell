@@ -27,10 +27,9 @@ void free_matrix(char ***matrix);
 int count_matrix(char **arr);
 /* Prints out the contents of an array `matrix`,
  * with each row separated by the string `separator`*/
-void print_matrix(char **matrix,char *separator);
+void print_matrix(char **matrix,char separator);
 /* add sub tokens to the end of final_tokens*/
-void matrix_push_back(char **final_tokens, char **sub_tokens);
-
+char **matrix_push_back(char **matrix, char **back);
 /*--STRING--*/
 /* 0 if equal 1 if not */
 int ft_strcmp(char *str1, char *str2);
@@ -64,5 +63,6 @@ char *path_expand(char *str, char *home);
  * searching for the variable.*/
 char *get_env_value(char *name,
 					t_exec_context *exContext);
+
 
 #endif

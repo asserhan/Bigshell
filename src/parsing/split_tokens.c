@@ -39,6 +39,7 @@ void line_to_tokens_delimiters(char const *line, char *delimiters, char **tokens
 			i[0]++;
 		tokens[i[2]++] = ft_substr(line, i[1], i[0] - i[1]);
 	}
+	tokens[i[2]] = NULL;
 }
 int words_number_delimiters(const char *str, const char *delimiters)
 {
@@ -72,7 +73,6 @@ char **split_tokens(char **tokens, t_exec_context *exContext)
 {
 	char **final_tokens;
 	char **sub_tokens;
-	// char **final_tokens;
 	char *line_expended;
 	int command_count;
 	int i;
@@ -83,14 +83,10 @@ char **split_tokens(char **tokens, t_exec_context *exContext)
 	while (i < command_count)
 	{
 		line_expended = expand_and_split_token(tokens[i++], exContext);
-		sub_tokens = malloc((words_number_delimiters(line_expended, "<>|") + 1) * sizeof(char *));
+		sub_tokens = ft_calloc((words_number_delimiters(line_expended, "<>|") + 1) , sizeof(char *));
 		line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
-		printf("%s",*sub_tokens);
-		printf("%s",sub_tokens[1]);
-		printf("%s",sub_tokens[2]);
-		// matrix_push_back(final_tokens, sub_tokens);
-		// free_matrix(&sub_tokens);
+		final_tokens = matrix_push_back(final_tokens, sub_tokens);
+
 	}
-	print_matrix(final_tokens,"\n");
-	return (tokens);
+	return (final_tokens);
 }
