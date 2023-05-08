@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:02:54 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/04 16:17:09 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:31:15 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_doubly_lst	*matrix_to_list(char **matrix)
 	tail = NULL;
 	while (*matrix)
 	{
-		cmd = ft_strdup(*matrix);
+		cmd = ft_strtrim(*matrix++,"'\"");
 		if (cmd && *cmd)
 		{
 			node = (t_doubly_lst *)malloc(sizeof(t_doubly_lst));
@@ -38,7 +38,6 @@ t_doubly_lst	*matrix_to_list(char **matrix)
 			if (!head)
 				head = node;
 		}
-		matrix++;
 	}
 	return (head);
 }

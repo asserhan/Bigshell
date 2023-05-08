@@ -7,11 +7,11 @@ int	pars_input(t_exec_context *exContext, char *input)
 	t_doubly_lst *cmd_list;
 
 	if (input[0] != '\0')
-		add_history(input);
+			add_history(input);
 	tokens = split_space(input);
 	final_tokens = split_tokens(tokens, exContext);
 	cmd_list = matrix_to_list(final_tokens);
 	print_list(cmd_list);
-	free(final_tokens);
+	free_matrix(&final_tokens);
 	return (1);
 }
