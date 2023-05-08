@@ -7,15 +7,16 @@ LIBTFT = libft/libft.a
 OBJ_DIR = obj
 SRC := $(notdir $(shell find src -name '*.c'))
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+LEAKS =  -g
 # Targets
 all: $(NAME)
 
 $(NAME): $(OBJ) obj_libft
-	@$(CC)  $(FLAGS) $(OBJ) $(LIBTFT) -lreadline -o $@
+	@$(CC)  $(FLAGS) $(OBJ) $(LIBTFT)  -lreadline -o $@
 
 $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(@D)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(LEAKS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: src/*/%.c
 	@mkdir -p $(@D)

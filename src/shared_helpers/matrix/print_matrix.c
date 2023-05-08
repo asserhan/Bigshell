@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_matrix.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/08 21:22:45 by otait-ta         ###   ########.fr       */
+/*   Created: 2023/05/04 11:57:09 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/05/04 16:42:19 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-int	main(int ac, char const **av, char **env)
+void print_matrix(char **matrix, char separator)
 {
-	t_exec_context	exContext;
-	char			*input;
+    int count;
+    int i;
 
-	(void)ac;
-	if (init_data(&exContext, (char **)av, env))
-		exit(1);
-	while (1)
-	{
-		input = readline("minishell $ ");
-		if (!*input)
-			continue;
-		pars_input(&exContext, input);
-	}
-	return (0);
+    i = 0;
+    count = count_matrix(matrix);
+    while ( i < count )
+    {
+        ft_putstr_fd(matrix[i], 1);
+        ft_putchar_fd(separator, 1);
+        i++;
+    }
 }
-
