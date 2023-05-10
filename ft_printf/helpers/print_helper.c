@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/09 16:41:24 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/28 09:56:47 by otait-ta          #+#    #+#             */
+/*   Updated: 2022/11/07 12:19:26 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../ft_printf.h"
 
-int	exit_status;
-
-int	main(int ac, char  **av, char **env)
+char	*putchar_count(char *s, char c, int *control)
 {
-	t_exec_context	exContext;
-	char			*input;
-
-	(void)ac;
-	if (init_data(&exContext, av, env))
-		exit(1);
-	while (1)
-	{
-		input = readline("minishell $ ");
-		if (!*input || pars_input(&exContext, input))
-			continue;
-		
-	}
-	return (0);
+	write(1, &c, 1);
+	*control += 1;
+	s++;
+	return (s);
 }
 
+char	*put_str(char *s, char *arg, int *control)
+{
+	if (!arg)
+	{
+		s = put_str(s, "(null)", control);
+		return (s);
+	}
+	while (*arg)
+		arg = putchar_count(arg, *arg, control);
+	s++;
+	return (s);
+}

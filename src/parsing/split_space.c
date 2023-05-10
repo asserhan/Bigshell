@@ -1,5 +1,6 @@
 #include "../../includes/minishell.h"
 
+extern int exit_status;
 int words_number(const char *str, const char *delimiters)
 {
 	int count;
@@ -80,8 +81,9 @@ char **split_space(char *line)
 	words = words_number(line, " ");
 	if (words < 0)
 	{
-		printf("err in quotes \n");
-		exit(1);
+		ft_printf("minishell: error while searching for a corresponding quotation mark. \n");
+		exit_status = 1;
+		return (NULL);
 	}
 	if (!line)
 		return (NULL);

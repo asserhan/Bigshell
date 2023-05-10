@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   dicimal_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/09 16:41:24 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/28 12:18:18 by otait-ta          #+#    #+#             */
+/*   Updated: 2022/11/07 11:41:27 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../ft_printf.h"
 
-int	exit_status;
-
-int	main(int ac, char  **av, char **env)
+char	*put_dicimal(char *s, long long nbr, int *control)
 {
-	t_exec_context	exContext;
-	char			*input;
+	char	table[18];
+	int		i;
 
-	(void)ac;
-	if (init_data(&exContext, av, env))
-		exit(1);
-	while (1)
+	i = 1;
+	if (nbr == 0)
+		putchar_count(s, '0', control);
+	if (nbr < 0)
 	{
-		input = readline("minishell $ ");
-		if (!*input || pars_input(&exContext, input))
-			continue;
-		
+		nbr = -nbr;
+		putchar_count(s, '-', control);
 	}
-	return (0);
+	while (nbr)
+	{
+		table[i] = nbr % 10 + '0';
+		nbr = nbr / 10;
+		i++;
+	}
+	i--;
+	while (i)
+		putchar_count(s, table[i--], control);
+	s++;
+	return (s);
 }
-
