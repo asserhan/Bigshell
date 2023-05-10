@@ -4,49 +4,21 @@ int check_syntax(t_doubly_lst *head)
 {
 	while (head)
 	{
-		if (start_with(head->cmd, "!)"))
-		{
-			ft_printf("bash: syntax error near unexpected token `%c'\n", head->cmd[0]);
-			return (1);
-		}
-		else if (end_with(head->cmd, "!)"))
-		{
-			ft_printf("bash: syntax error near unexpected token `)'\n");
-			return (1);
-		}
-		else if (end_with(head->cmd, "><!()") && head->next &&start_with(head->next->cmd, "|"))
-		{
-			ft_printf("bash: syntax error near unexpected token `|'\n");
-			return (1);
-		}
-		else if (!head->next && !head->prev)
-		{
-			if (ft_strlen(head->cmd) == 1 && ft_strchr("<|>)!", *head->cmd))
-			{
-				ft_printf("bash: syntax error near unexpected token `%s'\n", head->cmd);
-				return (1);
-			}
-		}
-		else if (!head->next)
-		{
-			if (ft_strchr("<>()|", *head->cmd))
-			{
-				ft_printf("bash: syntax error near unexpected token `newline'\n");
-				return (1);
-			}
-		}
-		else if (head->next && !head->prev)
-		{
-			if (ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd))
-			{
-				ft_printf("bash: syntax error near unexpected token `%s'\n", head->cmd);
-				return (1);
-			}
-		}
+		if (start_with(head->cmd, "!)") || end_with(head->cmd, "!)"))
+			return (ft_printf("bash: syntax error near unexpected token `%c'\n", head->cmd[0]) && 1);
+		if (end_with(head->cmd, "><!()") && head->next && start_with(head->next->cmd, "|"))
+			return (ft_printf("bash: syntax error near unexpected token `|'\n") && 1);
+		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1 && ft_strchr("<|>)!", *head->cmd))
+			|| (!head->next && ft_strchr("<>()|", *head->cmd))
+			|| (head->next && !head->prev && ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd))
+			|| (head->prev && head->next && ft_strchr("<>|", *head->cmd) && ft_strchr("|", *head->next->cmd)))
+			return (ft_printf("bash: syntax error near unexpected token `%s'\n", head->cmd) && 1);
 		head = head->next;
 	}
 	return (0);
 }
+
+
 int pars_input(t_exec_context *exContext, char *input)
 {
 	char **tokens;
