@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
 extern int exit_status;
+
 int words_number(const char *str, const char *delimiters)
 {
 	int count;
@@ -21,12 +22,19 @@ int words_number(const char *str, const char *delimiters)
 				quote_char = *str;
 				str++;
 			}
-			else if (in_quotes && (*str == '\"' || *str == '\''))
+			else if (in_quotes && (*str == quote_char))
 				in_quotes = 0;
 			while (*str != '\0' && (!ft_strchr(delimiters, *str) || in_quotes))
 			{
-				if (*str == '\"' || *str == '\'')
+				if (*str == quote_char)
+				{
 					in_quotes = !in_quotes;
+				}
+				else if ((*str == '\'' || *str == '\"') && !in_quotes)
+				{
+					in_quotes = 1;
+					quote_char = *str;
+				}
 				str++;
 			}
 			if (in_quotes)
