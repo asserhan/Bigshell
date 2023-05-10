@@ -53,11 +53,17 @@ char **matrix_push_back(char **matrix, char **back);
 /*--STRING--*/
 /* 0 if equal 1 if not */
 int ft_strcmp(char *str1, char *str2);
+
 /*Searches for the index of the first character in `str` that matches any character in `set`.*/
 int find_char_index(const char *str, const char *set);
 
 /* change the value of quote depanding on its place*/
 void handle_quotes(int *s_quote, int *d_quote, char c);
+
+/* if str start with c*/
+char start_with(char *str, char *set);
+/* if str end with c*/
+char end_with(char *str, char *set);
 
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
