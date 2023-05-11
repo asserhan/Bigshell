@@ -20,9 +20,6 @@ typedef struct s_exec_context
 {
 	t_doubly_lst	*cmds;
 	t_env			*env;
-	int 			infile;
-	int				outfile;
-	int				exit; //exit status
 }					t_exec_context;
 
 /*--- Redirections ---*/

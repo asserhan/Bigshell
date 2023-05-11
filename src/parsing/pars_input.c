@@ -18,7 +18,6 @@ int check_syntax(t_doubly_lst *head)
 	return (0);
 }
 
-
 int pars_input(t_exec_context *exContext, char *input)
 {
 	char **tokens;
@@ -34,7 +33,9 @@ int pars_input(t_exec_context *exContext, char *input)
 	cmd_list = matrix_to_list(final_tokens);
 	if (check_syntax(cmd_list))
 		return (1);
+	
 	print_list(cmd_list);
+	free_matrix(&tokens);
 	free_matrix(&final_tokens);
 	return (0);
 }
