@@ -40,13 +40,29 @@ t_doubly_lst *convert_list_format(t_doubly_lst *list)
 		{
 			while (list && ft_strcmp(list->cmd, "|") && node)
 			{
+				if (!ft_strcmp(list->cmd, ">") && !ft_strcmp(list->next->cmd, ">"))
+				{
+					handle_append(list, node);
+					list = list->next->next->next;
+					continue;
+				}
+				else if (!ft_strcmp(list->cmd, ">"))
+				{
+					handle_output(list, node);
+					list = list->next->next;
+					continue;
+				}
+				else if (!ft_strcmp(list->cmd, "<"))
+				{
+					handle_input(list, node);
+					list = list->next->next;
+					continue;
+				}
 				node->args = matrix_push_back(node->args, list->cmd);
 				list = list->next;
 			}
 			if (list && !ft_strcmp(list->cmd, "|"))
-			{
 				list = list->next;
-			}
 		}
 	}
 	return head;

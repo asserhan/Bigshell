@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:17:36 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/11 14:25:45 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:41:27 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void print_list(t_doubly_lst *head)
 		ft_printf("agrs :  ");
 		print_matrix(head->args,' ');
 		ft_printf("\n");
+		ft_printf("in : %d\n",head->in);
+		ft_printf("out : %d\n",head->out);
 		ft_printf("--------------------------\n");
-		ft_printf("         ||   \n");
-		ft_printf("         ||   \n");
-		ft_printf("         \\/   \n");
+
 		head = head->next;
 	}
 }

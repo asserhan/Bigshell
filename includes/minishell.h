@@ -1,36 +1,36 @@
 #ifndef MINISHELL_H
-# define MINISHELL_H
-# include "../libft/libft.h"
-# include "../ft_printf/ft_printf.h"
-# include "./doubly_lst.h"
-# include "./env_var.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-
+#define MINISHELL_H
+#include "../libft/libft.h"
+#include "../ft_printf/ft_printf.h"
+#include "./doubly_lst.h"
+#include "./env_var.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <stdio.h>
+#include <fcntl.h>
 
 /*---MACROS---*/
 #define true 1
 #define false 0
-#define PATH_MAX                 1024   /* max bytes in pathname */
+#define PATH_MAX 1024 /* max bytes in pathname */
 
 /* struct contain all cmnds in a linked list "cmds" and
 all env variables in other linked list "env"*/
 typedef struct s_exec_context
 {
-	t_doubly_lst	*cmds;
-	t_env			*env;
-}					t_exec_context;
+	t_doubly_lst *cmds;
+	t_env *env;
+} t_exec_context;
 
 /*--- Redirections ---*/
 typedef enum s_redir_t
 {
-	IN=0,
-	OUT=1,
-	APPEND=2,
-	HERE_DOC=3,
-	PIPE=4,
-}		t_redir_t;
+	IN = 0,
+	OUT = 1,
+	APPEND = 2,
+	HERE_DOC = 3,
+	PIPE = 4,
+} t_redir_t;
 
 /* fill the execContext with initial data*/
 int init_data(t_exec_context *exContext, char **av,
@@ -44,13 +44,13 @@ void free_matrix(char ***matrix);
 int count_matrix(char **arr);
 /* Prints out the contents of an array `matrix`,
  * with each row separated by the string `separator`*/
-void print_matrix(char **matrix,char separator);
+void print_matrix(char **matrix, char separator);
 /* Concatenates the rows of two matrices and returns a pointer to the updated matrix */
 char **matrix_concat(char **matrix, char **back);
 /*Appends a new row to the end of the matrix*/
 char **matrix_push_back(char **matrix, char *back);
 /*--STRING--*/
-/* 0 if equal 1 if not */
+/*  equal == 0 || not = 1 */
 int ft_strcmp(char *str1, char *str2);
 
 char *ft_strcpy(char *dest, const char *src);
@@ -69,7 +69,7 @@ char end_with(char *str, char *set);
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
 /* TODO */
-void	ft_echo(char **arg);
+void ft_echo(char **arg);
 
 /* TODO*/
 int pars_input(t_exec_context *exContext, char *input);
@@ -93,6 +93,11 @@ char *path_expand(char *str, char *home);
  * searching for the variable.*/
 char *get_env_value(char *name,
 					t_exec_context *exContext);
-
+/* open  the file with name in old_list command and asign the fd to node */
+void handle_input(t_doubly_lst *old_list, t_doubly_lst *node);
+/* open  the file with name in old_list command and asign the fd to node */
+void handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
+/* open  the file with name in old_list command and asign the fd to node */
+void handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 
 #endif
