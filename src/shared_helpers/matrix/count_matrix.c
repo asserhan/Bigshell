@@ -2,13 +2,13 @@
 
 int count_matrix(char **arr)
 {
-    int count ;
+    int count;
 
-	count = 0;
-    if (!arr) {
+    count = 0;
+    if (!arr)
         return 0;
-    }
-    while (*arr != NULL) {
+    while (*arr != NULL)
+    {
         count++;
         arr++;
     }

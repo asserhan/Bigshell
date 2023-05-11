@@ -45,11 +45,15 @@ int count_matrix(char **arr);
 /* Prints out the contents of an array `matrix`,
  * with each row separated by the string `separator`*/
 void print_matrix(char **matrix,char separator);
-/* add sub tokens to the end of final_tokens*/
-char **matrix_push_back(char **matrix, char **back);
+/* Concatenates the rows of two matrices and returns a pointer to the updated matrix */
+char **matrix_concat(char **matrix, char **back);
+/*Appends a new row to the end of the matrix*/
+char **matrix_push_back(char **matrix, char *back);
 /*--STRING--*/
 /* 0 if equal 1 if not */
 int ft_strcmp(char *str1, char *str2);
+
+char *ft_strcpy(char *dest, const char *src);
 
 /*Searches for the index of the first character in `str` that matches any character in `set`.*/
 int find_char_index(const char *str, const char *set);

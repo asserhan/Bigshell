@@ -85,7 +85,7 @@ char **split_tokens(char **tokens, t_exec_context *exContext)
 		line_expended = expand_and_split_token(tokens[i++], exContext);
 		sub_tokens = ft_calloc((words_number_delimiters(line_expended, "<>|") + 1) , sizeof(char *));
 		line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
-		final_tokens = matrix_push_back(final_tokens, sub_tokens);
+		final_tokens = matrix_concat(final_tokens, sub_tokens);
 
 	}
 	return (final_tokens);

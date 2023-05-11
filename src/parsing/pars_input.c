@@ -8,14 +8,48 @@ int check_syntax(t_doubly_lst *head)
 			return (ft_printf("bash: syntax error near unexpected token `%c'\n", head->cmd[0]) && 1);
 		if (end_with(head->cmd, "><!()") && head->next && start_with(head->next->cmd, "|"))
 			return (ft_printf("bash: syntax error near unexpected token `|'\n") && 1);
-		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1 && ft_strchr("<|>)!", *head->cmd))
-			|| (!head->next && ft_strchr("<>()|", *head->cmd))
-			|| (head->next && !head->prev && ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd))
-			|| (head->prev && head->next && ft_strchr("<>|", *head->cmd) && ft_strchr("|", *head->next->cmd)))
+		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1 && ft_strchr("<|>)!", *head->cmd)) || (!head->next && ft_strchr("<>()|", *head->cmd)) || (head->next && !head->prev && ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd)) || (head->prev && head->next && ft_strchr("<>|", *head->cmd) && ft_strchr("|", *head->next->cmd)))
 			return (ft_printf("bash: syntax error near unexpected token `%s'\n", head->cmd) && 1);
 		head = head->next;
 	}
 	return (0);
+}
+t_doubly_lst *convert_list_format(t_doubly_lst *list)
+{
+
+	t_doubly_lst *node;
+	t_doubly_lst *head = NULL;
+	t_doubly_lst *prev_node = NULL;
+
+	while (list)
+	{
+		if (ft_strcmp(list->cmd, "|") && (!list->prev || (list->prev && !ft_strcmp(list->prev->cmd, "|"))))
+		{
+			node = d_lstnew(list->cmd);
+			if (!head)
+				head = node;
+			if (prev_node)
+			{
+				prev_node->next = node;
+				node->prev = prev_node;
+			}
+			prev_node = node;
+			list = list->next;
+		}
+		else
+		{
+			while (list && ft_strcmp(list->cmd, "|") && node)
+			{
+				node->args = matrix_push_back(node->args, list->cmd);
+				list = list->next;
+			}
+			if (list && !ft_strcmp(list->cmd, "|"))
+			{
+				list = list->next;
+			}
+		}
+	}
+	return head;
 }
 
 int pars_input(t_exec_context *exContext, char *input)
@@ -23,6 +57,7 @@ int pars_input(t_exec_context *exContext, char *input)
 	char **tokens;
 	char **final_tokens;
 	t_doubly_lst *cmd_list;
+	t_doubly_lst *final_list;
 
 	if (input[0] != '\0')
 		add_history(input);
@@ -33,8 +68,8 @@ int pars_input(t_exec_context *exContext, char *input)
 	cmd_list = matrix_to_list(final_tokens);
 	if (check_syntax(cmd_list))
 		return (1);
-	
-	print_list(cmd_list);
+	final_list = convert_list_format(cmd_list);
+	print_list(final_list);
 	free_matrix(&tokens);
 	free_matrix(&final_tokens);
 	return (0);
