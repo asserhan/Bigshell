@@ -81,12 +81,12 @@ int pars_input(t_exec_context *exContext, char *input)
 	if (!tokens)
 		return 1;
 	final_tokens = split_tokens(tokens, exContext);
+	free_matrix(&tokens);
 	cmd_list = matrix_to_list(final_tokens);
+	free_matrix(&final_tokens);
 	if (check_syntax(cmd_list))
 		return (1);
 	final_list = convert_list_format(cmd_list);
 	print_list(final_list);
-	free_matrix(&tokens);
-	free_matrix(&final_tokens);
 	return (0);
 }

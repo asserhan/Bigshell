@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char *expand_and_split_token(char *token, t_exec_context *exContext)
+char *expand_token(char *token, t_exec_context *exContext)
 {
 	char *var_result;
 	char *result;
@@ -82,7 +82,7 @@ char **split_tokens(char **tokens, t_exec_context *exContext)
 	final_tokens = NULL;
 	while (i < command_count)
 	{
-		line_expended = expand_and_split_token(tokens[i++], exContext);
+		line_expended = expand_token(tokens[i++], exContext);
 		sub_tokens = ft_calloc((words_number_delimiters(line_expended, "<>|") + 1) , sizeof(char *));
 		line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
