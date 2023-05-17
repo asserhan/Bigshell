@@ -1,7 +1,7 @@
 NAME	=	libftprintf.a
 HEADRS	=	ft_printf.h
 AR		=	ar rc
-CC		=	CC
+CC		=	cc
 FLAGS	= 	-Wall -Werror -Wextra 
 RM		=	rm -rf
 

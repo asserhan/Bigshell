@@ -12,11 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-int char_count(char *str)
+int	char_count(char *str)
 {
-	int in_quote;
-	char quote_char;
-	int count;
+	int		in_quote;
+	char	quote_char;
+	int		count;
 
 	in_quote = 0;
 	in_quote = '\0';
@@ -39,16 +39,16 @@ int char_count(char *str)
 	}
 	return (count);
 }
-char *remove_quotes(char *str)
+char	*remove_quotes(char *str)
 {
-	int i;
-	char *new_str;
-	int in_quote;
-	char quote_char;
+	int		i;
+	char	*new_str;
+	int		in_quote;
+	char	quote_char;
 
 	i = 0;
 	in_quote = 0;
-	new_str = calloc(char_count(str) + 1, sizeof(char));
+	new_str = ft_calloc(char_count(str) + 1, sizeof(char));
 	while (*str)
 	{
 		if ((*str == '\'' || *str == '\"') && !in_quote)
@@ -65,15 +65,15 @@ char *remove_quotes(char *str)
 			new_str[i++] = *str;
 		str++;
 	}
-	return new_str;
+	return (new_str);
 }
 
-t_doubly_lst *matrix_to_list(char **matrix)
+t_doubly_lst	*matrix_to_list(char **matrix)
 {
-	t_doubly_lst *head;
-	t_doubly_lst *tail;
-	t_doubly_lst *node;
-	char *cmd;
+	t_doubly_lst	*head;
+	t_doubly_lst	*tail;
+	t_doubly_lst	*node;
+	char			*cmd;
 
 	head = NULL;
 	tail = NULL;

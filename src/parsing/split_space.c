@@ -1,12 +1,12 @@
 #include "../../includes/minishell.h"
 
-extern int exit_status;
+extern int	exit_status;
 
-int words_number(const char *str, const char *delimiters)
+int	words_number(const char *str, const char *delimiters)
 {
-	int count;
-	int in_quotes;
-	char quote_char;
+	int		count;
+	int		in_quotes;
+	char	quote_char;
 
 	count = 0;
 	in_quotes = 0;
@@ -46,7 +46,7 @@ int words_number(const char *str, const char *delimiters)
 	return (count);
 }
 
-void handle_quotes(int *s_quote, int *d_quote, char c)
+void	handle_quotes(int *s_quote, int *d_quote, char c)
 {
 	if (c == '\'' && *d_quote == 0)
 		*s_quote = !*s_quote;
@@ -54,10 +54,10 @@ void handle_quotes(int *s_quote, int *d_quote, char c)
 		*d_quote = !*d_quote;
 }
 
-void line_to_tokens(char const *line, char *delimiters, char **tokens)
+void	line_to_tokens(char const *line, char *delimiters, char **tokens)
 {
-	int q[2];
-	size_t i[3];
+	int		q[2];
+	size_t	i[3];
 
 	i[0] = 0;
 	i[1] = 0;
@@ -69,7 +69,8 @@ void line_to_tokens(char const *line, char *delimiters, char **tokens)
 		while (ft_strchr(delimiters, line[i[0]]) && line[i[0]] != '\0')
 			i[0]++;
 		i[1] = i[0];
-		while ((!ft_strchr(delimiters, line[i[0]]) || q[0] || q[1]) && line[i[0]])
+		while ((!ft_strchr(delimiters, line[i[0]]) || q[0] || q[1])
+			&& line[i[0]])
 		{
 			handle_quotes(&q[0], &q[1], line[i[0]]);
 			i[0]++;
@@ -81,7 +82,7 @@ void line_to_tokens(char const *line, char *delimiters, char **tokens)
 	}
 }
 
-char **split_space(char *line)
+char	**split_space(char *line)
 {
 	char **tokens;
 	int words;
@@ -89,7 +90,8 @@ char **split_space(char *line)
 	words = words_number(line, " ");
 	if (words < 0)
 	{
-		ft_printf("minishell: error while searching for a corresponding quotation mark. \n");
+		ft_putstr_fd("minishell: error while searching for a corresponding quotation mark. \n",
+						2);
 		exit_status = 1;
 		return (NULL);
 	}
