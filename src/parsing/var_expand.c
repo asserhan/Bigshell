@@ -40,9 +40,14 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 					exit_status = 2,
 					NULL);
 	}
+	if (str[i + 1] == '?')
+	{
+		var_value = ft_itoa(exit_status);
+		i += 2;
+	}
 	else
 	{
-		var_len = find_char_index(&str[i + 1], "|\"' $?.&-@:+=[]{}%~;#^*\\");
+		var_len = find_char_index(&str[i + 1], "|\"' $.&-@:+=[]{}%~;#^*\\");
 		if (var_len == -1)
 			var_len = ft_strlen(&str[i + 1]);
 		sub = ft_substr(&str[i + 1], 0, var_len);

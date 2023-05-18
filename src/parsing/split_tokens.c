@@ -97,6 +97,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			return (NULL);
 		line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
+		free_matrix(sub_tokens);
 	}
 	return (final_tokens);
 }

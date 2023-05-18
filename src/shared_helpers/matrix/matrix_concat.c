@@ -27,15 +27,15 @@ char	**matrix_concat(char **matrix, char **back)
 	i = 0;
 	while (i < matrix_len)
 	{
-		result[i] = matrix[i];
+		result[i] = ft_strdup(matrix[i]);
 		i++;
 	}
 	i = 0;
 	while (i < back_len)
 	{
-		result[matrix_len + i] = back[i];
+		result[matrix_len + i] = ft_strdup(back[i]);
 		i++;
 	}
 	result[matrix_len + back_len] = NULL;
-	return (result);
+	return (free_matrix(matrix), result);
 }

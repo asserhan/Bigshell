@@ -110,9 +110,11 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (!final_tokens)
 		return (1);
 	cmd_list = matrix_to_list(final_tokens);
+	free_matrix(final_tokens);
 	if (check_syntax(cmd_list))
 		return (1);
 	final_list = convert_list_format(cmd_list);
+	d_lstclear(&cmd_list);
 	print_list(final_list);
 	d_lstclear(&final_list);
 	return (0);
