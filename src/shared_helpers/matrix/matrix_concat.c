@@ -12,7 +12,7 @@
 
 #include "../../../includes/minishell.h"
 
-char **matrix_concat(char **matrix, char **back)
+char	**matrix_concat(char **matrix, char **back)
 {
 	int		matrix_len;
 	int		back_len;
@@ -21,17 +21,17 @@ char **matrix_concat(char **matrix, char **back)
 
 	matrix_len = count_matrix(matrix);
 	back_len = count_matrix(back);
-	result = malloc(sizeof(char *) * (matrix_len + back_len +1));
+	result = ft_calloc((matrix_len + back_len + 1), sizeof(char *));
 	if (!result)
 		return (NULL);
 	i = 0;
-	while(i < matrix_len)
+	while (i < matrix_len)
 	{
 		result[i] = matrix[i];
 		i++;
-	}	
+	}
 	i = 0;
-	while(i < back_len)
+	while (i < back_len)
 	{
 		result[matrix_len + i] = back[i];
 		i++;

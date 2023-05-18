@@ -12,22 +12,18 @@
 
 #include "../../../includes/minishell.h"
 
-void	free_matrix(char ***matrix)
+void	free_matrix(char **matrix)
 {
 	int	i;
 
 	i = 0;
 	if (matrix && matrix[0])
 	{
-		while (matrix[0][i])
+		while (matrix[i])
 		{
-			free(matrix[0][i]);
+			free(matrix[i]);
 			i++;
 		}
-	}
-	if (matrix)
-	{
-		free(matrix[0]);
-		*matrix = NULL;
+		free(matrix);
 	}
 }

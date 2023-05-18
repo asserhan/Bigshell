@@ -1,0 +1,78 @@
+{
+  "document": {
+    "id": "doc",
+    "name": "New Document",
+    "version": 15.5,
+    "pages": {
+      "page": {
+        "id": "page",
+        "name": "Page 1",
+        "childIndex": 1,
+        "shapes": {
+          "a7676249-751e-4034-12a2-d441995d3aa7": {
+            "id": "a7676249-751e-4034-12a2-d441995d3aa7",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 1,
+            "point": [
+              203.5,
+              128.31
+            ],
+            "rotation": 0,
+            "text": "test $HOME'ok'$HOME => its gives doubel free ???? ",
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          },
+          "0a45bc27-dcfa-4c08-24d0-3d6c720f0be5": {
+            "id": "0a45bc27-dcfa-4c08-24d0-3d6c720f0be5",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 2,
+            "point": [
+              200,
+              206.71
+            ],
+            "rotation": 0,
+            "text": "$HOME{$HOME} = > segfault",
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "middle"
+            }
+          }
+        },
+        "bindings": {}
+      }
+    },
+    "pageStates": {
+      "page": {
+        "id": "page",
+        "selectedIds": [
+          "a7676249-751e-4034-12a2-d441995d3aa7"
+        ],
+        "camera": {
+          "point": [
+            0,
+            6.29
+          ],
+          "zoom": 1
+        }
+      }
+    },
+    "assets": {}
+  },
+  "assets": {}
+}

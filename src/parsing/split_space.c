@@ -92,7 +92,7 @@ char	**split_space(char *line)
 	{
 		ft_putstr_fd("minishell: error while searching for a corresponding quotation mark. \n",
 						2);
-		exit_status = 1;
+		exit_status = 2;
 		return (NULL);
 	}
 	if (!line)
@@ -103,6 +103,6 @@ char	**split_space(char *line)
 	line_to_tokens(line, " ", tokens);
 	tokens[words] = NULL;
 	if (!tokens)
-		free_matrix(&tokens);
+		free_matrix(tokens);
 	return (tokens);
 }

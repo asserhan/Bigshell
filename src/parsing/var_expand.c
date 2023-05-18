@@ -12,30 +12,37 @@
 
 #include "../../includes/minishell.h"
 
-static char *subtoken(char *str, int i, t_exec_context *exContext)
+extern int	exit_status;
+
+static char	*subtoken(char *str, int i, t_exec_context *exContext)
 {
-	char *var_value;
-	char *result;
-	char *sub;
-	int var_len;
-	int start;
-	int d_quote;
+	char	*var_value;
+	char	*result;
+	char	*sub;
+	int		var_len;
+	int		start;
+	int		d_quote;
+
 	start = i;
 	var_value = NULL;
 	if (str[i + 1] == '{')
 	{
 		var_len = find_char_index(&str[i + 1], "}") - 1;
-		if (var_len > 0)
+		if (var_len >= 0)
 		{
 			sub = ft_substr(&str[i + 2], 0, var_len);
 			var_value = get_env_value(sub, exContext);
 			free(sub);
+			i += var_len + 3;
 		}
-		i += var_len + 3;
+		else
+			return (ft_putstr_fd("error : unclosed curly bracket\n", 2),
+					exit_status = 2,
+					NULL);
 	}
 	else
 	{
-		var_len = find_char_index(&str[i + 1], "|\"' $?><");
+		var_len = find_char_index(&str[i + 1], "|\"' $?.&-@:+=[]{}%~;#^*\\");
 		if (var_len == -1)
 			var_len = ft_strlen(&str[i + 1]);
 		sub = ft_substr(&str[i + 1], 0, var_len);
@@ -44,14 +51,7 @@ static char *subtoken(char *str, int i, t_exec_context *exContext)
 		i += var_len + 1;
 	}
 	if (!var_value)
-	{
-		if (str[i - var_len - 1] == '$')
-			var_value = ft_strdup("handle the PID");
-		else if (str[i - var_len - 1] == '?')
-			var_value = ft_strdup("handle the exit status");
-		else
-			var_value = ft_strdup("");
-	}
+		var_value = ft_strdup("");
 	d_quote = 0;
 	while (str[start - 1 - d_quote] == '"' && str[i + d_quote] == '"')
 		d_quote++;
@@ -65,13 +65,13 @@ static char *subtoken(char *str, int i, t_exec_context *exContext)
 	return (result);
 }
 
-char *var_expand(char *token, t_exec_context *exContext)
+char	*var_expand(char *token, t_exec_context *exContext)
 {
 	int s_quote;
 	int d_quote;
 	int i;
 	int should_expand;
-	char *test;
+	char *new_token;
 
 	s_quote = 0;
 	d_quote = 0;
@@ -84,13 +84,16 @@ char *var_expand(char *token, t_exec_context *exContext)
 			should_expand = 1;
 			if (i == 0 || token[i - 1] != '\\')
 			{
-				if (ft_strchr("/~%^}:; ", token[i + 1]) || (find_char_index("\"", &token[i + 1]) < 0 && d_quote))
+				if (ft_strchr("/~%^}:; ", token[i + 1])
+					|| (find_char_index("\"", &token[i + 1]) < 0 && d_quote))
 					should_expand = 0;
 			}
 			if (should_expand)
 			{
-				test = subtoken(token, i, exContext);
-				return (var_expand(test, exContext));
+				new_token = subtoken(token, i, exContext);
+				if (!new_token)
+					return (NULL);
+				return (var_expand(new_token, exContext));
 			}
 		}
 	}
