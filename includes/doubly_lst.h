@@ -11,7 +11,7 @@ typedef struct s_doubly_lst
 	struct s_doubly_lst	*prev;
 }						t_doubly_lst;
 
-t_doubly_lst	*d_lstnew(char *cmd);
+t_doubly_lst			*d_lstnew(char *cmd);
 
 void	d_lstadd_front(t_doubly_lst **lst,
 					t_doubly_lst *new_elm);
@@ -20,8 +20,10 @@ void	d_lstadd_back(t_doubly_lst **lst,
 					t_doubly_lst *new_elm);
 
 /* Transfer matrix to a doubly linked list */
-t_doubly_lst	*matrix_to_list(char **matrix);
+t_doubly_lst			*matrix_to_list(char **matrix);
 
-void print_list(t_doubly_lst *head);
+void					print_list(t_doubly_lst *head);
+
+void					d_lstclear(t_doubly_lst **lst);
 
 #endif

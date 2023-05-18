@@ -61,7 +61,6 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	free(var_value);
 	if (str[i] != '\0')
 		result = ft_strjoin(result, &str[i + d_quote]);
-	free(str);
 	return (result);
 }
 

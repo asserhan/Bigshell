@@ -1,5 +1,6 @@
 #include "../../includes/minishell.h"
 
+extern int		exit_status;
 int	check_syntax(t_doubly_lst *head)
 {
 	while (head)
@@ -9,12 +10,14 @@ int	check_syntax(t_doubly_lst *head)
 			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 			ft_putchar_fd(head->cmd[0], 2);
 			ft_putstr_fd("'\n", 2);
+			exit_status = 2;
 			return (1);
 		}
 		if (end_with(head->cmd, "><!()") && head->next
 			&& start_with(head->next->cmd, "|"))
 			return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
 									2),
+					exit_status = 2,
 					1);
 		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1
 				&& ft_strchr("<|>)!", *head->cmd)) ||
@@ -27,6 +30,7 @@ int	check_syntax(t_doubly_lst *head)
 			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 			ft_putstr_fd(head->cmd, 2);
 			ft_putstr_fd("'\n", 2);
+			exit_status = 2;
 			return (1);
 		}
 		head = head->next;
@@ -98,10 +102,11 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (input[0] != '\0')
 		add_history(input);
 	tokens = split_space(input);
+	free(input);
 	if (!tokens)
 		return (1);
 	final_tokens = split_tokens(tokens, exContext);
-	free(tokens);
+	free_matrix(tokens);
 	if (!final_tokens)
 		return (1);
 	cmd_list = matrix_to_list(final_tokens);
@@ -109,5 +114,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_list = convert_list_format(cmd_list);
 	print_list(final_list);
+	d_lstclear(&final_list);
 	return (0);
 }
