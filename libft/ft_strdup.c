@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:31:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/20 17:08:33 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:27:00 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*ft_strdup(const char *s1)
 	int		i;
 
 	i = 0;
+	ft_putstr_fd((char *)s1, 1);
 	size = ft_strlen(s1) + 1;
 	__p = malloc(size * sizeof(char));
 	if (!__p)
