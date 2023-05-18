@@ -5,68 +5,58 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:39:22 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/11/07 12:36:39 by otait-ta         ###   ########.fr       */
+/*   Created: 2023/05/18 16:23:35 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/05/18 16:24:03 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+void	ft_print_str(va_list ap, char str, int *len)
+{
+	if (str == 'c')
+		ft_putchar(va_arg(ap, int), len);
+	else if (str == 's')
+		ft_putstr(va_arg(ap, char *), len);
+	else if (str == 'p')
+		ft_print_address(va_arg(ap, long long), len);
+	else if (str == 'd' || str == 'i')
+		ft_putnbr(va_arg(ap, int), len);
+	else if (str == 'u')
+		ft_putnbr_u(va_arg(ap, int), len);
+	else if (str == 'x')
+		ft_putnbr_base(va_arg(ap, int), "0123456789abcdef", len);
+	else if (str == 'X')
+		ft_putnbr_base(va_arg(ap, int), "0123456789ABCDEF", len);
+	else if (str == '%')
+		ft_putchar('%', len);
+	else
+		ft_putchar(str, len);
+}
+
 int	ft_printf(const char *str, ...)
 {
-	char	*s;
-	va_list	args;
-	int		control;
+	va_list	ap;
+	int		i;
+	int		len;
 
-	control = 0;
-	s = (char *)str;
-	va_start(args, str);
-	flag_anal(s, args, &control);
-	va_end(args);
-	return (control);
-}
-
-char	*flag_anal(char *s, va_list args, int *control)
-{
-	char	*temp;
-
-	while (*s)
+	if (write(1, 0, 0) == -1)
+		return (-1);
+	i = 0;
+	len = 0;
+	va_start(ap, str);
+	while (str[i])
 	{
-		if (*s == '%' && !*(s + 1))
-			break ;
-		if (*s == '%')
+		if (str[i] == '%')
 		{
-			temp = ++s;
-			s = testing_flags(s, args, control);
-			if (s == temp)
-			{
-				s = putchar_count(s, *s, control);
-				continue ;
-			}
+			ft_print_str(ap, str[i + 1], &len);
+			if (str[i + 1] != '\0')
+				i++;
 		}
 		else
-			s = putchar_count(s, *s, control);
+			ft_putchar(str[i], &len);
+		i++;
 	}
-	return (s);
-}
-
-char	*testing_flags(char *s, va_list args, int *control)
-{
-	if (*(s) == 'c')
-		s = putchar_count(s, va_arg(args, int), control);
-	else if (*(s) == 's')
-		s = put_str(s, va_arg(args, char *), control);
-	else if (*(s) == 'p')
-		s = put_pointer(s,
-				(unsigned long)va_arg(args, void *), control);
-	else if (*(s) == 'd' || *(s) == 'i')
-		s = put_dicimal(s, va_arg(args, int), control);
-	else if (*(s) == 'u')
-		s = put_dicimal(s, va_arg(args, unsigned int), control);
-	else if (*(s) == 'x' || *(s) == 'X')
-		s = put_hexa(s,
-				(long long)va_arg(args, unsigned int), control);
-	else if (*(s) == '%')
-		s = putchar_count(s, '%', control);
-	return (s);
+	va_end(ap);
+	return (len);
 }

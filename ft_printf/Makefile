@@ -1,29 +1,24 @@
-NAME	=	libftprintf.a
-HEADRS	=	ft_printf.h
-AR		=	ar rc
-CC		=	cc
-FLAGS	= 	-Wall -Werror -Wextra 
-RM		=	rm -rf
+SRC =	ft_printf.c ft_putnbrs.c ft_printf_utils.c
+OBJ	= $(SRC:.c=.o)
+CFLAGS = -Wall -Wextra -Werror
+NAME = libftprintf.a
+CC = cc 
+RM = rm -f 
 
-CFILES	= helpers/dicimal_helper.c helpers/hexa_helper.c helpers/print_helper.c ft_printf.c
-
-OBJ = $(CFILES:.c=.o)
-
-
-all: $(NAME)
+%.o: %c 
+	$(CC)  $(CFLAGS) -c $<
 
 $(NAME): $(OBJ)
-		$(AR) $(NAME) $(OBJ)
+	ar -rcs $(NAME) $(OBJ)
+                                                
+all: $(NAME)
 
-%.o: %.c $(HEADRS)
-	$(CC) $(FLAGS) -c $< -o $@
-
-clean: 
-		$(RM) $(OBJ) 
+clean:
+	$(RM) $(OBJ)
 
 fclean: clean
-		$(RM) $(NAME)
+	$(RM) $(NAME)
 
-re:	fclean all
+re: fclean all
 
-.PHONY: all  clean fclean re
+.PHONY: re all clean fclean

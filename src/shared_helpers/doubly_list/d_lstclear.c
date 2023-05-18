@@ -8,8 +8,10 @@ void	d_lstclear(t_doubly_lst **lst)
 		return ;
 	while (*lst)
 	{
-		free_matrix((*lst)->args);
-		free((*lst)->cmd);
+		if ((*lst)->args)
+			free_matrix((*lst)->args);
+		if ((*lst)->cmd)
+			free((*lst)->cmd);
 		temp = *lst;
 		*lst = temp->next;
 		free(temp);
