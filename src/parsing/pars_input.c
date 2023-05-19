@@ -7,18 +7,15 @@ int	check_syntax(t_doubly_lst *head)
 	{
 		if (start_with(head->cmd, "!)") || end_with(head->cmd, "!)"))
 		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-			ft_putchar_fd(head->cmd[0], 2);
-			ft_putstr_fd("'\n", 2);
-			exit_status = 2;
+			put_error("minishell: syntax error near unexpected token `",
+						"newline",
+						2);
 			return (1);
 		}
 		if (end_with(head->cmd, "><!()") && head->next
 			&& start_with(head->next->cmd, "|"))
-			return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
-									2),
-					exit_status = 2,
-					1);
+			return (put_error("minishell: syntax error near unexpected token `",
+					"|", 2), 1);
 		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1
 				&& ft_strchr("<|>)!", *head->cmd)) ||
 			(!head->next && ft_strchr("<>()|", *head->cmd)) ||
@@ -26,13 +23,10 @@ int	check_syntax(t_doubly_lst *head)
 					&& ft_strchr("|", *head->cmd)) ||
 			(head->prev && head->next && ft_strchr("<>|", *head->cmd)
 					&& ft_strchr("|", *head->next->cmd)))
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-			ft_putstr_fd(head->cmd, 2);
-			ft_putstr_fd("'\n", 2);
-			exit_status = 2;
-			return (1);
-		}
+			return (put_error("minishell: syntax error near unexpected token `",
+								head->cmd,
+								2),
+					1);
 		head = head->next;
 	}
 	return (0);

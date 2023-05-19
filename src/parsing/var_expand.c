@@ -36,8 +36,9 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 			i += var_len + 3;
 		}
 		else
-			return (ft_putstr_fd("error : unclosed curly bracket\n", 2),
-					exit_status = 2,
+			return (put_error("error : unclosed curly bracket ",
+								NULL,
+								2),
 					NULL);
 	}
 	if (str[i + 1] == '?')

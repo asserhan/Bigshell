@@ -84,17 +84,15 @@ void	line_to_tokens(char const *line, char *delimiters, char **tokens)
 
 char	**split_space(char *line)
 {
-	char **tokens;
-	int words;
+	char	**tokens;
+	int		words;
 
 	words = words_number(line, " ");
 	if (words < 0)
-	{
-		ft_putstr_fd("minishell: error while searching for a corresponding quotation mark. \n",
-						2);
-		exit_status = 2;
-		return (NULL);
-	}
+		return (put_error("minishell: error while searching for a corresponding quotation mark. `",
+							NULL,
+							2),
+				NULL);
 	if (!line)
 		return (NULL);
 	tokens = malloc((words + 1) * sizeof(char *));
