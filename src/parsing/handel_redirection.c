@@ -65,7 +65,7 @@ void	handle_append(t_doubly_lst *old_list, t_doubly_lst *node)
 	char		*dir;
 	struct stat	fileStat;
 
-	path = old_list->next->cmd;
+	path = old_list->next->next->cmd;
 	stat(path, &fileStat);
 	dir = get_dir(path);
 	if (S_ISDIR(fileStat.st_mode))

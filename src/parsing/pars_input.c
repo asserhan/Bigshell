@@ -15,7 +15,9 @@ int	check_syntax(t_doubly_lst *head)
 		if (end_with(head->cmd, "><!()") && head->next
 			&& start_with(head->next->cmd, "|"))
 			return (put_error("minishell: syntax error near unexpected token `",
-					"|", 2), 1);
+								"|",
+								2),
+					1);
 		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1
 				&& ft_strchr("<|>)!", *head->cmd)) ||
 			(!head->next && ft_strchr("<>()|", *head->cmd)) ||
@@ -45,7 +47,10 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list)
 		if (ft_strcmp(list->cmd, "|") && (!list->prev || (list->prev
 					&& !ft_strcmp(list->prev->cmd, "|"))))
 		{
-			node = d_lstnew(list->cmd);
+			if (find_char_index(list->cmd, "><") >= 0)
+				node = d_lstnew("");
+			else
+				node = d_lstnew(list->cmd);
 			if (!head)
 				head = node;
 			if (prev_node)
