@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 11:15:09 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/20 17:08:33 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/11 13:44:18 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/23 10:53:43 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char		*__s1;
-	unsigned char		*__s2;
-	size_t				i;
+	size_t	i;
 
 	i = 0;
-	__s1 = ((unsigned char *)s1);
-	__s2 = ((unsigned char *)s2);
 	while (i < n)
 	{
-		if (*__s1 == *__s2)
-		{
-			__s1++;
-			__s2++;
-			i++;
-			continue ;
-		}
+		if (*(unsigned char *)s1 > *(unsigned char *)s2)
+			return (*(unsigned char *)s1 - *(unsigned char *)s2);
 		else
-			return (*__s1 - *__s2);
+		{
+			if (*(unsigned char *)s1 < *(unsigned char *)s2)
+				return (*(unsigned char *)s1 - *(unsigned char *)s2);
+		}
+		s1++;
+		s2++;
+		i++;
 	}
 	return (0);
 }

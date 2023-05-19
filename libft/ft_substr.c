@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 11:58:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/24 13:04:54 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/12 20:55:25 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/25 11:19:53 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*__substr;
-	size_t	i;
-	int		size;
+	char	*p;
+	size_t	len_s;
 
-	i = 0;
-	if (s == NULL || (int)len < 0)
+	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s) && *s)
+	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
-	if (len < ft_strlen(s))
-		size = len + 1;
 	else
-		size = ft_strlen((s + start) + 1);
-	__substr = malloc((size) * sizeof(char));
-	if (!__substr)
+	{
+		if (start == 0)
+			len_s = ft_strlen(s);
+		else
+			len_s = ft_strlen(s + start);
+	}
+	if (len >= len_s)
+		len = len_s;
+	p = (char *)malloc((len + 1) * sizeof (char));
+	if (!p)
 		return (NULL);
-	while (i < ft_strlen(s) && i < len)
-		__substr[i++] = s[start++];
-	__substr[i] = '\0';
-	return (__substr);
+	else
+		ft_strlcpy(p, s + start, len + 1);
+	return (p);
 }
