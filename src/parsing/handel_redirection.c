@@ -12,25 +12,48 @@
 
 #include "../../includes/minishell.h"
 
+char	*get_dir(char *path)
+{
+	char	*dir;
+	int		i;
+
+	i = ft_strlen(path);
+	while (path[i] != '/')
+		i--;
+	dir = ft_substr(path, 0, i);
+	return (dir);
+}
+
 void	handle_output(t_doubly_lst *old_list, t_doubly_lst *node)
 {
-	int		fd;
-	char	*file_name;
+	char		*path;
+	char		*dir;
+	struct stat	fileStat;
 
-	file_name = old_list->next->cmd;
-	fd = open(file_name, O_WRONLY | O_CREAT, 0666);
-	if (fd == -1)
-		ft_putstr_fd("could not creat or open the file ", 2);
-	node->out = fd;
+	path = old_list->next->cmd;
+	stat(path, &fileStat);
+	dir = get_dir(path);
+	if (S_ISDIR(fileStat.st_mode))
+		put_error("minishell: is a directory: ", path, 1);
+	else if (access(dir, F_OK) == -1)
+		put_error("minishell: No such file or directory: ", path, 1);
+	else if (access(path, W_OK) == -1 && access(path, F_OK) == 0)
+		put_error("minishell: permission denied: ", path, 1);
+	node->out = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	free(dir);
 }
 
 void	handle_input(t_doubly_lst *old_list, t_doubly_lst *node)
 {
 	int		fd;
-	char	*file_name;
+	char	*path;
 
-	file_name = old_list->next->cmd;
-	fd = open(file_name, O_RDONLY | O_APPEND);
+	path = old_list->next->cmd;
+	if (access(path, F_OK) == -1)
+		put_error("minishell: No such file or directory: ", path, 1);
+	else if (access(path, R_OK) == -1 && access(path, F_OK) == 0)
+		put_error("minishell: permission denied: ", path, 1);
+	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		ft_putstr_fd("minishell: No such file or directory ", 2);
 	node->in = fd;
@@ -38,12 +61,19 @@ void	handle_input(t_doubly_lst *old_list, t_doubly_lst *node)
 
 void	handle_append(t_doubly_lst *old_list, t_doubly_lst *node)
 {
-	int		fd;
-	char	*file_name;
+	char		*path;
+	char		*dir;
+	struct stat	fileStat;
 
-	file_name = old_list->next->next->cmd;
-	fd = open(file_name, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (fd == -1)
-		ft_putstr_fd("could not creat or open the file ", 2);
-	node->in = fd;
+	path = old_list->next->cmd;
+	stat(path, &fileStat);
+	dir = get_dir(path);
+	if (S_ISDIR(fileStat.st_mode))
+		put_error("minishell: is a directory: ", path, 1);
+	else if (access(dir, F_OK) == -1)
+		put_error("minishell: No such file or directory: ", path, 1);
+	else if (access(path, W_OK) == -1 && access(path, F_OK) == 0)
+		put_error("minishell: permission denied: ", path, 1);
+	node->out = open(path, O_CREAT | O_WRONLY | O_APPEND, 0666);
+	free(dir);
 }

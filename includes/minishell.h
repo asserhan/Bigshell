@@ -8,6 +8,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
+# include <sys/stat.h>
 
 /*---MACROS---*/
 # define true 1
@@ -65,6 +66,8 @@ void				handle_quotes(int *s_quote, int *d_quote, char c);
 char				start_with(char *str, char *set);
 /* if str end with c*/
 char				end_with(char *str, char *set);
+/* put message and set exit_satatus*/
+void				put_error(char *message, char *param, int status_code);
 
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
