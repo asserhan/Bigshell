@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 16:33:30 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 01:47:22 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/21 22:42:04 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/25 10:53:26 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_list	*p;
-
-	ft_putstr_fd("inside", 1);
-	if (lst)
+	if (!lst || !f)
+		return ;
+	while (lst)
 	{
-		p = lst;
-		while (p->next)
-		{
-			f(p->content);
-			p = p->next;
-		}
-		if (p->next == NULL)
-			f(p->content);
+		f(lst->content);
+		lst = lst->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 19:06:55 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/24 11:22:17 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/22 00:24:33 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/25 17:14:11 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*nd;
-	t_list	*n_list;
+	t_list	*new_lst;
+	t_list	*node;
 
-	n_list = NULL;
-	if (lst && f && del)
+	if (!lst || !f || !del)
+		return (NULL);
+	new_lst = NULL;
+	while (lst)
 	{
-		while (lst)
+		node = ft_lstnew(f(lst->content));
+		if (!node)
 		{
-			nd = ft_lstnew(f(lst->content));
-			if (!nd)
-			{
-				ft_lstclear(&n_list, del);
-				return (NULL);
-			}
-			ft_lstadd_back(&n_list, nd);
-			lst = lst->next;
+			ft_lstclear(&new_lst, del);
+			break ;
 		}
+		ft_lstadd_back(&new_lst, node);
+		lst = lst->next;
 	}
-	return (n_list);
+	return (new_lst);
 }

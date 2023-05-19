@@ -3,58 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 20:28:58 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/24 11:21:45 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/11 20:17:31 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/24 11:03:38 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	scape_space(const char *str, int *i)
-{
-	while (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\v'
-		|| str[*i] == '\r' || str[*i] == '\f' || str[*i] == '\n')
-		(*i)++;
-}
-
-static void	signe(const char *str, int *i, int *sign)
-{
-	if (str[*i] == '-')
-	{
-		*sign *= -1;
-		(*i)++;
-	}
-	else if (str[*i] == '+')
-		(*i)++;
-}
-
 int	ft_atoi(const char *str)
 {
-	int			i;
-	int			sign;
-	long long	__rtr;
-	long long	temp;
+	unsigned long long	result;
+	int					sign;
 
-	__rtr = 0;
+	result = 0;
 	sign = 1;
-	i = 0;
-	scape_space(str, &i);
-	signe(str, &i, &sign);
-	while (ft_isdigit(str[i]))
+	while (*str == ' ' || *str == '\t' || *str == '\v'
+		|| *str == '\n' || *str == '\f' || *str == '\r')
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		temp = __rtr;
-		__rtr *= 10;
-		if ((__rtr / 10) != temp)
-		{
-			if (sign == 1)
-				return (-1);
-			else
-				return (0);
-		}
-		__rtr += str[i] - '0';
-		i++;
+		if (*str == '-')
+			sign *= -1;
+		str++;
 	}
-	return (__rtr * sign);
+	while (*str && *str >= '0' && *str <= '9')
+	{
+		result = result * 10 + *str - '0';
+		if (result > 9223372036854775807ull && sign == 1)
+			return (-1);
+		if (result > 9223372036854775808ull)
+			return (0);
+		str++;
+	}
+	return (result * sign);
 }

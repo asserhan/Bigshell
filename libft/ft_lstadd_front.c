@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 15:44:44 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/23 10:51:41 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/21 12:23:22 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/24 15:26:15 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (lst && new)
 	{
-		new->next = *lst;
+		new -> next = *lst;
 		*lst = new;
 	}
 }

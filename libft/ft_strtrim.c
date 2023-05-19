@@ -3,33 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 19:26:34 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/24 12:26:56 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/13 11:11:11 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/25 14:18:22 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+int	find_set(char const *set, char x)
+{
+	while (*set)
+	{
+		if (*set == x)
+			return (1);
+		set++;
+	}
+	return (0);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	start;
-	size_t	end;
-	char	*str;
+	size_t	i;
+	size_t	j;
+	char	*p;
 
-	str = 0;
-	if (s1 && set)
+	if (!s1 || !set)
+		return (NULL);
+	else
 	{
-		start = 0;
-		end = ft_strlen(s1);
-		while (s1[start] && ft_strchr(set, s1[start]))
-			start++;
-		while (s1[end - 1] && ft_strchr(set, s1[end - 1]) && end > start)
-			end--;
-		str = (char *)malloc(sizeof(char) * (end - start + 1));
-		if (str)
-			ft_strlcpy(str, s1 + start, end - start + 1);
+		i = 0;
+		j = ft_strlen (s1) - 1;
+		while (s1[i] && find_set(set, s1[i]))
+				i++;
+		while (s1[j] && find_set(set, s1[j]))
+				j--;
+		p = ft_substr(s1, i, (j - i) + 1);
 	}
-	return (str);
+	return (p);
 }

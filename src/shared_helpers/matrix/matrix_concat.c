@@ -40,11 +40,11 @@ char	**matrix_concat(char **matrix, char **back)
 		ft_printf("start\n");
 		ft_printf("%s\n", result[matrix_len + i]);
 		ft_printf("%s\n", back[i]);
-		ft_printf("shiit2\n");
+		ft_printf("shiit1\n");
 		tmp = ft_strdup(back[i]);
+		ft_printf("shiit2\n");
 		result[matrix_len + i] = tmp;
 		i++;
-		ft_printf("shiit\n");
 	}
 	ft_printf("out\n");
 	result[matrix_len + back_len] = NULL;

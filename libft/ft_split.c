@@ -3,103 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 18:32:17 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/24 13:00:58 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/15 23:39:05 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/25 16:51:36 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	word_count(char *s, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] == c && s[i - 1] != c)
-			count++;
-		i++;
-	}
-	return (count + 1);
-}
-
-static char	*word_by_word(char *s, char c, size_t *start)
-{
-	int		i;
-	int		end;
-	char	*rtr;
-
-	i = *start;
-	while (s[i] && s[i] == c)
-		i++;
-	*start = i;
-	while (s[i] && s[i] != c)
-		i++;
-	end = i;
-	rtr = ft_substr(s, *start, end - *start);
-	if (rtr == NULL)
-		free(rtr);
-	*start = end;
-	return (rtr);
-}
-
-static int	protection(char const *s, char **trim, char ***rtr, char c)
-{
-	if (!s)
-		return (0);
-	*trim = ft_strtrim(s, &c);
-	if (!(*trim))
-		return (0);
-	*rtr = (char **)malloc((word_count(*trim, c) + 1) * sizeof(char *));
-	if (!(*rtr))
-	{
-		free(*trim);
-		return (0);
-	}
-	return (1);
-}
-
-static void	ft_free_all(char **rtn)
+static size_t	nbr_words(char const *s, char c)
 {
 	size_t	i;
+	size_t	word;
 
 	i = 0;
-	while (rtn[i])
+	word = 0;
+	while (s[i])
 	{
-		free(rtn[i]);
-		i++;
+		if (s[i] != c)
+		{
+			word++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
+		else
+			i++;
 	}
-	free(rtn);
-	rtn = 0;
+	return (word);
+}
+
+static void	next_word(const char *s, size_t *begin, size_t *end, char c)
+{
+	while (s[*begin] == c)
+			(*begin)++;
+		*end = *begin;
+	while (s[*end] && s[*end] != c)
+			(*end)++;
+}
+
+static char	**free_strings(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free (str[i++]);
+	}
+	free (str);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	*trim;
-	char	**rtr;
-	int		i;
-	size_t	start;
+	char	**strings;
+	size_t	begin;
+	size_t	end;
+	size_t	i;
 
-	i = 0;
-	start = 0;
-	if (!(protection(s, &trim, &rtr, c)))
+	if (s == NULL)
 		return (NULL);
-	while (start < ft_strlen(trim))
+	strings = (char **) malloc((nbr_words(s, c) + 1) * sizeof(char *));
+	if (!strings)
+		return (NULL);
+	begin = 0;
+	end = 0;
+	i = 0;
+	while (i < nbr_words(s, c))
 	{
-		*(rtr + i) = word_by_word(trim, c, &start);
-		if (*(rtr + i) == NULL)
-		{
-			ft_free_all(rtr);
-			return (NULL);
-		}
+		next_word(s, &begin, &end, c);
+		strings[i] = ft_substr(s, begin, (end - begin));
+		if (!strings[i])
+			return (free_strings(strings));
 		i++;
+		begin = end;
 	}
-	*(rtr + i) = 0;
-	free(trim);
-	return (rtr);
+	strings[i] = NULL;
+	return (strings);
 }
