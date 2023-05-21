@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 18:15:47 by hasserao          #+#    #+#             */
-/*   Updated: 2022/10/23 17:43:45 by hasserao         ###   ########.fr       */
+/*   Created: 2023/05/11 11:36:22 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/05/11 11:38:20 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../includes/minishell.h"
 
-char	*ft_strdup(const char *s1)
+char *ft_strcpy(char *dest, const char *src)
 {
-	char	*p;
-	size_t	size ;
+    char *p;
 
-	size = ft_strlen(s1) + 1;
-	p = (char *)malloc (size * sizeof(char));
-	if (!p)
-		return (NULL);
-	else
-		ft_memcpy(p, s1, size);
-	return (p);
+    p = dest;
+    while (*src)
+    {
+        *p++ = *src++;
+    }
+    *p = '\0';
+    return dest;
 }

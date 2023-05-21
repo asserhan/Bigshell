@@ -6,28 +6,24 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:36:54 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/07 22:42:57 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/18 17:05:41 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	free_matrix(char ***matrix)
+void	free_matrix(char **matrix)
 {
 	int	i;
 
 	i = 0;
-	if (matrix && matrix[0])
+	if (matrix && *matrix)
 	{
-		while (matrix[0][i])
+		while (matrix[i])
 		{
-			free(matrix[0][i]);
+			free(matrix[i]);
 			i++;
 		}
-	}
-	if (matrix)
-	{
-		free(matrix[0]);
-		*matrix = NULL;
+		free(matrix);
 	}
 }

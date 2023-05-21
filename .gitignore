@@ -1,2 +1,6 @@
 obj
 libft
+src/execution
+*.o
+*.a
+minishell

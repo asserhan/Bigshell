@@ -3,67 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 18:14:20 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/24 12:45:11 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/13 16:09:15 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/24 13:18:38 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_n_of_d(int nbr)
+static int	n_len(long n)
 {
-	int				rst;
-	int				count;
-	unsigned long	n;
+	int	len;
 
-	n = nbr;
-	count = 0;
-	rst = 1;
-	if (nbr < 0)
-	{
-		n *= -1;
-		count++;
-	}
-	while (rst > 0)
-	{
-		rst = n / 10;
-		n = n / 10;
-		count++;
-	}
-	return (count);
-}
-
-static void	ft_nega(int n, char **rtr, int *limit, unsigned int *pnbr)
-{
+	len = 0;
 	if (n < 0)
+		len++;
+	if (n == 0)
+		len = 1;
+	while (n)
 	{
-		*(rtr[0]) = '-';
-		*pnbr = n * -1;
-		*limit = 1;
+		n /= 10;
+		len++;
 	}
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	int				size;
-	int				limit;
-	char			*rtr;
-	unsigned int	pnbr;
+	char	*str;
+	int		length;
+	long	nb;
 
-	pnbr = n;
-	limit = 0;
-	size = ft_n_of_d(n);
-	rtr = (char *)malloc((size + 1) * sizeof(char));
-	if (!rtr)
+	nb = n;
+	length = n_len(n);
+	str = (char *)malloc(length + 1 * sizeof (char));
+	if (!str)
 		return (NULL);
-	ft_nega(n, &rtr, &limit, &pnbr);
-	rtr[size--] = '\0';
-	while (size >= limit)
+	str[length] = '\0';
+	if (nb < 0)
 	{
-		rtr[size--] = 48 + (pnbr % 10);
-		pnbr = pnbr / 10;
+		str[0] = '-';
+		nb = -nb;
 	}
-	return (rtr);
+	if (nb == 0)
+		return (str[0] = '0', str);
+	while (nb != 0)
+	{
+		str[--length] = (nb % 10) + '0';
+		nb /= 10;
+	}
+	return (str);
 }

@@ -1,41 +1,38 @@
 /* ************************************************************************** */
-/* */
-/* ::: :::::::: */
-/* matrix_push_back.c :+: :+: :+: */
-/* +:+ +:+ +:+ */
-/* By: otait-ta <otait-ta@student.42.fr> +#+ +:+ +#+ */
-/* +#+#+#+#+#+ +#+ */
-/* Created: 2023/05/04 11:40:42 by otait-ta #+# #+# */
-/* Updated: 2023/05/04 11:44:13 by otait-ta ### ########.fr */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix_push_back.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/11 11:29:20 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/05/11 14:25:11 by otait-ta         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-char **matrix_push_back(char **matrix, char **back)
+char	**matrix_push_back(char **matrix, char *back)
 {
-	int		matrix_len;
-	int		back_len;
-	char	**result;
-	int		i;
+	char **new_matrix;
+	char *new_row;
+	int count;
+	int i;
 
-	matrix_len = count_matrix(matrix);
-	back_len = count_matrix(back);
-	result = malloc(sizeof(char *) * (matrix_len + back_len +1));
-	if (!result)
+	count = count_matrix(matrix);
+	new_matrix = (char **)ft_calloc((count + 1) + 1, sizeof(char *));
+	if (!new_matrix)
 		return (NULL);
 	i = 0;
-	while(i < matrix_len)
+	while (matrix && matrix[i] != NULL)
 	{
-		result[i] = matrix[i];
-		i++;
-	}	
-	i = 0;
-	while(i < back_len)
-	{
-		result[matrix_len + i] = back[i];
+		new_matrix[i] = matrix[i];
 		i++;
 	}
-	result[matrix_len + back_len] = NULL;
-	return (result);
+	new_row = (char *)malloc(sizeof(char) * (ft_strlen(back) + 1));
+	if (!new_row)
+		return (NULL);
+	ft_strcpy(new_row, back);
+	new_matrix[count] = new_row;
+	return (new_matrix);
 }

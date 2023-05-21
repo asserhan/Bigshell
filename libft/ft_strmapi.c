@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 00:35:59 by otait-ta          #+#    #+#             */
-/*   Updated: 2022/10/20 17:08:33 by otait-ta         ###   ########.fr       */
+/*   Created: 2022/10/13 21:28:28 by hasserao          #+#    #+#             */
+/*   Updated: 2022/10/25 15:34:57 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,23 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*rtr;
-	unsigned int	i;
-	int				len;
+	char	*p;
+	size_t	i;
 
 	if (!s || !f)
 		return (NULL);
-	len = ft_strlen(s);
-	i = 0;
-	if (!s)
+	p = ft_strdup(s);
+	if (!p)
 		return (NULL);
-	rtr = malloc((len + 1) * sizeof(char));
-	if (!(rtr))
-		return (NULL);
-	if (!rtr || !f)
-		return (NULL);
-	while (i < (unsigned int)len)
+	else
 	{
-		rtr[i] = f(i, s[i]);
-		i++;
+		i = 0;
+		while (s[i])
+		{
+			p[i] = f(i, s[i]);
+			i++;
+		}
+		p[i] = '\0';
 	}
-	rtr[i] = '\0';
-	return (rtr);
+	return (p);
 }
