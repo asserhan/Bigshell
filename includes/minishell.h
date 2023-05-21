@@ -103,4 +103,12 @@ void				handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 
+////////////////////////////////////* Builtins*////////////////////////////////////
+void ft_env(char **str);
+
+
+////////////////////////////////////* Execution*////////////////////////////////////
+void exec_builtins(t_doubly_lst *list,char **env);
+
+
 #endif

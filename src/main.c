@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/09 16:41:24 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:57:53 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int ac, char  **av, char **env)
 {
 	t_exec_context	exContext;
 	char			*input;
+	t_doubly_lst  *list = NULL;
 
 	(void)ac;
 	if (init_data(&exContext, av, env))
@@ -27,7 +28,8 @@ int	main(int ac, char  **av, char **env)
 		input = readline("minishell $ ");
 		if (!*input || pars_input(&exContext, input))
 			continue;
-		
+		exec_builtins(list,env);
+
 	}
 	return (0);
 }
