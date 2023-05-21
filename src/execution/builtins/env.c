@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:03 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/21 17:31:33 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:24:26 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void ft_env(char **str)
+void	ft_env(char **str)
 {
-	t_env *envi;
-	envi=env_to_list(str);
-	print_env(envi,1);
-}
+	t_env	*envi;
 
+	envi = env_to_list(str);
+	print_env(envi, 1);
+}

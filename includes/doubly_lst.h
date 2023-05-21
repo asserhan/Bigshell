@@ -1,13 +1,12 @@
 #ifndef DOUBLY_LST_H
 # define DOUBLY_LST_H
-#include "env_var.h"
+# include "env_var.h"
 typedef struct s_doubly_lst
 {
 	char				*cmd;
 	char				**args;
 	int					in;
 	int					out;
-	t_env				*env;
 	struct s_doubly_lst	*next;
 	struct s_doubly_lst	*prev;
 }						t_doubly_lst;
