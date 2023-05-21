@@ -68,6 +68,7 @@ char				start_with(char *str, char *set);
 char				end_with(char *str, char *set);
 /* put message and set exit_satatus*/
 void				put_error(char *message, char *param, int status_code);
+void	put_error_ex(char *message, char *param,char *suffix, int status_code);
 
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
@@ -104,8 +105,7 @@ void				handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
 void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 
 ////////////////////////////////////* Builtins*////////////////////////////////////
-void				ft_env(char **str);
-
+void ft_env(t_exec_context *exContext);
 ////////////////////////////////////* Execution*////////////////////////////////////
 void				exec_builtins(t_exec_context *exContext);
 
