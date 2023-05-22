@@ -72,9 +72,14 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list)
 			}
 			else if (!ft_strcmp(list->cmd, ">"))
 			{
-				handle_output(list, node);
-				list = list->next->next;
-				continue ;
+				if (list->prev && list->next->next)
+				{
+					handle_output(list, node);
+					list = list->next->next;
+					continue ;
+				}
+				else
+					list = list->next;
 			}
 			else if (!ft_strcmp(list->cmd, "<"))
 			{
@@ -116,6 +121,5 @@ int	pars_input(t_exec_context *exContext, char *input)
 	d_lstclear(&cmd_list);
 	print_list(final_list);
 	exContext->cmds = final_list;
-	// d_lstclear(&final_list);
 	return (0);
 }
