@@ -6,11 +6,12 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/22 17:58:06 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/22 23:25:28 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
 /*Bubble sort*/
 char **sort_env(t_env *env)
 {
@@ -40,18 +41,22 @@ char **sort_env(t_env *env)
 	}
 	return (arr);
 }
-void print_export(t_exec_context *exContext)
+void print_export(char **arr)
 {
 	int i;
 	i = 0;
-	while (exContext->env->env_array[i])
+	while (arr[i])
 	{
 		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(exContext->env->env_array[i], 1);
+		ft_putstr_fd(arr[i], 1);
 		ft_putstr_fd("\n", 1);
 		i++;
 	}
 }
+// void print_export(t_env *env)
+// {
+
+// }
 
 int _export_parse(char *arg)
 {
@@ -83,9 +88,9 @@ void ft_export(t_exec_context *exContext)
 	t_env_variable *tmp;
 	int i;
 
-	exContext->env->env_array = sort_env(exContext->env);
 	if (exContext->cmds->args != NULL)
 	{
+		puts("here1");
 		i = 0;
 		while (exContext->cmds->args[i])
 		{
@@ -100,5 +105,15 @@ void ft_export(t_exec_context *exContext)
 		}
 	}
 	else
-		print_export(exContext);
+	{
+		// int i=0;
+		// while (exContext->env->env_array[i])
+		// {
+		// 	printf("%s\n", exContext->env->env_array[i]);
+		// 	i++;
+		// }
+		exContext->env->env_array = sort_env(exContext->env);
+		puts("here2");
+		print_export(exContext->env->env_array);
+	}
 }

@@ -10,14 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(char *str1, char *str2)
+int ft_strcmp(char *str1, char *str2)
 {
-	int i;
+	// int i;
 
-	i = 0;
+	// i = 0;
 	if (!str1 || !str2)
-		return (-1);
-	while (str1[i] && str2[i] && str1[i] == str2[i])
-		i++;
-	return (str1[i] - str2[i]);
+	{
+		if (!str1 && !str2)
+			return (0);
+		else if (!str1)
+			return (-1);
+		else
+			return (1);
+	}
+	while ((*str1 || *str2) && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+	return (*str1 - *str2);
 }
