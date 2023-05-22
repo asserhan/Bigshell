@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/21 18:23:37 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/22 01:21:08 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_exec_context	exContext;
 	char			*input;
-	t_doubly_lst	*list;
-
-	list = NULL;
+	int i=0;
 	(void)ac;
 	if (init_data(&exContext, av, env))
 		exit(1);
@@ -29,6 +27,11 @@ int	main(int ac, char **av, char **env)
 		input = readline("minishell $ ");
 		if (!*input || pars_input(&exContext, input))
 			continue ;
+		while (exContext.cmds->args[i])
+		{
+			printf("%s\n", exContext.cmds->args[i]);
+			i++;
+		}
 		exec_builtins(&exContext);
 	}
 	return (0);

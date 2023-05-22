@@ -106,6 +106,7 @@ void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void ft_env(t_exec_context *exContext);
+void ft_export(t_exec_context *exContext);
 ////////////////////////////////////* Execution*////////////////////////////////////
 void				exec_builtins(t_exec_context *exContext);
 

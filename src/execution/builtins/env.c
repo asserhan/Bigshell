@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:03 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/21 21:49:49 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/21 22:29:02 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void ft_env(t_exec_context *exContext)
 			print_env(exContext->env, 1);
 		else if (start_with(cmds->args[0], "="))
 			put_error_ex("env: ", cmds->args[0], ": Invalid argument\n", 127);
+		else if (start_with(cmds->args[0], "-"))
+			exit_status = 0;
 		else if (start_with(cmds->args[0], "./"))
 			put_error_ex("env: ", cmds->args[0], ": Permission denied\n", 126);
 		else
