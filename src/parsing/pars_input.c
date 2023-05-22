@@ -72,14 +72,9 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list)
 			}
 			else if (!ft_strcmp(list->cmd, ">"))
 			{
-				if (list->prev && list->next->next)
-				{
-					handle_output(list, node);
-					list = list->next->next;
-					continue ;
-				}
-				else
-					list = list->next;
+				handle_output(list, node);
+				list = list->next->next;
+				continue ;
 			}
 			else if (!ft_strcmp(list->cmd, "<"))
 			{
