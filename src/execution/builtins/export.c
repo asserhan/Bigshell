@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/22 13:40:56 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:58:06 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,56 +52,53 @@ void print_export(t_exec_context *exContext)
 		i++;
 	}
 }
-int ft_strpbrk(char *s1, char *s2)
+
+int _export_parse(char *arg)
 {
-	int i;
-	if (!s1 || !s2)
+
+	int j;
+	char *alpha;
+	alpha = ft_alpha();
+	if (start_with(arg, alpha) == 0)
+	{
+		put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
 		return (1);
-	while (*s1)
+	}
+	j = 1;
+	while (arg[j] && arg[j] != '=')
 	{
-		i = 0;
-		while (s2[i])
+		if(!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
-			if (*s1 == s2[i])
-				return (0);
-			i++;
+			put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
+			return (1);
 		}
-		s1++;
+		j++;
 	}
-	return (1);
+	return (0);
 }
-void _export_parse(t_exec_context *exContext)
-{
-	t_env_variable *tmp;
-	int i;
-	if (start_with(exContext->cmds->args[0], "+@=*0123456789%"))
-	{
-		put_error_ex("minishell: export: ", exContext->cmds->args[0], ": not a valid identifier\n", 1);
-		return;
-	}
-	i = 0;
-	while (exContext->cmds->args[i])
-	{
-		if (ft_strchr(exContext->cmds->args[i], '='))
-		{
-			printf("has =\n");
-			tmp = create_env_elem(exContext->cmds->args[i]);
-			set_env_elem(exContext->env, tmp);
-			// // free(tmp);
-		}
-		i++;
-	}
-	return;
-}
+
 void ft_export(t_exec_context *exContext)
 {
+
+	t_env_variable *tmp;
 	int i;
-	i = 0;
 
 	exContext->env->env_array = sort_env(exContext->env);
 	if (exContext->cmds->args != NULL)
-		_export_parse(exContext);
+	{
+		i = 0;
+		while (exContext->cmds->args[i])
+		{
+			if (_export_parse(exContext->cmds->args[i]) == 0)
+			{
+				tmp = create_env_elem(exContext->cmds->args[i]);
+				set_env_elem(exContext->env, tmp);
+			}
+			else
+				return;
+			i++;
+		}
+	}
 	else
 		print_export(exContext);
-	// set_env_elem(exContext->env, create_env_elem("wat"));
 }
