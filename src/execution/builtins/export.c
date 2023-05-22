@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/22 02:38:27 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:40:56 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,56 @@ void print_export(t_exec_context *exContext)
 		i++;
 	}
 }
-
+int ft_strpbrk(char *s1, char *s2)
+{
+	int i;
+	if (!s1 || !s2)
+		return (1);
+	while (*s1)
+	{
+		i = 0;
+		while (s2[i])
+		{
+			if (*s1 == s2[i])
+				return (0);
+			i++;
+		}
+		s1++;
+	}
+	return (1);
+}
+void _export_parse(t_exec_context *exContext)
+{
+	t_env_variable *tmp;
+	int i;
+	if (start_with(exContext->cmds->args[0], "+@=*0123456789%"))
+	{
+		put_error_ex("minishell: export: ", exContext->cmds->args[0], ": not a valid identifier\n", 1);
+		return;
+	}
+	i = 0;
+	while (exContext->cmds->args[i])
+	{
+		if (ft_strchr(exContext->cmds->args[i], '='))
+		{
+			printf("has =\n");
+			tmp = create_env_elem(exContext->cmds->args[i]);
+			set_env_elem(exContext->env, tmp);
+			// // free(tmp);
+		}
+		i++;
+	}
+	return;
+}
 void ft_export(t_exec_context *exContext)
 {
 	int i;
 	i = 0;
-	if (exContext->cmds->args != NULL)
-	{
-		if (start_with(exContext->cmds->args[0], "+@=0123456789"))
-		{
-			put_error_ex("minishell: export: ", exContext->cmds->args[0], ": not a valid identifier\n", 1);
-			return;
-		}
-		// while(exContext->cmds->args[i])
-		// {
-		// 	i++;
 
-		// }
-		// if(start_with(exContext->cmds->args[0],'-'))
-	}
 	exContext->env->env_array = sort_env(exContext->env);
-	print_export(exContext);
+	if (exContext->cmds->args != NULL)
+		_export_parse(exContext);
+	else
+		print_export(exContext);
 	// set_env_elem(exContext->env, create_env_elem("wat"));
 }
