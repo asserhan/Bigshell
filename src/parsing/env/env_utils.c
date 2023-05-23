@@ -6,15 +6,15 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:18:39 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/23 15:00:46 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:21:52 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	set_env_elem(t_env *env, t_env_variable *new_env)
+void set_env_elem(t_env *env, t_env_variable *new_env)
 {
-	t_env_variable	*tmp;
+	t_env_variable *tmp;
 
 	if (env->first == NULL)
 		env->first = new_env;
@@ -29,29 +29,31 @@ void	set_env_elem(t_env *env, t_env_variable *new_env)
 	env->size++;
 }
 
-void	print_env(t_env *env, int fd)
+void print_env(t_env *env, int fd)
 {
-	t_env_variable	*tmp;
+	t_env_variable *tmp;
 
 	tmp = env->first;
 	while (tmp)
 	{
-		if (tmp->content[0] != '\0')
+		if (tmp->content[0] || ft_strchr(tmp->name,'='))
 		{
-			ft_putstr_fd(tmp->name, fd);
-			ft_putstr_fd("=", 1);
-			ft_putstr_fd(tmp->content, 1);
-			ft_putstr_fd("\n", fd);
+			ft_printf("%s",tmp->name);
+			if (!ft_strchr(tmp->name,'='))
+				ft_putstr_fd("=",fd);
+			ft_printf("%s",tmp->content);
+
+				ft_putstr_fd("\n",fd);
 		}
 		tmp = tmp->next;
 	}
 }
 
-t_env	*env_to_list(char **str)
+t_env *env_to_list(char **str)
 {
-	t_env			*env;
-	int				i;
-	t_env_variable	*tmp_env;
+	t_env *env;
+	int i;
+	t_env_variable *tmp_env;
 
 	env = ft_calloc(sizeof(t_env), 1);
 	if (!env)
@@ -69,10 +71,10 @@ t_env	*env_to_list(char **str)
 	return (env);
 }
 
-char	*str_to_env_form(char *s1, char *s2)
+char *str_to_env_form(char *s1, char *s2)
 {
-	char	*p1;
-	char	*rtr;
+	char *p1;
+	char *rtr;
 
 	p1 = ft_strjoin(s1, "=");
 	if (!p1)

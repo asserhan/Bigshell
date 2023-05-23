@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/23 14:58:17 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:54:29 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int _export_parse(char *arg)
 	j = 1;
 	while (arg[j] && arg[j] != '=')
 	{
+		if(arg[j] == '+' && arg[j + 1] == '=')
+			return (2);
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
 			put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
@@ -102,7 +104,7 @@ void ft_export(t_exec_context *exContext)
 		i = 0;
 		while (exContext->cmds->args[i])
 		{
-			if (_export_parse(exContext->cmds->args[i]) == 0)
+			if (!_export_parse(exContext->cmds->args[i]) || _export_parse(exContext->cmds->args[i]) == 2)
 			{
 				tmp = create_env_elem(exContext->cmds->args[i]);
 				set_env_elem(exContext->env, tmp);
