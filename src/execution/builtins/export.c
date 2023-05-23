@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/23 16:54:29 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:45:55 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void print_export(t_env *env)
 		if (tmp->content[0] != '\0')
 		{
 			ft_putstr_fd("=", 1);
-			ft_putstr_fd(tmp->content, 1);
+			ft_printf("\"%s\"", tmp->content);
 		}
 		ft_putstr_fd("\n", 1);
 		tmp = tmp->next;
@@ -80,7 +80,7 @@ int _export_parse(char *arg)
 	j = 1;
 	while (arg[j] && arg[j] != '=')
 	{
-		if(arg[j] == '+' && arg[j + 1] == '=')
+		if (arg[j] == '+' && arg[j + 1] == '=')
 			return (2);
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
