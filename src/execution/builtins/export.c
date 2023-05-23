@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/22 23:25:28 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:58:17 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,27 @@ char **sort_env(t_env *env)
 	}
 	return (arr);
 }
-void print_export(char **arr)
+
+void print_export(t_env *env)
 {
-	int i;
-	i = 0;
-	while (arr[i])
+
+	sort_env_var(env->first);
+	t_env_variable *tmp;
+
+	tmp = env->first;
+	while (tmp)
 	{
 		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(arr[i], 1);
+		ft_putstr_fd(tmp->name, 1);
+		if (tmp->content[0] != '\0')
+		{
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(tmp->content, 1);
+		}
 		ft_putstr_fd("\n", 1);
-		i++;
+		tmp = tmp->next;
 	}
 }
-// void print_export(t_env *env)
-// {
-
-// }
 
 int _export_parse(char *arg)
 {
@@ -66,13 +71,16 @@ int _export_parse(char *arg)
 	alpha = ft_alpha();
 	if (start_with(arg, alpha) == 0)
 	{
-		put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
+		if (start_with(arg, "-"))
+			put_error_ex("export: ", arg, ": export with no option\n", 1);
+		else
+			put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
 		return (1);
 	}
 	j = 1;
 	while (arg[j] && arg[j] != '=')
 	{
-		if(!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
+		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
 			put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
 			return (1);
@@ -85,12 +93,12 @@ int _export_parse(char *arg)
 void ft_export(t_exec_context *exContext)
 {
 
+	t_env *copy;
 	t_env_variable *tmp;
 	int i;
 
 	if (exContext->cmds->args != NULL)
 	{
-		puts("here1");
 		i = 0;
 		while (exContext->cmds->args[i])
 		{
@@ -106,14 +114,7 @@ void ft_export(t_exec_context *exContext)
 	}
 	else
 	{
-		// int i=0;
-		// while (exContext->env->env_array[i])
-		// {
-		// 	printf("%s\n", exContext->env->env_array[i]);
-		// 	i++;
-		// }
-		exContext->env->env_array = sort_env(exContext->env);
-		puts("here2");
-		print_export(exContext->env->env_array);
+		copy = copy_env_list(exContext);
+		print_export(copy);
 	}
 }

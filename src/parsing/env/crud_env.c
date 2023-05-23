@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crud_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:53:42 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/21 18:43:09 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:55:27 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ t_env_variable	*create_env_elem(char *pair)
 	new = ft_calloc(sizeof(t_env_variable), 1);
 	if (!new)
 		return (NULL);
+	if(!ft_strchr(pair, '='))
+	{
+		new->name = ft_strdup(pair);
+		if (!new->name)
+			return (NULL);
+		new->content = ft_strdup("");
+		return (new);
+	}
 	equal_index = ft_strchr(pair, '=') - pair;
 	new->name = ft_substr(pair, 0, equal_index);
 	if (!new->name)

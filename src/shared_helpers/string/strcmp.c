@@ -12,9 +12,7 @@
 
 int ft_strcmp(char *str1, char *str2)
 {
-	// int i;
 
-	// i = 0;
 	if (!str1 || !str2)
 	{
 		if (!str1 && !str2)

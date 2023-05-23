@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:18:39 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/04/08 17:34:35 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:00:46 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ void	print_env(t_env *env, int fd)
 	tmp = env->first;
 	while (tmp)
 	{
-		ft_putstr_fd(tmp->name, fd);
-		ft_putstr_fd("=", fd);
-		ft_putstr_fd(tmp->content, fd);
-		ft_putstr_fd("\n", fd);
+		if (tmp->content[0] != '\0')
+		{
+			ft_putstr_fd(tmp->name, fd);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(tmp->content, 1);
+			ft_putstr_fd("\n", fd);
+		}
 		tmp = tmp->next;
 	}
 }

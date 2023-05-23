@@ -114,6 +114,8 @@ void ft_env(t_exec_context *exContext);
 void ft_export(t_exec_context *exContext);
 /* copy env list */
 t_env *copy_env_list(t_exec_context *exContext);
+/*sort env variable list*/
+void sort_env_var(t_env_variable *head);
 ////////////////////////////////////* Execution*////////////////////////////////////
 void exec_builtins(t_exec_context *exContext);
 
