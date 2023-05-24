@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 15:46:04 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/01 12:02:20 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:12:54 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 	return (i);
 })*/
 
-static void	ft_display(char **arg,int i,int fd)
+static void ft_display(char **arg, int i, int fd)
 {
 	while (arg[i])
 	{
@@ -31,13 +31,34 @@ static void	ft_display(char **arg,int i,int fd)
 		i++;
 	}
 }
-void	ft_echo(char **arg)
+int ft_check_flag(char *str)
+{
+	int i;
+	i = 0;
+	if(!str[i])
+		return (1);
+	if (str[i] == '-' && str[i + 1] == 'n')
+	{
+		i++;
+		while(str[i] == 'n')
+			i++;
+	}
+	if (str[i])
+		return (1);
+	return (0);
+}
+void ft_echo(char **arg)
 {
 	int i;
 	int flag;
 	flag = false;
-	i = 1;
-	while (arg[i] && ft_strcmp(arg[i], "-n") == 0)
+	i = 0;
+	if (!arg)
+	{
+		ft_putstr_fd("\n", 1);
+		return;
+	}
+	while (arg[i] && !ft_check_flag(arg[i]))
 	{
 		flag = true;
 		i++;
@@ -46,7 +67,3 @@ void	ft_echo(char **arg)
 	if (flag == false)
 		ft_putstr_fd("\n", 1);
 }
-
-
-
-

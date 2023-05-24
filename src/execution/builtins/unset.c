@@ -6,8 +6,13 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:16 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/04 01:28:20 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:22:45 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+void ft_unset(char **arg)
+{
+	
+}
