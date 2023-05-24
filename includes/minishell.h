@@ -112,6 +112,7 @@ void handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void ft_env(t_exec_context *exContext);
 void ft_export(t_exec_context *exContext);
+void ft_unset(t_exec_context *exContext);
 /* copy env list */
 t_env *copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/
