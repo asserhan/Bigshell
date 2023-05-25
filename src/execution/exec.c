@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/24 19:35:16 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/25 02:45:42 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	exec_builtins(t_exec_context *exContext)
 		ft_echo(exContext->cmds->args);
 	if(ft_strcmp(exContext->cmds->cmd, "unset") == 0)
 		ft_unset(exContext);
+	if(ft_strcmp(exContext->cmds->cmd, "cd") == 0)
+		ft_cd(exContext->cmds->args, exContext->env);
+	if(ft_strcmp(exContext->cmds->cmd, "pwd") == 0)
+		ft_pwd();
 
 
 }
