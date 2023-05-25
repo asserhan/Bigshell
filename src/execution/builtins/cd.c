@@ -25,7 +25,7 @@
 // 	return (NULL);
 
 // }
-static char *get_env_path(t_env *env,char *name)
+static char *          get_env_path(t_env *env,char *name)
 {
 	t_env_variable *tmp;
 	tmp = env->first;
@@ -59,10 +59,10 @@ void ft_cd(char **arg,t_env *env)
 {
 	char *path;
 	char *new_path;
-	if(arg== NULL)
+	if(!arg)
 		path = get_env_path(env,"HOME");
 	else
-		path = arg[1];
+		path = arg[0];
 	if (ft_strcmp(path,"-") == 0)
 	{
 		new_path = get_env_path(env,"OLDPWD");
