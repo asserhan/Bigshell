@@ -114,7 +114,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_list = convert_list_format(cmd_list);
 	d_lstclear(&cmd_list);
-	print_list(final_list);
-	// d_lstclear(&final_list);
+	//print_list(final_list);
+	exContext->cmds = final_list;
 	return (0);
 }

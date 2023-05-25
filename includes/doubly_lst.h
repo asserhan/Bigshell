@@ -1,6 +1,6 @@
 #ifndef DOUBLY_LST_H
 # define DOUBLY_LST_H
-
+# include "env_var.h"
 typedef struct s_doubly_lst
 {
 	char				*cmd;

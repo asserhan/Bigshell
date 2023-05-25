@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strpbrk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:34:10 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/22 16:56:52 by hasserao         ###   ########.fr       */
+/*   Created: 2023/05/22 14:26:35 by hasserao          #+#    #+#             */
+/*   Updated: 2023/05/22 14:27:40 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../includes/minishell.h"
 
-int	ft_isalpha(int c)
+int ft_strpbrk(char *s1, char *s2)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-char *ft_alpha(void)
-{
-	return("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_");
+	int i;
+	if (!s1 || !s2)
+		return (1);
+	while (*s1)
+	{
+		i = 0;
+		while (s2[i])
+		{
+			if (*s1 == s2[i])
+				return (0);
+			i++;
+		}
+		s1++;
+	}
+	return (1);
 }

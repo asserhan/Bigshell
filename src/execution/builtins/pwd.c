@@ -10,20 +10,22 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "../../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-// int ft_pwd(void)
-// {
-// 	char *buff;
-// 	if (getcwd(buff,PATH_MAX) != NULL)
-// 	{
-// 		ft_putstr_fd(buff,1);
-// 		ft_putstr_fd("\n",1);
-// 	}
-// 	else
-// 	{
-// 		perror("getcwd() error");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
+extern int exit_status;
+int ft_pwd(void)
+{
+	char buff[PATH_MAX];
+	if (getcwd(buff,PATH_MAX) != NULL)
+	{
+		ft_putstr_fd(buff,1);
+		ft_putstr_fd("\n",1);
+		exit_status = 0;
+	}
+	else
+	{
+		perror("getcwd()");
+		return (1);
+	}
+	return (0);
+}

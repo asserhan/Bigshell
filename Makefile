@@ -1,7 +1,7 @@
 # Variables
 NAME = minishell
 CC = cc
-FLAGS = -Wall -Werror -Wextra -I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
+FLAGS = -Wall -Werror -Wextra -g -I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
 RM = rm -rf
 LIBTFT = libft/libft.a
 PRINTF = ft_printf/libftprintf.a

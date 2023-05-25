@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/09 16:41:24 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:37:39 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	exit_status;
 
-int	main(int ac, char  **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_exec_context	exContext;
 	char			*input;
-
 	(void)ac;
 	if (init_data(&exContext, av, env))
 		exit(1);
@@ -26,9 +25,8 @@ int	main(int ac, char  **av, char **env)
 	{
 		input = readline("minishell $ ");
 		if (!*input || pars_input(&exContext, input))
-			continue;
-		
+			continue ;
+		exec_builtins(&exContext);
 	}
 	return (0);
 }
-

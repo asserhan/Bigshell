@@ -4,6 +4,16 @@
         "readline.h": "c",
         "minishell.h": "c",
         "doubly_lst.h": "c",
-        "history.h": "c"
+        "history.h": "c",
+        "string.h": "c",
+        "memory": "c",
+        "utility": "c",
+        "env_var.h": "c",
+        "__hash_table": "c",
+        "functional": "c",
+        "mutex": "c",
+        "optional": "c",
+        "unordered_map": "c",
+        "vector": "c"
     }
 }
