@@ -13,6 +13,11 @@ char	**matrix_add_front(char *str, char **matrix)
 		return (NULL);
 	new_matrix[0] = ft_strdup(str);
 	i = 0;
+	if (!matrix)
+	{
+		new_matrix[1] = NULL;
+		return (new_matrix);
+	}
 	while (matrix[i])
 	{
 		new_matrix[i + 1] = ft_strdup(matrix[i]);
