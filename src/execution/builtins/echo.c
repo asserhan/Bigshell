@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 15:46:04 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/25 20:57:03 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:52:42 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	ft_echo(char **arg)
 	int	flag;
 
 	flag = false;
-	i = 0;
-	if (!arg)
+	i = 1;
+	if (count_matrix(arg) == 1)
 	{
 		ft_putstr_fd("\n", 1);
 		return ;

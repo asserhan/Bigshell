@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handel_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/22 13:20:46 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/26 21:46:45 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	handle_output(t_doubly_lst *old_list, t_doubly_lst *node)
 
 	path = old_list->next->cmd;
 	stat(path, &fileStat);
+	
 	if (S_ISDIR(fileStat.st_mode))
 		return (put_error("minishell: is a directory: ", path, 1));
 	else if (ft_strchr(path, '/'))

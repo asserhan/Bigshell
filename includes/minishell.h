@@ -78,6 +78,7 @@ char				end_with(char *str, char *set);
 void				put_error(char *message, char *param, int status_code);
 void				put_error_ex(char *message, char *param, char *suffix,
 						int status_code);
+int is_digit(char *str);
 
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
@@ -119,6 +120,7 @@ void				ft_export(t_exec_context *exContext);
 void				ft_unset(t_exec_context *exContext);
 void				ft_cd(char **arg, t_env *env);
 int					ft_pwd(void);
+void ft_exit(char **arg);
 /* copy env list */
 t_env				*copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/

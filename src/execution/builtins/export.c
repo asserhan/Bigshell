@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/26 16:46:47 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:49:39 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@
 // 	return (arr);
 // }
 
-void print_export(t_env *env)
+void	print_export(t_env *env)
 {
+	t_env_variable	*tmp;
 
 	sort_env_var(env->first);
-	t_env_variable *tmp;
-
 	tmp = env->first;
 	while (tmp)
 	{
@@ -63,18 +62,19 @@ void print_export(t_env *env)
 	}
 }
 
-int _export_parse(char *arg)
+int	_export_parse(char *arg)
 {
+	int		j;
+	char	*alpha;
 
-	int j;
-	char *alpha;
 	alpha = ft_alpha();
 	if (start_with(arg, alpha) == 0)
 	{
 		if (start_with(arg, "-"))
 			put_error_ex("export: ", arg, ": export with no option\n", 1);
 		else
-			put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
+			put_error_ex("minishell:  export: ", arg,
+					": not a valid identifier\n", 1);
 		return (1);
 	}
 	j = 1;
@@ -84,7 +84,8 @@ int _export_parse(char *arg)
 			return (0);
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
-			put_error_ex("minishell:  export: ", arg, ": not a valid identifier\n", 1);
+			put_error_ex("minishell:  export: ", arg,
+					": not a valid identifier\n", 1);
 			return (1);
 		}
 		j++;
@@ -92,25 +93,24 @@ int _export_parse(char *arg)
 	return (0);
 }
 
-void ft_export(t_exec_context *exContext)
+void	ft_export(t_exec_context *exContext)
 {
+	t_env			*copy;
+	t_env_variable	*tmp;
+	int				i;
 
-	t_env *copy;
-	t_env_variable *tmp;
-	int i;
-
-	if (exContext->cmds->args != NULL)
+	if (count_matrix(exContext->cmds->args) > 1)
 	{
 		i = 1;
 		while (exContext->cmds->args[i])
 		{
-			if (!_export_parse(exContext->cmds->args[i]) )
+			if (!_export_parse(exContext->cmds->args[i]))
 			{
 				tmp = create_env_elem(exContext->cmds->args[i]);
 				set_env_elem(exContext->env, tmp);
 			}
 			else
-				return;
+				return ;
 			i++;
 		}
 	}

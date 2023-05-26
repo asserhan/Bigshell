@@ -6,25 +6,12 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/25 23:45:48 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/26 22:58:50 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-// static char *go_home(t_env *env)
-// {
-// 	t_env_variable *tmp;
-// 	tmp = env->first;
-// 	while(tmp)
-// 	{
-// 		if(ft_strcmp(tmp->name,"HOME") == 0)
-// 			return (tmp->content);
-// 		tmp = tmp->next;
-// 	}
-// 	return (NULL);
-
-// }
 static char	*get_env_path(t_env *env, char *name)
 {
 	t_env_variable	*tmp;
@@ -41,9 +28,8 @@ static char	*get_env_path(t_env *env, char *name)
 static void	update_pwd(t_env *env, char *name)
 {
 	t_env_variable	*tmp;
-	// t_env_variable	*old_pwd;
 	char			pwd[PATH_MAX];
-	char 			*home;
+	char			*home;
 
 	tmp = env->first;
 	while (tmp)
@@ -56,13 +42,14 @@ static void	update_pwd(t_env *env, char *name)
 			else
 			{
 				if (search_env_elem(env, "OLDPWD"))
-					tmp->content = ft_strdup(search_env_elem(env, "OLDPWD")->content);
+					tmp->content = ft_strdup(search_env_elem(env,
+																"OLDPWD")
+													->content);
 				else
 				{
 					home = get_env_path(env, "HOME");
 					tmp->content = ft_strdup(home);
 				}
-					
 			}
 		}
 		tmp = tmp->next;
@@ -71,30 +58,22 @@ static void	update_pwd(t_env *env, char *name)
 void	ft_cd(char **arg, t_env *env)
 {
 	char	*path;
-	//char	new_path[PATH_MAX];
 
-	if (!arg)
+	if (count_matrix(arg) == 1)
 	{
 		path = get_env_path(env, "HOME");
 		chdir(path);
-		// printf ("%s\n", path);
 	}
 	else
 	{
-		path = arg[0];
-		// new_path = get_env_path(env, "OLDPWD");
-		// if (new_path == NULL)
-		// {
-		// 	put_error_ex("minishell: cd: OLDPWD not set\n", NULL, NULL, 127);
-		// 	return ;
-		// }
+		path = arg[1];
 		if (chdir(path) == -1)
 		{
-			perror("chdir()");
+			put_error_ex("minishell: cd: ", path, "No such file or directory",
+					1);
 			return ;
 		}
-		//ft_printf("%s\n", new_path);
 		update_pwd(env, "PWD");
-		update_pwd(env, "OLDPWD");
+		update_pwd(env, "OLDPWD"); //to do
 	}
 }
