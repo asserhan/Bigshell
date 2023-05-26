@@ -114,7 +114,8 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_list = convert_list_format(cmd_list);
 	d_lstclear(&cmd_list);
-	//print_list(final_list);
+	final_list->args = matrix_add_front(final_list->cmd, final_list->args);
+	print_list(final_list);
 	exContext->cmds = final_list;
 	return (0);
 }
