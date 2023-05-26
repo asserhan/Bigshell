@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/24 18:13:06 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:46:47 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void ft_export(t_exec_context *exContext)
 
 	if (exContext->cmds->args != NULL)
 	{
-		i = 0;
+		i = 1;
 		while (exContext->cmds->args[i])
 		{
 			if (!_export_parse(exContext->cmds->args[i]) )
