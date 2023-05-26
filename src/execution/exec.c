@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/25 02:45:42 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:10:47 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	exec_builtins(t_exec_context *exContext)
 {
+	//char *str[4] = {"ls", "-a", "-l", NULL};
 	if (ft_strcmp(exContext->cmds->cmd, "env") == 0)
 		ft_env(exContext);
 
@@ -28,6 +29,6 @@ void	exec_builtins(t_exec_context *exContext)
 		ft_cd(exContext->cmds->args, exContext->env);
 	if(ft_strcmp(exContext->cmds->cmd, "pwd") == 0)
 		ft_pwd();
-
-
+	// puts("here");
+	// execve("/bin/ls", str, NULL);
 }

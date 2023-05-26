@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 15:46:04 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/24 16:12:54 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:57:03 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 /*static int count_arg(char **arg)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (arg[i] != NULL)
 		i++;
 	return (i);
 })*/
-
-static void ft_display(char **arg, int i, int fd)
+static void	ft_display(char **arg, int i, int fd)
 {
 	while (arg[i])
 	{
@@ -31,32 +31,34 @@ static void ft_display(char **arg, int i, int fd)
 		i++;
 	}
 }
-int ft_check_flag(char *str)
+int	ft_check_flag(char *str)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	if(!str[i])
+	if (!str[i])
 		return (1);
 	if (str[i] == '-' && str[i + 1] == 'n')
 	{
 		i++;
-		while(str[i] == 'n')
+		while (str[i] == 'n')
 			i++;
 	}
 	if (str[i])
 		return (1);
 	return (0);
 }
-void ft_echo(char **arg)
+void	ft_echo(char **arg)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
+
 	flag = false;
 	i = 0;
 	if (!arg)
 	{
 		ft_putstr_fd("\n", 1);
-		return;
+		return ;
 	}
 	while (arg[i] && !ft_check_flag(arg[i]))
 	{
