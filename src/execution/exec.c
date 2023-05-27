@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/27 00:16:48 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/05/27 20:29:30 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@ void	exec_builtins(t_exec_context *exContext)
 	// str[4] = {"ls", "-l", NULL};
 	if (ft_strcmp(exContext->cmds->cmd, "env") == 0)
 		ft_env(exContext);
-	if (ft_strcmp(exContext->cmds->cmd, "export") == 0)
+	else if (ft_strcmp(exContext->cmds->cmd, "export") == 0)
 		ft_export(exContext);
-	if (ft_strcmp(exContext->cmds->cmd, "echo") == 0)
+	else if (ft_strcmp(exContext->cmds->cmd, "echo") == 0)
 		ft_echo(exContext->cmds->args);
-	if (ft_strcmp(exContext->cmds->cmd, "unset") == 0)
+	else if (ft_strcmp(exContext->cmds->cmd, "unset") == 0)
 		ft_unset(exContext);
-	if (ft_strcmp(exContext->cmds->cmd, "cd") == 0)
+	else if (ft_strcmp(exContext->cmds->cmd, "cd") == 0)
 		ft_cd(exContext->cmds->args, exContext->env);
-	if (ft_strcmp(exContext->cmds->cmd, "pwd") == 0)
+	else if (ft_strcmp(exContext->cmds->cmd, "pwd") == 0)
 		ft_pwd();
-	if (ft_strcmp(exContext->cmds->cmd, "exit") == 0)
+	else if (ft_strcmp(exContext->cmds->cmd, "exit") == 0)
 		ft_exit(exContext->cmds->args);
+	
 	// pid=fork();
 	// if (pid == 0)
 	// 	execve("/bin/ls", str, NULL);
@@ -40,6 +41,20 @@ void	exec_builtins(t_exec_context *exContext)
 	// 	wait(NULL);
 	// //execve("/bin/ls", str, NULL);
 }
-// void execution(t_exec_context *exContext)
-// {
-// }
+int is_builtin(char *cmd)
+{
+	if(ft_strcmp(cmd,"env") && ft_strcmp(cmd,"export") && ft_strcmp(cmd,"echo") && ft_strcmp(cmd,"unset") && ft_strcmp(cmd,"cd") && ft_strcmp(cmd,"pwd") && ft_strcmp(cmd,"exit"))
+		return (0);
+	else 
+		return (1);
+}
+void execution(t_exec_context *exContext)
+{
+	int size;
+	size = d_lstsize(exContext->cmds);
+	if(size == 1 && is_builtin(exContext->cmds->cmd))
+		exec_builtins(exContext);
+	
+	
+	
+}

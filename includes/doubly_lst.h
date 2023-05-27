@@ -19,8 +19,11 @@ void	d_lstadd_front(t_doubly_lst **lst,
 void	d_lstadd_back(t_doubly_lst **lst,
 					t_doubly_lst *new_elm);
 
-/* Transfer matrix to a doubly linked list */
-t_doubly_lst			*matrix_to_list(char **matrix);
+
+int	d_lstsize(t_doubly_lst *lst);
+
+	/* Transfer matrix to a doubly linked list */
+	t_doubly_lst *matrix_to_list(char **matrix);
 
 void					print_list(t_doubly_lst *head);
 

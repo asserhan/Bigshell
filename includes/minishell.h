@@ -21,6 +21,8 @@ typedef struct s_exec_context
 {
 	t_doubly_lst	*cmds;
 	t_env			*env;
+	char 			*paths;
+	int 			end[2];
 }					t_exec_context;
 
 /*--- Redirections ---*/
