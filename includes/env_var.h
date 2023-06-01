@@ -34,6 +34,8 @@ void						delete_env_elem(t_env *list, t_env_variable *elem);
 /*update an existing env element or creat new if not found*/
 void						update_env_elem(t_env *env, char *name,
 								char *new_content);
+/* free all env variables*/
+void	env_lstclear(t_env *env);
 
 
 #endif

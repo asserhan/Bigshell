@@ -21,8 +21,11 @@ typedef struct s_exec_context
 {
 	t_doubly_lst	*cmds;
 	t_env			*env;
-	char 			*paths;
-	int 			end[2];
+	t_env_variable	*paths;
+	int				end[2];
+	pid_t			pid;
+	char			**cmd_paths;
+
 }					t_exec_context;
 
 /*--- Redirections ---*/
@@ -80,6 +83,7 @@ char				end_with(char *str, char *set);
 void				put_error(char *message, char *param, int status_code);
 void				put_error_ex(char *message, char *param, char *suffix,
 						int status_code);
+void  ft_msg_error(char *message);
 /* parse first element in exit*/
 int					parse_arg(char *str);
 
@@ -129,6 +133,10 @@ t_env				*copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/
 void				sort_env_var(t_env_variable *head);
 ////////////////////////////////////* Execution*////////////////////////////////////
+
+/*fuction that execute builtins*/
 void				exec_builtins(t_exec_context *exContext);
+/*get path from enviroment and split it*/
+void	ft_get_path(t_exec_context *exContext);
 
 #endif
