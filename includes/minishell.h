@@ -83,7 +83,7 @@ char				end_with(char *str, char *set);
 void				put_error(char *message, char *param, int status_code);
 void				put_error_ex(char *message, char *param, char *suffix,
 						int status_code);
-void  ft_msg_error(char *message);
+void				ft_msg_error(char *message, int exit);
 /* parse first element in exit*/
 int					parse_arg(char *str);
 
@@ -137,6 +137,11 @@ void				sort_env_var(t_env_variable *head);
 /*fuction that execute builtins*/
 void				exec_builtins(t_exec_context *exContext);
 /*get path from enviroment and split it*/
-void	ft_get_path(t_exec_context *exContext);
-
+void				ft_get_path(t_exec_context *exContext);
+/*function that join the command with her path */
+char				*ft_get_cmd_path(t_exec_context *exContext);
+/*function that excute command in child process*/
+void				ft_execute_child(t_exec_context *exContext);
+/*excute the program*/
+void execution(t_exec_context *exContext);
 #endif

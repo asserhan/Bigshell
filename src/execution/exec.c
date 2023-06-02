@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/01 15:53:49 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/02 18:56:06 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ void one_cmd(t_exec_context *exContext)
 	ft_get_path(exContext);
 	exContext->pid = fork();
 	if(exContext->pid == -1)
-		ft_msg_error("fork");
+		ft_msg_error("fork",1);
 	if(exContext->pid == 0)
 	   ft_execute_child(exContext);
+		
 	
 }
 void execution(t_exec_context *exContext)
@@ -64,8 +65,12 @@ void execution(t_exec_context *exContext)
 	size = d_lstsize(exContext->cmds);
 	if(size == 1 && is_builtin(exContext->cmds->cmd))
 		exec_builtins(exContext);
-	// else if(size == 1 && !is_builtin(exContext->cmds->cmd))
-	// 		one_cmd(exContext);
+	else if(size == 1 && !is_builtin(exContext->cmds->cmd))
+	{
+		
+			one_cmd(exContext);
+			wait(NULL);
+	}
 	
 	
 	
