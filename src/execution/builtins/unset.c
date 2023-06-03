@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:16 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 15:50:12 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:39:05 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_unset(t_exec_context *exContext)
 					return ;
 				delete_env_elem(exContext->env, elem);
 				if (ft_strcmp(exContext->cmds->args[i], "PATH") == 0)
-					exContext->is = 0;
+					exContext->is = 1;
 			}
 			else
 				return ;

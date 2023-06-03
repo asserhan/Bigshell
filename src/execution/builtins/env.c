@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:03 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 15:53:25 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:39:10 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_env(t_exec_context *exContext)
 	t_doubly_lst	*cmds;
 
 	cmds = exContext->cmds;
-	if(!exContext->is)
+	if(exContext->is == 1)
 		return ;
 	if (count_matrix(cmds->args) == 1)
 	{
