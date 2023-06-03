@@ -89,7 +89,10 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list)
 				list = list->next->next;
 				continue ;
 			}
-			node->args = matrix_push_back(node->args, list->cmd);
+			if (node->cmd[0] == '\0')
+				node->cmd = ft_strdup(list->cmd);
+			else
+				node->args = matrix_push_back(node->args, list->cmd);
 			list = list->next;
 		}
 		if (list && !ft_strcmp(list->cmd, "|"))
@@ -120,9 +123,9 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (check_syntax(cmd_list))
 		return (1);
 	final_list = convert_list_format(cmd_list);
-	print_list(final_list);
 	d_lstclear(&cmd_list);
 	final_list->args = matrix_add_front(final_list->cmd, final_list->args);
+	print_list(final_list);
 	exContext->cmds = final_list;
 	return (0);
 }
