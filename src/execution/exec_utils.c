@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:19 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 21:43:11 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/03 22:16:47 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_get_path(t_exec_context *exContext)
 	exContext->cmd_paths = NULL;
 	envp = exContext->env->first;
 	i = -1;
-	//print_env(exContext->env,1);
 	while (envp)
 	{
 		exContext->paths = search_env_elem(exContext->env, "PATH");
