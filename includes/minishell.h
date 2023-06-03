@@ -25,6 +25,7 @@ typedef struct s_exec_context
 	int				end[2];
 	pid_t			pid;
 	char			**cmd_paths;
+	int 			is; //unset PATH
 
 }					t_exec_context;
 
