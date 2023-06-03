@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 21:34:43 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:44:51 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_execute_child(t_exec_context *exContext)
 		ft_msg_error("dup2", 1);
 	if (exContext->paths && ft_strchr(exContext->cmds->cmd, '/') == NULL)
 		exContext->cmds->cmd = ft_get_cmd_path(exContext);
-	ft_printf("cmd: %s\n", exContext->cmds->cmd);
 	if (!exContext->cmds->cmd)
 	{
 		///ft_printf("**%s**\n", exContext->cmds->cmd);
