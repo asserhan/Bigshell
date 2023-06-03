@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handel_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/03 16:45:40 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/03 18:58:35 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node)
 			break ;
 		}
 		if (write(end[1], line, ft_strlen(line)) == -1)
+			put_error("Error in readline\n", NULL, 0);
+		else if (write(end[1], "\n", 1) == -1)
 			put_error("Error in readline\n", NULL, 0);
 		free(line);
 	}

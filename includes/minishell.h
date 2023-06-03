@@ -25,7 +25,7 @@ typedef struct s_exec_context
 	int				end[2];
 	pid_t			pid;
 	char			**cmd_paths;
-	int 			is; //unset PATH
+	int is; //unset PATH
 
 }					t_exec_context;
 
@@ -146,5 +146,7 @@ char				*ft_get_cmd_path(t_exec_context *exContext);
 /*function that excute command in child process*/
 void				ft_execute_child(t_exec_context *exContext);
 /*excute the program*/
-void execution(t_exec_context *exContext);
+void				execution(t_exec_context *exContext);
+/*fuction that duplicate in and out to stdin and stdout*/
+void				ft_dup(t_exec_context *exContext);
 #endif
