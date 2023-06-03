@@ -112,6 +112,8 @@ void				handle_input(t_doubly_lst *old_list, t_doubly_lst *node);
 void				handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
+/* open  the file with name in old_list command and asign the fd to node */
+void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node);
 
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);

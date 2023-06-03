@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/23 11:37:39 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/03 14:23:26 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline("minishell $ ");
-		if (!*input || pars_input(&exContext, input))
+		if (!input || pars_input(&exContext, input))
 			continue ;
 		exec_builtins(&exContext);
 	}

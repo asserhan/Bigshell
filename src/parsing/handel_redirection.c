@@ -6,11 +6,13 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/22 13:20:46 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:27:19 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int	exit_status;
 
 char	*get_dir(char *path)
 {
@@ -86,4 +88,34 @@ void	handle_append(t_doubly_lst *old_list, t_doubly_lst *node)
 	else if (access(path, W_OK) == -1 && access(path, F_OK) == 0)
 		return (put_error("minishell: permission denied: ", path, 1));
 	node->out = open(path, O_CREAT | O_WRONLY | O_APPEND, 0666);
+}
+
+void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node)
+{
+	char	*line;
+	int		end[2];
+	char	*delimiter;
+
+	if (pipe(end) == -1)
+		put_error("Error in readline\n", NULL, 0);
+	delimiter = old_list->next->next->cmd;
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			put_error("Error in readline\n", NULL, 0);
+		if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0)
+		{
+			free(line);
+			line = NULL;
+			close(end[1]);
+			break ;
+		}
+		if (write(end[1], line, ft_strlen(line)) == -1)
+			put_error("Error in readline\n", NULL, 0);
+		free(line);
+	}
+	if (line)
+		free(line);
+	node->in = end[0];
 }
