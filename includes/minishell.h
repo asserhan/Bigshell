@@ -25,7 +25,7 @@ typedef struct s_exec_context
 	int				end[2];
 	pid_t			pid;
 	char			**cmd_paths;
-	int 			is; //unset PATH
+	int is; //unset PATH
 
 }					t_exec_context;
 
@@ -122,7 +122,12 @@ void				handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node);
+void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
+						t_exec_context *exContext);
+/* remove quotes from str*/
+char				*remove_quotes(char *str);
+/* expand token*/
+char				*expand_token(char *token, t_exec_context *exContext);
 
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
@@ -146,5 +151,5 @@ char				*ft_get_cmd_path(t_exec_context *exContext);
 /*function that excute command in child process*/
 void				ft_execute_child(t_exec_context *exContext);
 /*excute the program*/
-void execution(t_exec_context *exContext);
+void				execution(t_exec_context *exContext);
 #endif

@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/03 16:45:40 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:30:19 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,40 @@ void	handle_append(t_doubly_lst *old_list, t_doubly_lst *node)
 	node->out = open(path, O_CREAT | O_WRONLY | O_APPEND, 0666);
 }
 
-void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node)
+void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
+		t_exec_context *exContext)
 {
 	char	*line;
 	int		end[2];
 	char	*delimiter;
+	int		quotes;
 
 	if (pipe(end) == -1)
 		put_error("Error in readline\n", NULL, 0);
 	delimiter = old_list->next->next->cmd;
+	quotes = 1;
+	if (ft_strchr(delimiter, '\"'))
+	{
+		quotes = 0;
+		delimiter = remove_quotes(delimiter);
+	}
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 			put_error("Error in readline\n", NULL, 0);
-		if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0)
+		if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0 && line[0])
 		{
 			free(line);
 			line = NULL;
 			close(end[1]);
 			break ;
 		}
+		if (quotes)
+			line = expand_token(line, exContext);
 		if (write(end[1], line, ft_strlen(line)) == -1)
+			put_error("Error in readline\n", NULL, 0);
+		else if (write(end[1], "\n", 1) == -1)
 			put_error("Error in readline\n", NULL, 0);
 		free(line);
 	}
