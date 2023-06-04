@@ -7,28 +7,31 @@ int	check_syntax(t_doubly_lst *head)
 	{
 		if (start_with(head->cmd, "!)") || end_with(head->cmd, "!)"))
 		{
-			put_error("minishell: syntax error near unexpected token `",
+			put_error("syntax error near unexpected token `",
 						"newline",
 						2);
 			return (1);
 		}
 		if (end_with(head->cmd, "><!()") && head->next
 			&& start_with(head->next->cmd, "|"))
-			return (put_error("minishell: syntax error near unexpected token `",
+			return (put_error("syntax error near unexpected token `",
 								"|",
 								2),
 					1);
-		if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1
-				&& ft_strchr("<|>)!", *head->cmd)) ||
-			(!head->next && ft_strchr("<>()|", *head->cmd)) ||
-			(head->next && !head->prev && ft_strlen(head->cmd) == 1
-					&& ft_strchr("|", *head->cmd)) ||
-			(head->prev && head->next && ft_strchr("<>|", *head->cmd)
-					&& ft_strchr("|", *head->next->cmd)))
-			return (put_error("minishell: syntax error near unexpected token `",
-								head->cmd,
-								2),
-					1);
+		if (!head->have_quotes)
+		{
+			if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1
+					&& ft_strchr("<|>)!", *head->cmd)) ||
+				(!head->next && ft_strchr("<>()|", *head->cmd)) ||
+				(head->next && !head->prev && ft_strlen(head->cmd) == 1
+						&& ft_strchr("|", *head->cmd)) ||
+				(head->prev && head->next && ft_strchr("<>|", *head->cmd)
+						&& ft_strchr("|", *head->next->cmd)))
+				return (put_error("syntax error near unexpected token `",
+									head->cmd,
+									2),
+						1);
+		}
 		head = head->next;
 	}
 	return (0);
@@ -116,6 +119,8 @@ t_doubly_lst	*remove_quotes_from_list(t_doubly_lst *list)
 			node = d_lstnew(list->cmd);
 		else
 			node = d_lstnew(remove_quotes(list->cmd));
+		if (ft_strchr(list->cmd, '\'') || ft_strchr(list->cmd, '\"'))
+			node->have_quotes = 1;
 		if (!head)
 			head = node;
 		if (prev_node)
