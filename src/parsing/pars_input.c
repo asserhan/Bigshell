@@ -68,26 +68,27 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 		}
 		while (list && ft_strcmp(list->cmd, "|") && node)
 		{
-			if (!ft_strcmp(list->cmd, ">") && !ft_strcmp(list->next->cmd, ">"))
+			if (!ft_strcmp(list->cmd, ">") && !ft_strcmp(list->next->cmd, ">")
+				&& !list->have_quotes)
 			{
 				handle_append(list, node);
 				list = list->next->next->next;
 				continue ;
 			}
 			else if (!ft_strcmp(list->cmd, "<") && !ft_strcmp(list->next->cmd,
-						"<"))
+						"<") && !list->have_quotes)
 			{
 				handle_heredoc(list, node, exContext);
 				list = list->next->next->next;
 				continue ;
 			}
-			else if (!ft_strcmp(list->cmd, ">"))
+			else if (!ft_strcmp(list->cmd, ">") && !list->have_quotes)
 			{
 				handle_output(list, node);
 				list = list->next->next;
 				continue ;
 			}
-			else if (!ft_strcmp(list->cmd, "<"))
+			else if (!ft_strcmp(list->cmd, "<") && !list->have_quotes)
 			{
 				handle_input(list, node);
 				list = list->next->next;
