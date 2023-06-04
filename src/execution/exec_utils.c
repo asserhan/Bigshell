@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:19 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 22:16:47 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/04 12:22:40 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*ft_get_cmd_path(t_exec_context *exContext)
 	int i;
 	i = -1;
 
-	ft_printf("cmdddddd: %s\n", exContext->cmds->cmd);
 	if (!exContext->cmd_paths)
 		return (exContext->cmds->cmd); // update
 	while (exContext->cmd_paths[++i])
