@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 22:22:53 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/04 04:44:49 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,42 @@ void	one_cmd(t_exec_context *exContext)
 		ft_execute_child(exContext);
 	}
 }
+void mutiple_cmd(t_exec_context *exContext)
+{
+	int end[2];
+	int pid;
+	if(pipe(end) == -1)
+		ft_msg_error("pipe", 1);
+	pid = fork();
+	if (pid == -1)
+		ft_msg_error("fork", 1);
+	if (pid == 0)
+	{
+		close(end[0]);
+		if(dup2(end[1], STDOUT_FILENO) == -1)
+			ft_msg_error("dup2", 1);
+		close(end[1]);
+		if(is_builtin(exContext->cmds->cmd))
+		{
+			exec_builtins(exContext);
+		}
+		else
+		{
+			ft_get_path(exContext);
+			ft_execute_child(exContext);
+		}
+	}
+	else{
+		close(end[1]);
+		if(dup2(end[0], STDIN_FILENO) == -1)
+			ft_msg_error("dup2", 1);
+		close(end[0]);
+		waitpid(pid, NULL, 0);
+	}
+	
+	
+	
+}
 void	execution(t_exec_context *exContext)
 {
 	int			size;
@@ -73,11 +109,34 @@ void	execution(t_exec_context *exContext)
 		return (put_error_ex("minishell: ", exContext->cmds->cmd,
 				": is a directory\n", 126));
 	size = d_lstsize(exContext->cmds);
-	if (size == 1 && is_builtin(exContext->cmds->cmd))
-		exec_builtins(exContext);
-	else if (size == 1 && !is_builtin(exContext->cmds->cmd))
+	int pipes = size - 1;
+	if (size == 1)
 	{
-		one_cmd(exContext);
-		wait(NULL);
+		if (is_builtin(exContext->cmds->cmd))
+			exec_builtins(exContext);
+		else
+		{
+			one_cmd(exContext);
+			wait(NULL);
+		}
+	}
+	else{
+			if(dup2(exContext->cmds->in, STDIN_FILENO) == -1)
+				ft_msg_error("dup2", 1);
+		while(pipes--)
+		{
+			
+			ft_printf(" hiiti\n");
+			
+			mutiple_cmd(exContext);
+			
+	
+		}
+			ft_get_path(exContext);
+			ft_execute_child(exContext);
+			if(dup2(exContext->cmds->out, STDOUT_FILENO) == -1)	
+				ft_msg_error("dup2", 1);
+			// while(waitpid(-1, NULL, 0) != -1)
+			// 	;
 	}
 }

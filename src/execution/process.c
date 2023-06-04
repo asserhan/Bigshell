@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 22:17:13 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:42:30 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_execute_child(t_exec_context *exContext)
 		exContext->cmds->cmd = ft_get_cmd_path(exContext);
 	if (!exContext->cmds->cmd)
 	{
-		///ft_printf("**%s**\n", exContext->cmds->cmd);
 		free_matrix(exContext->cmds->args);
 		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
 				127);
