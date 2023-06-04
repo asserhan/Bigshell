@@ -16,7 +16,7 @@ int	check_syntax(t_doubly_lst *head)
 			&& start_with(head->next->cmd, "|"))
 			return (put_error("syntax error near unexpected token `",
 								"|",
-								2),
+								258),
 					1);
 		if (!head->have_quotes)
 		{
@@ -29,7 +29,7 @@ int	check_syntax(t_doubly_lst *head)
 						&& ft_strchr("|", *head->next->cmd)))
 				return (put_error("syntax error near unexpected token `",
 									head->cmd,
-									2),
+									258),
 						1);
 		}
 		head = head->next;
