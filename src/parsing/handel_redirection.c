@@ -6,13 +6,13 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/04 15:54:39 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/04 17:35:20 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern int	exit_status;
+extern int	g_exit_status;
 
 char	*get_dir(char *path)
 {

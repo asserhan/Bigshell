@@ -128,6 +128,8 @@ void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 char				*remove_quotes(char *str);
 /* expand token*/
 char				*expand_token(char *token, t_exec_context *exContext);
+/* check syntax for every node in list*/
+int					check_syntax(t_doubly_lst *head);
 
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);

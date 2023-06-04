@@ -6,13 +6,13 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:06 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/18 18:04:03 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/04 17:35:20 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern int	exit_status;
+extern int	g_exit_status;
 
 static char	*subtoken(char *str, int i, t_exec_context *exContext)
 {
@@ -43,7 +43,7 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	}
 	if (str[i + 1] == '?')
 	{
-		var_value = ft_itoa(exit_status);
+		var_value = ft_itoa(g_exit_status);
 		i += 2;
 	}
 	else

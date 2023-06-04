@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-extern int	exit_status;
+extern int	g_exit_status;
 
 int	words_number(const char *str, const char *delimiters)
 {
