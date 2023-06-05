@@ -14,6 +14,19 @@
 
 extern int		g_exit_status;
 
+t_doubly_lst	*create_node_after_heredeoc(t_doubly_lst *list)
+{
+	t_doubly_lst	*node;
+
+	node = NULL;
+	if (list->prev && list->prev->prev && !ft_strcmp(list->prev->cmd, "<")
+		&& !ft_strcmp(list->prev->prev->cmd, "<"))
+		node = d_lstnew(list->cmd);
+	else
+		node = d_lstnew(remove_quotes(list->cmd));
+	return (node);
+}
+
 t_doubly_lst	*remove_quotes_from_list(t_doubly_lst *list)
 {
 	t_doubly_lst	*head;
@@ -24,11 +37,7 @@ t_doubly_lst	*remove_quotes_from_list(t_doubly_lst *list)
 	prev_node = NULL;
 	while (list)
 	{
-		if (list->prev && list->prev->prev && !ft_strcmp(list->prev->cmd, "<")
-			&& !ft_strcmp(list->prev->prev->cmd, "<"))
-			node = d_lstnew(list->cmd);
-		else
-			node = d_lstnew(remove_quotes(list->cmd));
+		node = create_node_after_heredeoc(list);
 		if (ft_strchr(list->cmd, '\'') || ft_strchr(list->cmd, '\"'))
 			node->have_quotes = 1;
 		if (!head)
