@@ -27,9 +27,7 @@ int	words_number(const char *str, const char *delimiters)
 			while (*str != '\0' && (!ft_strchr(delimiters, *str) || in_quotes))
 			{
 				if (*str == quote_char)
-				{
 					in_quotes = !in_quotes;
-				}
 				else if ((*str == '\'' || *str == '\"') && !in_quotes)
 				{
 					in_quotes = 1;
