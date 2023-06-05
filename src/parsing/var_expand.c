@@ -72,11 +72,11 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 
 char	*var_expand(char *token, t_exec_context *exContext)
 {
-	int s_quote;
-	int d_quote;
-	int i;
-	int should_expand;
-	char *new_token;
+	int		s_quote;
+	int		d_quote;
+	int		i;
+	int		should_expand;
+	char	*new_token;
 
 	s_quote = 0;
 	d_quote = 0;
@@ -103,4 +103,19 @@ char	*var_expand(char *token, t_exec_context *exContext)
 		}
 	}
 	return (token);
+}
+
+char	*expand_token(char *token, t_exec_context *exContext)
+{
+	char *var_result;
+	char *result;
+	char *path;
+
+	var_result = var_expand(token, exContext);
+	path = get_env_value("HOME", exContext);
+	if (!var_result || !path)
+		return (NULL);
+	result = path_expand(var_result, path);
+	free(path);
+	return (result);
 }

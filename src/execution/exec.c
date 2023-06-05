@@ -78,6 +78,6 @@ void	execution(t_exec_context *exContext)
 	else if (size == 1 && !is_builtin(exContext->cmds->cmd))
 	{
 		one_cmd(exContext);
-		wait(NULL);
+		// wait(NULL);
 	}
 }
