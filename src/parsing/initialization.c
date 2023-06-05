@@ -13,6 +13,7 @@
 #include "../../includes/minishell.h"
 
 extern int	g_exit_status;
+
 void	set_start_vars(t_env *env)
 {
 	char			*tmp;
