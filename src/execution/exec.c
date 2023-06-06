@@ -188,6 +188,7 @@ void	execution(t_exec_context *exContext)
 	exContext->pipe_num = size - 1;
 	if (size == 1)
 	{
+<<<<<<< HEAD
 		if (is_builtin(exContext->cmds->cmd))
 		{
 			int fdout = dup(1);
@@ -217,5 +218,9 @@ void	execution(t_exec_context *exContext)
 		waitpid(pid, NULL, 0);
 		while (wait(NULL) != -1);
 		
+=======
+		one_cmd(exContext);
+		// wait(NULL);
+>>>>>>> origin/Parsing
 	}
 }
