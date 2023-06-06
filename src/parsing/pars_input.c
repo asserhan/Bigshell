@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 16:10:20 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:15:46 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ t_doubly_lst	*remove_quotes_from_list(t_doubly_lst *list)
 	return (head);
 }
 
+void	add_cmd_to_args(t_doubly_lst *final_list)
+{
+	while ((final_list))
+	{
+		(final_list)->args = matrix_add_front((final_list)->cmd,
+												(final_list)->args);
+		(final_list) = (final_list)->next;
+	}
+}
 int	pars_input(t_exec_context *exContext, char *input)
 {
 	char			**tokens;
@@ -77,8 +86,8 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_list = convert_list_format(list_without_quotes, exContext);
 	d_lstclear(&list_without_quotes);
+	add_cmd_to_args(final_list);
 	print_list(final_list);
-	final_list->args = matrix_add_front(final_list->cmd, final_list->args);
 	exContext->cmds = final_list;
 	return (0);
 }
