@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 17:22:03 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:37:55 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,9 +176,16 @@ void	execution(t_exec_context *exContext)
 	// i=-1 it me;
 	tmp = exContext;
 
-	if (exContext->cmds->cmd[0] == '\0')
-		// todo close the fds
+	if (exContext->cmds->cmd[0] == '\0' )
+	{
+		if(exContext->cmds->in == 0 && exContext->cmds->out == 1)
+		{
+		put_error_ex("minishell: ", exContext->cmds->cmd,
+				": command not found\n", 127);
+		}
+		ft_close_fd(exContext);
 		return ;
+	}
  
 	stat(exContext->cmds->cmd, &fileStat);
 	if (S_ISDIR(fileStat.st_mode))
@@ -210,7 +217,6 @@ void	execution(t_exec_context *exContext)
 		int pid;
 		while(tmp->cmds)
 		{
-			//ft_printf(" hiiti\n");
 			pid = mutiple_cmd(tmp, &w);
 			tmp->cmds = tmp->cmds->next;
 		}
@@ -218,4 +224,5 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1);
 		
 	}
+		ft_close_fd(exContext);
 }
