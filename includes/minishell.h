@@ -26,6 +26,8 @@ typedef struct s_exec_context
 	pid_t			pid;
 	char			**cmd_paths;
 	int is; //unset PATH
+	int				pipe_num;
+	int				**pipe_fd;
 
 }					t_exec_context;
 
@@ -160,4 +162,6 @@ void				ft_execute_child(t_exec_context *exContext);
 void				execution(t_exec_context *exContext);
 /*fuction that duplicate in and out to stdin and stdout*/
 void				ft_dup(t_exec_context *exContext);
+/*fuction that close file descriptor*/
+void				ft_close_fd(t_exec_context *exContext);
 #endif

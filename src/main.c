@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 16:08:27 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:25:26 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		//print_matrix(exContext.env->env_array,'\n');
 		//exec_builtins(&exContext);
-		//execution(&exContext);
+		execution(&exContext);
 		//wait(NULL);
 	}
 	return (0);
