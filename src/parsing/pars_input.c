@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 17:22:40 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:52:57 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_list = convert_list_format(list_without_quotes, exContext);
 	add_cmd_to_args(final_list);
-	print_list(final_list);
+	//print_list(final_list);
 	exContext->cmds = final_list;
 	return (d_lstclear(&list_without_quotes), 0);
 }
