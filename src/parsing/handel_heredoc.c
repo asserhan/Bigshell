@@ -19,7 +19,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 
 	line = readline("> ");
 	if (!line)
-		put_error("Error in readline\n", NULL, 0);
+		return (put_error("Error in readline\n", NULL, 0), 1);
 	if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0 && line[0])
 	{
 		free(line);
@@ -34,9 +34,9 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 			free(tmp);
 	}
 	if (write(end[1], line, ft_strlen(line)) == -1)
-		put_error("Error in readline\n", NULL, 0);
+		return (put_error("Error in readline\n", NULL, 0), 1);
 	else if (write(end[1], "\n", 1) == -1)
-		put_error("Error in readline\n", NULL, 0);
+		return (put_error("Error in readline\n", NULL, 0), 1);
 	free(line);
 	return (0);
 }
@@ -49,7 +49,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	int		quotes;
 
 	if (pipe(end) == -1)
-		put_error("Error in readline\n", NULL, 0);
+		return (put_error("Error in readline\n", NULL, 0));
 	quotes = 0;
 	if (ft_strchr(old_list->next->next->cmd, '\"'))
 	{
