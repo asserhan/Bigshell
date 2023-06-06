@@ -3,40 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   conver_list_forma.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/04 19:46:52 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:38:24 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	create_node(t_doubly_lst **node, t_doubly_lst **head,
-		t_doubly_lst **list)
-{
-	t_doubly_lst	*prev_node;
-
-	prev_node = NULL;
-	if (ft_strcmp((*list)->cmd, "|") && (!(*list)->prev || ((*list)->prev
-				&& !ft_strcmp((*list)->prev->cmd, "|"))))
-	{
-		if (find_char_index((*list)->cmd, "><") >= 0)
-			(*node) = d_lstnew("");
-		else
-			(*node) = d_lstnew((*list)->cmd);
-		if (!*head)
-			*head = (*node);
-		if (prev_node)
-		{
-			prev_node->next = *node;
-			(*node)->prev = prev_node;
-		}
-		prev_node = (*node);
-		if (find_char_index((*list)->cmd, "<>") < 0)
-			(*list) = (*list)->next;
-	}
-}
 int	redirection_type(t_doubly_lst *list)
 {
 	if (!ft_strcmp(list->cmd, ">") && !ft_strcmp(list->next->cmd, ">")
@@ -71,6 +46,24 @@ void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 	else
 		(*list) = (*list)->next->next;
 }
+void	create_node(t_doubly_lst **node, t_doubly_lst **head,
+		t_doubly_lst **list)
+{
+
+	if (ft_strcmp((*list)->cmd, "|") && (!(*list)->prev || ((*list)->prev
+				&& !ft_strcmp((*list)->prev->cmd, "|"))))
+	{
+		if (find_char_index((*list)->cmd, "><") >= 0)
+			(*node) = d_lstnew("");
+		else
+			(*node) = d_lstnew((*list)->cmd);
+		d_lstadd_back(head, (*node));
+	
+		if (find_char_index((*list)->cmd, "<>") < 0)
+			(*list) = (*list)->next;
+	}
+}
+
 
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext)
