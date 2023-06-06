@@ -1,50 +1,43 @@
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
-
-int	count_words(char **str, const char *delimiters, char *quote_char,
-		int *in_quotes)
-{
-	if (!*in_quotes && (**str == '\"' || **str == '\''))
-	{
-		*in_quotes = 1;
-		*quote_char = **str;
-		*str = *str + 1;
-	}
-	else if (*in_quotes && (**str == *quote_char))
-		*in_quotes = 0;
-	while (**str != '\0' && (!ft_strchr(delimiters, **str) || *in_quotes))
-	{
-		if (**str == *quote_char)
-			*in_quotes = !*in_quotes;
-		else if ((**str == '\'' || **str == '\"') && !*in_quotes)
-		{
-			*in_quotes = 1;
-			*quote_char = **str;
-		}
-		*str = *str + 1;
-	}
-	if (*in_quotes)
-		return (-1);
-	return (0);
-}
+extern int	exit_status;
 
 int	words_number(const char *str, const char *delimiters)
 {
 	int		count;
-	char	quote_char;
 	int		in_quotes;
+	char	quote_char;
 
 	count = 0;
-	quote_char = '\0';
 	in_quotes = 0;
+	quote_char = '\0';
 	while (*str != '\0')
 	{
 		if (!ft_strchr(delimiters, *str))
 		{
 			count++;
-			if (count_words((char **)&str, delimiters, &quote_char,
-					&in_quotes) == -1)
+			if (!in_quotes && (*str == '\"' || *str == '\''))
+			{
+				in_quotes = 1;
+				quote_char = *str;
+				str++;
+			}
+			else if (in_quotes && (*str == quote_char))
+				in_quotes = 0;
+			while (*str != '\0' && (!ft_strchr(delimiters, *str) || in_quotes))
+			{
+				if (*str == quote_char)
+				{
+					in_quotes = !in_quotes;
+				}
+				else if ((*str == '\'' || *str == '\"') && !in_quotes)
+				{
+					in_quotes = 1;
+					quote_char = *str;
+				}
+				str++;
+			}
+			if (in_quotes)
 				return (-1);
 		}
 		if (*str)

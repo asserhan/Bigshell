@@ -1,0 +1,297 @@
+{
+  "tldrawFileFormatVersion": 1,
+  "schema": {
+    "schemaVersion": 1,
+    "storeVersion": 1,
+    "recordVersions": {
+      "asset": {
+        "version": 0,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "image": 2,
+          "video": 2,
+          "bookmark": 0
+        }
+      },
+      "camera": {
+        "version": 0
+      },
+      "document": {
+        "version": 0
+      },
+      "instance": {
+        "version": 7
+      },
+      "instance_page_state": {
+        "version": 1
+      },
+      "page": {
+        "version": 0
+      },
+      "shape": {
+        "version": 1,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "draw": 1,
+          "text": 1,
+          "line": 0,
+          "arrow": 1,
+          "image": 2,
+          "video": 1,
+          "geo": 3,
+          "note": 2,
+          "group": 0,
+          "bookmark": 1,
+          "embed": 1,
+          "frame": 0
+        }
+      },
+      "user": {
+        "version": 0
+      },
+      "user_document": {
+        "version": 2
+      },
+      "user_presence": {
+        "version": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "x": 181.3079071044922,
+      "y": 169.0915625,
+      "z": 1,
+      "id": "camera:_nNl3vLDIQ7NEOxrz-2Nm",
+      "typeName": "camera"
+    },
+    {
+      "gridSize": 10,
+      "id": "document:document",
+      "typeName": "document"
+    },
+    {
+      "followingUserId": null,
+      "propsForNextShape": {
+        "opacity": "1",
+        "color": "black",
+        "labelColor": "black",
+        "dash": "draw",
+        "fill": "none",
+        "size": "m",
+        "icon": "file",
+        "font": "draw",
+        "align": "middle",
+        "geo": "rectangle",
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "spline": "line"
+      },
+      "brush": null,
+      "scribble": null,
+      "cursor": {
+        "type": "default",
+        "color": "black",
+        "rotation": 0
+      },
+      "isFocusMode": false,
+      "exportBackground": true,
+      "isDebugMode": false,
+      "isToolLocked": false,
+      "screenBounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1248.333251953125,
+        "h": 697.5
+      },
+      "id": "instance:45rMsLlMXd209_jOo0nyP",
+      "userId": "user:oMsn1KoE6MA-0xp0eQcCo",
+      "currentPageId": "page:DiqCCSla8akm-IpwdtiUx",
+      "typeName": "instance"
+    },
+    {
+      "editingId": null,
+      "croppingId": null,
+      "selectedIds": [],
+      "hoveredId": null,
+      "erasingIds": [],
+      "hintingIds": [],
+      "focusLayerId": null,
+      "id": "instance_page_state:4LCFbEFFQi_twVerTqlwM",
+      "pageId": "page:DiqCCSla8akm-IpwdtiUx",
+      "instanceId": "instance:45rMsLlMXd209_jOo0nyP",
+      "cameraId": "camera:_nNl3vLDIQ7NEOxrz-2Nm",
+      "typeName": "instance_page_state"
+    },
+    {
+      "id": "page:DiqCCSla8akm-IpwdtiUx",
+      "name": "Page 1",
+      "index": "a1",
+      "typeName": "page"
+    },
+    {
+      "name": "New User",
+      "locale": "en",
+      "id": "user:oMsn1KoE6MA-0xp0eQcCo",
+      "typeName": "user"
+    },
+    {
+      "isReadOnly": false,
+      "isPenMode": false,
+      "isGridMode": false,
+      "isDarkMode": false,
+      "isMobileMode": false,
+      "isSnapMode": false,
+      "lastUpdatedPageId": "page:DiqCCSla8akm-IpwdtiUx",
+      "lastUsedTabId": "instance:7VaN9MkaZZuBdBT4u6MaT",
+      "id": "user_document:DDmgeH60sxgg-3GZmZuTX",
+      "userId": "user:oMsn1KoE6MA-0xp0eQcCo",
+      "typeName": "user_document"
+    },
+    {
+      "lastUsedInstanceId": "instance:7VaN9MkaZZuBdBT4u6MaT",
+      "lastActivityTimestamp": 1684424509819,
+      "cursor": {
+        "x": 338.8092803955078,
+        "y": 270.9735314941406,
+        "z": 0
+      },
+      "viewportPageBounds": {
+        "x": -181.3079071044922,
+        "y": -169.0915625,
+        "w": 1248.333251953125,
+        "h": 697.5
+      },
+      "color": "#BD54C6",
+      "id": "user_presence:oEuVrEymiI8vWBYl84VP6",
+      "userId": "user:oMsn1KoE6MA-0xp0eQcCo",
+      "typeName": "user_presence"
+    },
+    {
+      "followingUserId": null,
+      "propsForNextShape": {
+        "opacity": "1",
+        "color": "black",
+        "labelColor": "black",
+        "dash": "draw",
+        "fill": "none",
+        "size": "m",
+        "icon": "file",
+        "font": "draw",
+        "align": "middle",
+        "geo": "rectangle",
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "spline": "line"
+      },
+      "brush": null,
+      "scribble": null,
+      "cursor": {
+        "type": "default",
+        "color": "black",
+        "rotation": 0
+      },
+      "isFocusMode": false,
+      "exportBackground": true,
+      "isDebugMode": false,
+      "isToolLocked": false,
+      "screenBounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1248.333251953125,
+        "h": 697.5
+      },
+      "id": "instance:7VaN9MkaZZuBdBT4u6MaT",
+      "userId": "user:oMsn1KoE6MA-0xp0eQcCo",
+      "currentPageId": "page:DiqCCSla8akm-IpwdtiUx",
+      "typeName": "instance"
+    },
+    {
+      "x": 181.3079071044922,
+      "y": 169.0915625,
+      "z": 1,
+      "id": "camera:LuNg2ZNsHovzBmtsT47Uv",
+      "typeName": "camera"
+    },
+    {
+      "editingId": null,
+      "croppingId": null,
+      "selectedIds": [],
+      "hoveredId": null,
+      "erasingIds": [],
+      "hintingIds": [],
+      "focusLayerId": null,
+      "id": "instance_page_state:Cn6ahq0xww5Q9eXRlTKzZ",
+      "pageId": "page:DiqCCSla8akm-IpwdtiUx",
+      "instanceId": "instance:7VaN9MkaZZuBdBT4u6MaT",
+      "cameraId": "camera:LuNg2ZNsHovzBmtsT47Uv",
+      "typeName": "instance_page_state"
+    },
+    {
+      "x": 203.5,
+      "y": 128.31,
+      "rotation": 0,
+      "isLocked": false,
+      "id": "shape:83caPCHdKjUzJgrBjyzmb",
+      "parentId": "page:DiqCCSla8akm-IpwdtiUx",
+      "type": "text",
+      "props": {
+        "opacity": "1",
+        "color": "black",
+        "size": "s",
+        "w": 8,
+        "text": "test $HOME'ok'$HOME => its gives doubel free ???? ",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "index": "a1",
+      "typeName": "shape"
+    },
+    {
+      "x": 200,
+      "y": 206.71,
+      "rotation": 0,
+      "isLocked": false,
+      "id": "shape:7lZ23EB3TRskC1TT7_v6m",
+      "parentId": "page:DiqCCSla8akm-IpwdtiUx",
+      "type": "text",
+      "props": {
+        "opacity": "1",
+        "color": "black",
+        "size": "s",
+        "w": 8,
+        "text": "$HOME{$HOME} = > segfault",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "index": "a2",
+      "typeName": "shape"
+    },
+    {
+      "x": 306.08597564697266,
+      "y": 299.35242820739745,
+      "rotation": 0,
+      "isLocked": false,
+      "id": "shape:6qRwwMZcgpBXuC-7hNYMC",
+      "type": "text",
+      "props": {
+        "opacity": "1",
+        "color": "black",
+        "size": "m",
+        "w": 94.82160949707031,
+        "text": "> $PWp",
+        "font": "draw",
+        "align": "middle",
+        "autoSize": true,
+        "scale": 1
+      },
+      "parentId": "page:DiqCCSla8akm-IpwdtiUx",
+      "index": "a3",
+      "typeName": "shape"
+    }
+  ]
+}

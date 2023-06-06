@@ -12,10 +12,9 @@
 
 #include "../../../includes/minishell.h"
 
-t_env_variable	*creat_node(char *name, char *content)
+t_env_variable *creat_node(char *name, char *content)
 {
-	t_env_variable	*new;
-
+	t_env_variable *new;
 	new = ft_calloc(sizeof(t_env_variable), 1);
 	if (!new)
 		return (NULL);
@@ -26,21 +25,16 @@ t_env_variable	*creat_node(char *name, char *content)
 	return (new);
 }
 
-t_env_variable	*copy_env_var(t_env_variable *head)
+t_env_variable *copy_env_var(t_env_variable *head)
 {
-	t_env_variable	*curr;
-	t_env_variable	*new_head;
-	t_env_variable	*tail;
-	t_env_variable	*new_node;
-
 	if (head == NULL)
-		return (NULL);
-	curr = head;
-	new_head = NULL;
-	tail = NULL;
+		return NULL;
+	t_env_variable *curr = head;
+	t_env_variable *new_head = NULL;
+	t_env_variable *tail = NULL;
 	while (curr != NULL)
 	{
-		new_node = creat_node(curr->name, curr->content);
+		t_env_variable *new_node = creat_node(curr->name, curr->content);
 		if (new_head == NULL)
 		{
 			new_head = new_node;
@@ -54,33 +48,31 @@ t_env_variable	*copy_env_var(t_env_variable *head)
 		}
 		curr = curr->next;
 	}
+
 	return (new_head);
 }
-t_env	*copy_env_list(t_exec_context *exContext)
+t_env *copy_env_list(t_exec_context *exContext)
 {
-	t_env	*env;
-	t_env	*new_env;
-
-	new_env = ft_calloc(sizeof(t_env), 1);
+	t_env *env;
+	t_env *new_env = ft_calloc(sizeof(t_env), 1);
 	env = exContext->env;
 	new_env->first = copy_env_var(env->first);
 	new_env->size = env->size;
 	return (new_env);
 }
-void	sort_env_var(t_env_variable *head)
+void sort_env_var(t_env_variable *head)
 {
-	t_env_variable	*curr;
-	t_env_variable	*next_node;
-	char			*tmp_name;
-	char			*tmp_content;
-
+	t_env_variable *curr ;
+	t_env_variable *next_node;
+	char *tmp_name;
+	char *tmp_content;
 	curr = head;
 	while (curr != NULL)
 	{
 		next_node = curr->next;
 		while (next_node != NULL)
 		{
-			if (ft_strcmp(curr->name, next_node->name) > 0)
+			if(ft_strcmp(curr->name, next_node->name) > 0)
 			{
 				tmp_name = curr->name;
 				curr->name = next_node->name;

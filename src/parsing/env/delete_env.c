@@ -14,12 +14,12 @@
 
 void	env_lstclear(t_env *env)
 {
-	if (!env)
-		return ;
-	while (env->first)
-	{
-		delete_env_elem(env, env->first);
-		env->first = env->first->next;
-	}
-	env = NULL;
+    if (!env)
+        return ;
+    while (env->first)
+    {
+        delete_env_elem(env, env->first);
+        env->first = env->first->next;
+    }
+    env = NULL;
 }

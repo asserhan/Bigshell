@@ -6,13 +6,13 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:06 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/04 17:35:20 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/05/18 18:04:03 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
+extern int	exit_status;
 
 static char	*subtoken(char *str, int i, t_exec_context *exContext)
 {
@@ -43,7 +43,7 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	}
 	if (str[i + 1] == '?')
 	{
-		var_value = ft_itoa(g_exit_status);
+		var_value = ft_itoa(exit_status);
 		i += 2;
 	}
 	else
@@ -72,11 +72,11 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 
 char	*var_expand(char *token, t_exec_context *exContext)
 {
-	int		s_quote;
-	int		d_quote;
-	int		i;
-	int		should_expand;
-	char	*new_token;
+	int s_quote;
+	int d_quote;
+	int i;
+	int should_expand;
+	char *new_token;
 
 	s_quote = 0;
 	d_quote = 0;
@@ -103,19 +103,4 @@ char	*var_expand(char *token, t_exec_context *exContext)
 		}
 	}
 	return (token);
-}
-
-char	*expand_token(char *token, t_exec_context *exContext)
-{
-	char *var_result;
-	char *result;
-	char *path;
-
-	var_result = var_expand(token, exContext);
-	path = get_env_value("HOME", exContext);
-	if (!var_result || !path)
-		return (NULL);
-	result = path_expand(var_result, path);
-	free(path);
-	return (result);
 }

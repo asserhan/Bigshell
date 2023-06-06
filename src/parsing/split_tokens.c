@@ -1,5 +1,19 @@
 #include "../../includes/minishell.h"
 
+char	*expand_token(char *token, t_exec_context *exContext)
+{
+	char	*var_result;
+	char	*result;
+	char	*path;
+
+	var_result = var_expand(token, exContext);
+	path = get_env_value("HOME", exContext);
+	if (!var_result || !path)
+		return (NULL);
+	result = path_expand(var_result, path);
+	free(path);
+	return (result);
+}
 void	line_to_tokens_delimiters(char const *line, char *delimiters,
 		char **tokens)
 {
@@ -19,7 +33,10 @@ void	line_to_tokens_delimiters(char const *line, char *delimiters,
 		{
 			while ((!ft_strchr(delimiters, line[i[0]]) || s_quote || d_quote)
 				&& line[i[0]])
-				handle_quotes(&s_quote, &d_quote, line[i[0]++]);
+			{
+				handle_quotes(&s_quote, &d_quote, line[i[0]]);
+				i[0]++;
+			}
 		}
 		else
 			i[0]++;
@@ -47,7 +64,9 @@ int	words_number_delimiters(const char *str, const char *delimiters)
 		{
 			while ((s_quote || d_quote || !ft_strchr(delimiters, str[i]))
 				&& str[i])
+			{
 				handle_quotes(&s_quote, &d_quote, str[i++]);
+			}
 			if (s_quote || d_quote)
 				return (-1);
 		}
@@ -69,25 +88,14 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 	final_tokens = NULL;
 	while (i < command_count)
 	{
-		if (i > 0 && find_char_index(tokens[i - 1], "<<") != -1)
-		{
-			sub_tokens = ft_calloc(2, sizeof(char *));
-			sub_tokens[0] = ft_strdup(tokens[i++]);
-			sub_tokens[1] = NULL;
-		}
-		else
-		{
-			line_expended = expand_token(tokens[i++], exContext);
-			if (!line_expended)
-				return (NULL);
-			sub_tokens = ft_calloc((words_number_delimiters(line_expended,
-															"<>|") +
-									1),
-									sizeof(char *));
-			if (!sub_tokens)
-				return (NULL);
-			line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
-		}
+		line_expended = expand_token(tokens[i++], exContext);
+		if (!line_expended)
+			return (NULL);
+		sub_tokens = ft_calloc((words_number_delimiters(line_expended, "<>|")
+					+ 1), sizeof(char *));
+		if (!sub_tokens)
+			return (NULL);
+		line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
 		free_matrix(sub_tokens);
 	}

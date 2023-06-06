@@ -14,11 +14,11 @@
 
 char	*path_expand(char *str, char *home)
 {
-	char	*before_tilde;
-	char	*tilde_expansion;
-	char	*after_tilde;
-	int		quotes[2];
-	int		i;
+	char *before_tilde;
+	char *tilde_expansion;
+	char *after_tilde;
+	int quotes[2];
+	int i;
 
 	quotes[0] = 0;
 	quotes[1] = 0;
@@ -35,7 +35,8 @@ char	*path_expand(char *str, char *home)
 			after_tilde = ft_strdup(str + i + 1);
 			str = ft_strjoin(tilde_expansion, after_tilde);
 			free(after_tilde);
-			return (free(tilde_expansion), path_expand(str, home));
+			free(tilde_expansion);
+			return (path_expand(str, home));
 		}
 	}
 	return (str);

@@ -6,13 +6,13 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 18:06:55 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:58:13 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_exit_status;
+int	exit_status;
 
 int	main(int ac, char **av, char **env)
 {
@@ -25,13 +25,11 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline("minishell $ ");
-		if (input[0] != '\0')
-			add_history(input);
 		if (!input || pars_input(&exContext, input))
 			continue ;
 		//print_matrix(exContext.env->env_array,'\n');
 		//exec_builtins(&exContext);
-		//execution(&exContext);
+		execution(&exContext);
 		//wait(NULL);
 	}
 	return (0);

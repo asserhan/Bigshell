@@ -12,7 +12,7 @@
 
 #include "../../../includes/minishell.h"
 
-void	delete_env_elem(t_env *list, t_env_variable *elem)
+void delete_env_elem(t_env *list, t_env_variable *elem)
 {
 	if (elem != NULL)
 	{
@@ -28,9 +28,9 @@ void	delete_env_elem(t_env *list, t_env_variable *elem)
 	}
 }
 
-t_env_variable	*search_env_elem(t_env *env, char *name)
+t_env_variable *search_env_elem(t_env *env, char *name)
 {
-	t_env_variable	*match;
+	t_env_variable *match;
 
 	match = env->first;
 	while (match != NULL && ft_strcmp(match->name, name) != 0)
@@ -40,30 +40,10 @@ t_env_variable	*search_env_elem(t_env *env, char *name)
 	return (match);
 }
 
-void	create_normal_env(t_env_variable *new, char *pair)
+t_env_variable *create_env_elem(char *pair)
 {
-	int	equal_index;
-
-	equal_index = ft_strchr(pair, '=') - pair;
-	new->name = ft_substr(pair, 0, equal_index);
-	if (!new->name)
-	{
-		free(new);
-		new = NULL;
-	}
-	new->content = ft_substr(pair, equal_index + 1, ft_strlen(pair)
-			- equal_index);
-	if (!new->content)
-	{
-		free(new->name);
-		free(new);
-		new = NULL;
-	}
-}
-
-t_env_variable	*create_env_elem(char *pair)
-{
-	t_env_variable	*new;
+	t_env_variable *new;
+	int equal_index;
 
 	new = ft_calloc(sizeof(t_env_variable), 1);
 	if (!new)
@@ -82,14 +62,20 @@ t_env_variable	*create_env_elem(char *pair)
 		new->content = ft_strdup("");
 		return (new);
 	}
-	create_normal_env(new, pair);
+	equal_index = ft_strchr(pair, '=') - pair;
+	new->name = ft_substr(pair, 0, equal_index);
+	if (!new->name)
+		return (NULL);
+	new->content = ft_substr(pair, equal_index + 1, ft_strlen(pair) - equal_index);
+	if (!new->content)
+		return (free(new->name), NULL);
 	return (new);
 }
 
-void	update_env_elem(t_env *env, char *name, char *new_content)
+void update_env_elem(t_env *env, char *name, char *new_content)
 {
-	t_env_variable	*match;
-	char			*new_pair;
+	t_env_variable *match;
+	char *new_pair;
 
 	match = search_env_elem(env, name);
 	if (match)

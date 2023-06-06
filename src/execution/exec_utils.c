@@ -6,11 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:19 by hasserao          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2023/06/03 23:42:47 by hasserao         ###   ########.fr       */
-=======
-/*   Updated: 2023/06/04 12:22:40 by otait-ta         ###   ########.fr       */
->>>>>>> origin/Parsing
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +45,6 @@ char	*ft_get_cmd_path(t_exec_context *exContext)
 	char *my_cmd;
 	int i;
 	i = -1;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Parsing
 	if (!exContext->cmd_paths)
 		return (exContext->cmds->cmd); // update
 	while (exContext->cmd_paths[++i])

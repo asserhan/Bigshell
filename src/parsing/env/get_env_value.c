@@ -2,8 +2,8 @@
 
 char	*get_env_value(char *name, t_exec_context *exContext)
 {
-	char			*result;
-	t_env_variable	*match;
+	char *result;
+	t_env_variable *match;
 
 	result = NULL;
 	match = search_env_elem(exContext->env, name);
