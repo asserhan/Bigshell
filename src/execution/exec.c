@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 16:44:41 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:22:03 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,13 @@ void	execution(t_exec_context *exContext)
 	{
 		if (is_builtin(exContext->cmds->cmd))
 		{
+			int fdout = dup(1);
+			int fdin = dup(0);
 			ft_dup(exContext);
 			exec_builtins(exContext);
-			exit(0);
+			dup2(fdout, 1);
+			dup2(fdin, 0);
+			//exit(0);
 		}
 		else
 		{
