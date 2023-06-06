@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 13:25:38 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:51:53 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ void	one_cmd(t_exec_context *exContext)
 		ft_execute_child(exContext);
 	}
 }
-void	mutiple_cmd(t_exec_context *exContext)
+int	mutiple_cmd(t_exec_context *exContext, int *w)
 {
 	int	end[2];
 	int	pid;
-	static int w;
+	// static int w;
 
 	if (pipe(end) == -1)
 		ft_msg_error("pipe", 1);
@@ -75,8 +75,18 @@ void	mutiple_cmd(t_exec_context *exContext)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
 	{
-		if (dup2(end[1], STDOUT_FILENO) == -1)
-			ft_msg_error("dup2", 1);
+		// if (dup2(end[1], STDOUT_FILENO) == -1)
+		// 	ft_msg_error("dup2", 1);
+		if(!exContext->cmds->next)
+			dup2(*w, 0);
+		else
+		{
+			if (dup2(end[1], STDOUT_FILENO) == -1)
+				ft_msg_error("dup2", 1);
+			if (dup2(*w, STDIN_FILENO) == -1)
+				ft_msg_error("dup2", 1);
+		}
+		printf("w = %d\n", *w);
 		close(end[0]);
 		close(end[1]);
 		if (is_builtin(exContext->cmds->cmd))
@@ -91,12 +101,13 @@ void	mutiple_cmd(t_exec_context *exContext)
 	}
 	else
 	{
+		if (*w)
+			close(*w);
+		*w = dup(end[0]);
 		close(end[1]);
-		if (dup2(end[0], STDIN_FILENO) == -1)
-			ft_msg_error("dup2", 1);
 		close(end[0]);
-		waitpid(pid, NULL, 0);
 	}
+	return (pid);
 }
 void	pipes_end(t_exec_context *exContext)
 {
@@ -155,10 +166,13 @@ void	execution(t_exec_context *exContext)
 	int			size;
 	struct stat	fileStat;
 	//int			pid;
-	//t_exec_context *tmp;
+	t_exec_context *tmp;
+	int w;
+
+	w = 0;
 	// int i;
 	// i=-1;
-	//tmp = exContext;
+	tmp = exContext;
 
 	if (exContext->cmds->cmd[0] == '\0')
 		// todo close the fds
@@ -209,16 +223,20 @@ void	execution(t_exec_context *exContext)
 		// 	waitpid(pid, NULL, 0);
 		// 	i--;}
 		
-			if(dup2(exContext->cmds->in, STDIN_FILENO) == -1)
-				ft_msg_error("dup2", 1);
-		while(exContext->pipe_num--)
+			// if(dup2(exContext->cmds->in, STDIN_FILENO) == -1)
+				// ft_msg_error("dup2", 1);
+		int pid;
+		while(tmp->cmds)
 		{
 			//ft_printf(" hiiti\n");
-			mutiple_cmd(exContext);
+			pid = mutiple_cmd(tmp, &w);
+			tmp->cmds = tmp->cmds->next;
 		}
-			ft_get_path(exContext);
-			ft_execute_child(exContext);
-			if(dup2(exContext->cmds->out, STDOUT_FILENO) == -1)
-				ft_msg_error("dup2", 1);
+		waitpid(pid, NULL, 0);
+		while (wait(NULL) != -1);
+			// ft_get_path(exContext);
+			// ft_execute_child(exContext);
+			// if(dup2(exContext->cmds->out, STDOUT_FILENO) == -1)
+				// ft_msg_error("dup2", 1);
 	}
 }
