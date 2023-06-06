@@ -24,14 +24,14 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	{
 		tmp = line;
 		line = expand_token(line, exContext);
-		free(tmp);
+		if (line != tmp)
+			free(tmp);
 	}
 	if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0 && line[0])
 	{
 		free(line);
 		line = NULL;
-		close(end[1]);
-		return (1);
+		return (close(end[1]), 1);
 	}
 	if (write(end[1], line, ft_strlen(line)) == -1)
 		put_error("Error in readline\n", NULL, 0);
