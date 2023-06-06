@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 17:22:03 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:46:44 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,12 @@ void	execution(t_exec_context *exContext)
 	tmp = exContext;
 
 	if (exContext->cmds->cmd[0] == '\0')
-		// todo close the fds
+	{
+		put_error_ex("minishell: ", exContext->cmds->cmd,
+				": command not found\n", 127);
+		ft_close_fd(exContext);
 		return ;
+	}
  
 	stat(exContext->cmds->cmd, &fileStat);
 	if (S_ISDIR(fileStat.st_mode))
@@ -218,4 +222,5 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1);
 		
 	}
+		ft_close_fd(exContext);
 }
