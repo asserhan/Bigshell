@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handel_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 21:14:26 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:56:15 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	handle_input(t_doubly_lst *old_list, t_doubly_lst *node)
 
 	path = old_list->next->cmd;
 	if (access(path, F_OK) == -1)
-		return (put_error("minishell: No such file or directoryy: ", path, 1));
+		return (put_error_ex("minishell:",path, ": No such file or directory\n", 1));
 	else if (access(path, R_OK) == -1 && access(path, F_OK) == 0)
-		return (put_error("minishell: permission denied: ", path, 1));
+		return (put_error_ex("minishell:",path, ": Permission denied\n", 1));
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (put_error("minishell: No such file or directory ", "", 2));
