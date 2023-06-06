@@ -20,8 +20,9 @@ void	put_error_ex(char *message, char *param,char *suffix, int status_code)
 		ft_putstr_fd(suffix, 2);
 	exit_status = status_code;
 }
-void  ft_msg_error(char *message,int exit)
+void  ft_msg_error(char *message,int exit_s)
 {
 	perror(message);
-	exit_status = exit;
+	exit_status = exit_s;
+	exit(exit_s);
 }

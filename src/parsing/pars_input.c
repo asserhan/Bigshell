@@ -156,7 +156,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 	final_list = convert_list_format(list_without_quotes, exContext);
 	d_lstclear(&list_without_quotes);
 	final_list->args = matrix_add_front(final_list->cmd, final_list->args);
-	print_list(final_list);
+	//print_list(final_list);
 	exContext->cmds = final_list;
 	return (0);
 }

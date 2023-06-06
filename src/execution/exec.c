@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/04 04:44:49 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:25:38 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	exec_builtins(t_exec_context *exContext)
 	// pid_t	pid;
 	// char	*str[4];
 	// str[4] = {"ls", "-l", NULL};
+	//ft_dup(exContext);
 	if (ft_strcmp(exContext->cmds->cmd, "env") == 0)
 		ft_env(exContext);
 	else if (ft_strcmp(exContext->cmds->cmd, "export") == 0)
@@ -32,6 +33,7 @@ void	exec_builtins(t_exec_context *exContext)
 		ft_pwd();
 	else if (ft_strcmp(exContext->cmds->cmd, "exit") == 0)
 		ft_exit(exContext->cmds->args);
+	//ft_close_fd(exContext);
 	// pid=fork();
 	// if (pid == 0)
 	// 	execve("/bin/ls", str, NULL);
@@ -60,22 +62,24 @@ void	one_cmd(t_exec_context *exContext)
 		ft_execute_child(exContext);
 	}
 }
-void mutiple_cmd(t_exec_context *exContext)
+void	mutiple_cmd(t_exec_context *exContext)
 {
-	int end[2];
-	int pid;
-	if(pipe(end) == -1)
+	int	end[2];
+	int	pid;
+	static int w;
+
+	if (pipe(end) == -1)
 		ft_msg_error("pipe", 1);
 	pid = fork();
 	if (pid == -1)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
 	{
-		close(end[0]);
-		if(dup2(end[1], STDOUT_FILENO) == -1)
+		if (dup2(end[1], STDOUT_FILENO) == -1)
 			ft_msg_error("dup2", 1);
+		close(end[0]);
 		close(end[1]);
-		if(is_builtin(exContext->cmds->cmd))
+		if (is_builtin(exContext->cmds->cmd))
 		{
 			exec_builtins(exContext);
 		}
@@ -85,21 +89,76 @@ void mutiple_cmd(t_exec_context *exContext)
 			ft_execute_child(exContext);
 		}
 	}
-	else{
+	else
+	{
 		close(end[1]);
-		if(dup2(end[0], STDIN_FILENO) == -1)
+		if (dup2(end[0], STDIN_FILENO) == -1)
 			ft_msg_error("dup2", 1);
 		close(end[0]);
 		waitpid(pid, NULL, 0);
 	}
-	
-	
-	
+}
+void	pipes_end(t_exec_context *exContext)
+{
+	int	i;
+
+	i = 0;
+	while (exContext->cmds)
+	{
+		if (i == 0 && exContext->cmds->next)
+		{
+			if (exContext->cmds->out == 1)
+				exContext->cmds->out = exContext->pipe_fd[i][1];
+		}
+		else if (i != 0 && exContext->cmds->next)
+		{
+			if (exContext->cmds->out == 1)
+				exContext->cmds->out = exContext->pipe_fd[i][1];
+			if (exContext->cmds->in == 0)
+				exContext->cmds->in = exContext->pipe_fd[i - 1][0];
+		}
+		else if (i != 0 && !exContext->cmds->next)
+		{
+			if (exContext->cmds->in == 0)
+				exContext->cmds->in = exContext->pipe_fd[i - 1][0];
+		}
+		i++;
+		exContext->cmds = exContext->cmds->next;
+	}
+}
+int	create_pipes(t_exec_context *exContext, int size)
+{
+	int	i;
+	exContext->pipe_fd = NULL;
+
+	i = 0;
+	if (size > 1)
+	{
+		exContext->pipe_fd = malloc(sizeof(int *) * exContext->pipe_num);
+		if (!exContext->pipe_fd)
+			ft_msg_error("malloc", 1);
+		while (i < exContext->pipe_num)
+		{
+			exContext->pipe_fd[i] = malloc(sizeof(int) * 2);
+			if (!exContext->pipe_fd[i])
+				ft_msg_error("malloc", 1);
+			if (pipe(exContext->pipe_fd[i]) == -1)
+				ft_msg_error("pipe", 1);
+			i++;
+		}
+		pipes_end(exContext);
+	}
+	return (0);
 }
 void	execution(t_exec_context *exContext)
 {
 	int			size;
 	struct stat	fileStat;
+	//int			pid;
+	//t_exec_context *tmp;
+	// int i;
+	// i=-1;
+	//tmp = exContext;
 
 	if (exContext->cmds->cmd[0] == '\0')
 		// todo close the fds
@@ -109,7 +168,7 @@ void	execution(t_exec_context *exContext)
 		return (put_error_ex("minishell: ", exContext->cmds->cmd,
 				": is a directory\n", 126));
 	size = d_lstsize(exContext->cmds);
-	int pipes = size - 1;
+	exContext->pipe_num = size - 1;
 	if (size == 1)
 	{
 		if (is_builtin(exContext->cmds->cmd))
@@ -120,23 +179,46 @@ void	execution(t_exec_context *exContext)
 			wait(NULL);
 		}
 	}
-	else{
+	else
+	{
+		// if (create_pipes(exContext, size))
+		// 	return ;
+		// while (tmp->cmds)
+		// {
+		// 	if (is_builtin(tmp->cmds->cmd))
+		// 		exec_builtins(tmp);
+		// 	else
+		// 	{
+		// 		ft_get_path(tmp);
+		// 		pid = fork();
+		// 		i++;
+		// 		if (pid == -1)
+		// 			ft_msg_error("fork", 1);
+		// 		if (pid == 0)
+		// 		{
+		// 			ft_dup(tmp);
+		// 			//ft_close_fd(exContext);
+		// 			ft_execute_child(tmp);
+		// 		}
+		// 	}
+		// 	tmp->cmds = tmp->cmds->next;
+		// }
+		// ft_close_fd(exContext);
+		// while(i>=0)
+		// {
+		// 	waitpid(pid, NULL, 0);
+		// 	i--;}
+		
 			if(dup2(exContext->cmds->in, STDIN_FILENO) == -1)
 				ft_msg_error("dup2", 1);
-		while(pipes--)
+		while(exContext->pipe_num--)
 		{
-			
-			ft_printf(" hiiti\n");
-			
+			//ft_printf(" hiiti\n");
 			mutiple_cmd(exContext);
-			
-	
 		}
 			ft_get_path(exContext);
 			ft_execute_child(exContext);
-			if(dup2(exContext->cmds->out, STDOUT_FILENO) == -1)	
+			if(dup2(exContext->cmds->out, STDOUT_FILENO) == -1)
 				ft_msg_error("dup2", 1);
-			// while(waitpid(-1, NULL, 0) != -1)
-			// 	;
 	}
 }
