@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 13:51:53 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:28:04 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ void	execution(t_exec_context *exContext)
 
 	w = 0;
 	// int i;
-	// i=-1;
+	// i=-1 it me;
 	tmp = exContext;
 
 	if (exContext->cmds->cmd[0] == '\0')
