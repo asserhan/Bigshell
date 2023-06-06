@@ -1,8 +1,10 @@
 Makefile
+dlk
 ft_printf
 gh
 includes
 libft
+ls
 minishell
 obj
 ok

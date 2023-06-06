@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 19:58:32 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/05 22:03:45 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:32:39 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	ft_dup(t_exec_context *exContext)
 		if (dup2(exContext->cmds->in, STDIN_FILENO) == -1)
 			ft_msg_error("dup2", 1);
 	}
-	if (dup2(exContext->cmds->out, STDOUT_FILENO) == -1)
-		ft_msg_error("dup2", 1);
+    if(exContext->cmds->out != STDOUT_FILENO)
+    {
+        if (dup2(exContext->cmds->out, STDOUT_FILENO) == -1)
+            ft_msg_error("dup2", 1);
+    }
 }
 void	ft_close_fd(t_exec_context *exContext)
 {

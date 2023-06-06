@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 15:28:04 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:44:41 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	mutiple_cmd(t_exec_context *exContext, int *w)
 	int	end[2];
 	int	pid;
 	// static int w;
-
+	
 	if (pipe(end) == -1)
 		ft_msg_error("pipe", 1);
 	pid = fork();
@@ -86,16 +86,18 @@ int	mutiple_cmd(t_exec_context *exContext, int *w)
 			if (dup2(*w, STDIN_FILENO) == -1)
 				ft_msg_error("dup2", 1);
 		}
-		printf("w = %d\n", *w);
 		close(end[0]);
 		close(end[1]);
 		if (is_builtin(exContext->cmds->cmd))
 		{
+			ft_dup(exContext);
 			exec_builtins(exContext);
+			exit(0);
 		}
 		else
 		{
 			ft_get_path(exContext);
+			ft_dup(exContext);
 			ft_execute_child(exContext);
 		}
 	}
@@ -177,6 +179,7 @@ void	execution(t_exec_context *exContext)
 	if (exContext->cmds->cmd[0] == '\0')
 		// todo close the fds
 		return ;
+ 
 	stat(exContext->cmds->cmd, &fileStat);
 	if (S_ISDIR(fileStat.st_mode))
 		return (put_error_ex("minishell: ", exContext->cmds->cmd,
@@ -186,7 +189,11 @@ void	execution(t_exec_context *exContext)
 	if (size == 1)
 	{
 		if (is_builtin(exContext->cmds->cmd))
+		{
+			ft_dup(exContext);
 			exec_builtins(exContext);
+			exit(0);
+		}
 		else
 		{
 			one_cmd(exContext);
@@ -195,36 +202,7 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
-		// if (create_pipes(exContext, size))
-		// 	return ;
-		// while (tmp->cmds)
-		// {
-		// 	if (is_builtin(tmp->cmds->cmd))
-		// 		exec_builtins(tmp);
-		// 	else
-		// 	{
-		// 		ft_get_path(tmp);
-		// 		pid = fork();
-		// 		i++;
-		// 		if (pid == -1)
-		// 			ft_msg_error("fork", 1);
-		// 		if (pid == 0)
-		// 		{
-		// 			ft_dup(tmp);
-		// 			//ft_close_fd(exContext);
-		// 			ft_execute_child(tmp);
-		// 		}
-		// 	}
-		// 	tmp->cmds = tmp->cmds->next;
-		// }
-		// ft_close_fd(exContext);
-		// while(i>=0)
-		// {
-		// 	waitpid(pid, NULL, 0);
-		// 	i--;}
-		
-			// if(dup2(exContext->cmds->in, STDIN_FILENO) == -1)
-				// ft_msg_error("dup2", 1);
+	
 		int pid;
 		while(tmp->cmds)
 		{
@@ -234,9 +212,6 @@ void	execution(t_exec_context *exContext)
 		}
 		waitpid(pid, NULL, 0);
 		while (wait(NULL) != -1);
-			// ft_get_path(exContext);
-			// ft_execute_child(exContext);
-			// if(dup2(exContext->cmds->out, STDOUT_FILENO) == -1)
-				// ft_msg_error("dup2", 1);
+		
 	}
 }
