@@ -31,8 +31,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		//print_matrix(exContext.env->env_array,'\n');
 		//exec_builtins(&exContext);
-		execution(&exContext);
-		
+		// execution(&exContext);
 		//wait(NULL);
 	}
 	return (0);

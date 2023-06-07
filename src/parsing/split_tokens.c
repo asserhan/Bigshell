@@ -56,6 +56,45 @@ int	words_number_delimiters(const char *str, const char *delimiters)
 	}
 	return (count);
 }
+
+char	**heredoc_in_token(char *token)
+{
+	char	**rtr;
+	int		here_index;
+	int		len;
+
+	here_index = find_char_index(token, "<");
+	len = ft_strlen(token) - here_index;
+	rtr = ft_calloc(4, sizeof(char *));
+	rtr[0] = ft_strdup("<");
+	rtr[1] = ft_strdup("<");
+	rtr[2] = ft_substr(token, here_index + 2, len);
+	rtr[3] = NULL;
+	return (rtr);
+}
+
+char	**heredoc_befor(char *token)
+{
+	char	**rtr;
+
+	rtr = ft_calloc(2, sizeof(char *));
+	rtr[0] = ft_strdup(token);
+	rtr[1] = NULL;
+	return (rtr);
+}
+
+int	ends_with_heredoc(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+		i++;
+	if (i > 1 && !ft_strcmp(matrix[i - 1], "<") && !ft_strcmp(matrix[i - 2],
+			"<"))
+		return (1);
+	return (0);
+}
 char	**split_tokens(char **tokens, t_exec_context *exContext)
 {
 	char	**final_tokens;
@@ -69,11 +108,13 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 	final_tokens = NULL;
 	while (i < command_count)
 	{
-		if (i > 0 && find_char_index(tokens[i - 1], "<<") != -1)
+		if (final_tokens && ends_with_heredoc(final_tokens))
 		{
-			sub_tokens = ft_calloc(2, sizeof(char *));
-			sub_tokens[0] = ft_strdup(tokens[i++]);
-			sub_tokens[1] = NULL;
+			sub_tokens = heredoc_befor(tokens[i++]);
+		}
+		else if (ft_strncmp(tokens[i], "<<", ft_strlen(tokens[i])))
+		{
+			sub_tokens = heredoc_in_token(tokens[i++]);
 		}
 		else
 		{
