@@ -61,15 +61,45 @@ char	**heredoc_in_token(char *token)
 {
 	char	**rtr;
 	int		here_index;
-	int		len;
+	char	*befor;
 
 	here_index = find_char_index(token, "<");
-	len = ft_strlen(token) - here_index;
-	rtr = ft_calloc(4, sizeof(char *));
-	rtr[0] = ft_strdup("<");
-	rtr[1] = ft_strdup("<");
-	rtr[2] = ft_substr(token, here_index + 2, len);
-	rtr[3] = NULL;
+	if (here_index > 0 && !end_with(token, "<"))
+	{
+		befor = ft_substr(token, 0, here_index);
+		rtr = ft_calloc(5, sizeof(char *));
+		rtr[0] = ft_strdup(befor);
+		rtr[1] = ft_strdup("<");
+		rtr[2] = ft_strdup("<");
+		rtr[3] = ft_strdup(ft_substr(token, here_index + 2, ft_strlen(token)));
+		rtr[4] = NULL;
+		free(befor);
+	}
+	else if (here_index > 0 && end_with(token, "<"))
+	{
+		befor = ft_substr(token, 0, here_index);
+		rtr = ft_calloc(4, sizeof(char *));
+		rtr[0] = ft_strdup(befor);
+		rtr[1] = ft_strdup("<");
+		rtr[2] = ft_strdup("<");
+		rtr[3] = NULL;
+		free(befor);
+	}
+	else if (here_index == 0 && !end_with(token, "<"))
+	{
+		rtr = ft_calloc(4, sizeof(char *));
+		rtr[0] = ft_strdup("<");
+		rtr[1] = ft_strdup("<");
+		rtr[2] = ft_strdup(ft_substr(token, here_index + 2, ft_strlen(token)));
+		rtr[3] = NULL;
+	}
+	else
+	{
+		rtr = ft_calloc(3, sizeof(char *));
+		rtr[0] = ft_strdup("<");
+		rtr[1] = ft_strdup("<");
+		rtr[2] = NULL;
+	}
 	return (rtr);
 }
 
@@ -92,7 +122,9 @@ int	ends_with_heredoc(char **matrix)
 		i++;
 	if (i > 1 && !ft_strcmp(matrix[i - 1], "<") && !ft_strcmp(matrix[i - 2],
 			"<"))
+	{
 		return (1);
+	}
 	return (0);
 }
 char	**split_tokens(char **tokens, t_exec_context *exContext)
@@ -112,7 +144,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 		{
 			sub_tokens = heredoc_befor(tokens[i++]);
 		}
-		else if (ft_strncmp(tokens[i], "<<", ft_strlen(tokens[i])))
+		else if (ft_strnstr(tokens[i], "<<", ft_strlen(tokens[i])))
 		{
 			sub_tokens = heredoc_in_token(tokens[i++]);
 		}
