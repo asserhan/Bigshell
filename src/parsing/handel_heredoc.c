@@ -58,7 +58,6 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	}
 	else
 		delimiter = old_list->next->next->cmd;
-	ft_printf("delimeter : %s\n", delimiter);
 	while (1)
 	{
 		if (fill_line(quotes, exContext, delimiter, end))
