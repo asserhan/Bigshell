@@ -86,7 +86,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_list = convert_list_format(list_without_quotes, exContext);
 	add_cmd_to_args(final_list);
-	print_list(final_list);
 	exContext->cmds = final_list;
 	return (d_lstclear(&list_without_quotes), 0);
 }
