@@ -139,6 +139,8 @@ int					check_syntax(t_doubly_lst *head);
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
 
+void				sigint_handler(int sig);
+
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
 void				ft_export(t_exec_context *exContext);
