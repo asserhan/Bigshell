@@ -10,7 +10,7 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 LEAKS =  -g
 rlpath = $(shell brew --prefix readline)
 RL = -L$(rlpath)/lib -lreadline -I$(rlpath)/include
-FLAGS = -Wall -Werror -Wextra -Qunused-arguments   -L/goinfre/otait-ta/homebrew/opt/readline/lib -I/goinfre/otait-ta/homebrew/opt/readline/include  -lreadline -g  
+FLAGS = -Wall -Werror -Wextra -Qunused-arguments   $(RL)  
 # Targets
 all: $(NAME)
 
