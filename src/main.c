@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/08 20:24:21 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 20:40:00 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	if (init_data(&exContext, av, env))
 		exit(1);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	while (1)
 	{
-		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, sigquit_handler);
 		input = readline("minishell $ ");
 		if (!input)
 			exit(g_exit_status);
 		if (input[0] != '\0')
 			add_history(input);
 		if (pars_input(&exContext, input))
+		{
+			d_lstclear(&exContext.cmds);
 			continue ;
+		}
 		execution(&exContext);
-		d_lstclear(&exContext.cmds);
 	}
 	return (0);
 }
