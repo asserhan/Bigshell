@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/27 17:40:28 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:26:21 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,75 @@ int	_export_parse(char *arg)
 	}
 	return (0);
 }
+char	*ft_elimine_char(char *str, char c)
+{
+	char	*new;
+	int i;
+	i = 0;
+
+	new = malloc(sizeof(char) * ft_strlen(str));
+	if (!new)
+		return (NULL);
+	while (*str)
+	{
+		if (*str == c)
+			str++;
+		new[i++] = *str++;;
+	}
+	new[i] = '\0';
+	return (new);
+}
+void	_export_variable(char *arg, t_env *env)
+{
+	t_env_variable	*tmp;
+	char			*var;
+	char			*str;
+	char			*s;
+	int				i;
+
+	var = arg;
+	i = 0;
+	while (arg[i] && var[i] != '=' && var[i] != '+')
+		i++;
+	if (var[i] == '+')
+	{
+		s = ft_substr(var, 0, i );
+		var = ft_elimine_char(var, '+');
+		str = ft_substr(var, i + 1, ft_strlen(var));
+		tmp = search_env_elem(env, s);
+		if (!tmp)
+			tmp = create_env_elem(var);
+		else
+		{
+			s = ft_strjoin(s, "=");
+			s = ft_strjoin(s, tmp->content);
+			s = ft_strjoin(s, str);
+			delete_env_elem(env, tmp);
+			tmp = create_env_elem(s);
+		}
+		set_env_elem(env, tmp);
+		(free(s), free(str),free(var));
+	}
+	else
+	{
+		
+		s = ft_substr(var, 0, i );
+		tmp = search_env_elem(env, s);
+		if(tmp != NULL)
+		{
+			delete_env_elem(env, tmp);
+		}
+		tmp = create_env_elem(arg);
+		set_env_elem(env, tmp);
+		free(s);
+	}
+		
+		
+}
 
 void	ft_export(t_exec_context *exContext)
 {
 	t_env			*copy;
-	t_env_variable	*tmp;
 	int				i;
 
 	if (count_matrix(exContext->cmds->args) > 1)
@@ -75,10 +139,7 @@ void	ft_export(t_exec_context *exContext)
 		while (exContext->cmds->args[i])
 		{
 			if (!_export_parse(exContext->cmds->args[i]))
-			{
-				tmp = create_env_elem(exContext->cmds->args[i]);
-				set_env_elem(exContext->env, tmp);
-			}
+				_export_variable(exContext->cmds->args[i], exContext->env);
 			else
 				return ;
 			i++;

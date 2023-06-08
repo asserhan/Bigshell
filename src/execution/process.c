@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/03 23:42:30 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:52:17 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,14 @@
 void	ft_execute_child(t_exec_context *exContext)
 {
 	if (exContext->paths && ft_strchr(exContext->cmds->cmd, '/') == NULL)
+	{
 		exContext->cmds->cmd = ft_get_cmd_path(exContext);
+		free_matrix(exContext->cmd_paths);
+	}
+	else
+		free_matrix(exContext->cmd_paths);
 	if (!exContext->cmds->cmd)
 	{
-		free_matrix(exContext->cmds->args);
 		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
 				127);
 		free(exContext->cmds->cmd);
