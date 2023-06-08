@@ -24,8 +24,12 @@ void	line_to_tokens_delimiters(char const *line, char *delimiters,
 		else
 			i[0]++;
 		tokens[i[2]] = ft_substr(line, i[1], i[0] - i[1]);
-		if (!tokens[i[2]++])
+		if (!tokens[i[2]])
 			return (free_matrix(tokens));
+		if (!ft_strcmp(tokens[i[2]], " "))
+			free(tokens[i[2]]);
+		else
+			i[2]++;
 	}
 	tokens[i[2]] = NULL;
 }
@@ -154,15 +158,16 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			if (!line_expended)
 				return (NULL);
 			sub_tokens = ft_calloc((words_number_delimiters(line_expended,
-															"<>|") +
+															"<>| ") +
 									1),
 									sizeof(char *));
 			if (!sub_tokens)
 				return (NULL);
-			line_to_tokens_delimiters(line_expended, "<>|", sub_tokens);
+			line_to_tokens_delimiters(line_expended, "<>| ", sub_tokens);
 		}
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
 		free_matrix(sub_tokens);
 	}
+	// print_matrix(final_tokens, '.');
 	return (final_tokens);
 }

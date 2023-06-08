@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/08 16:00:42 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 20:24:21 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, sigquit_handler);
 		input = readline("minishell $ ");
 		if (!input)
 			exit(g_exit_status);
