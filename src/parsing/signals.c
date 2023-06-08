@@ -6,11 +6,12 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:34:07 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/07 17:20:37 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:11:12 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <sys/ioctl.h>
 
 int		g_exit_status;
 
@@ -18,10 +19,19 @@ void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
 		g_exit_status = 1;
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
+}
+void	heredoc_sigint_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_exit_status = 1;
+		// ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		// // rl_replace_line("", 0);
+		// // rl_on_new_line();
 	}
 }

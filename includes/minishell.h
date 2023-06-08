@@ -5,9 +5,9 @@
 # include "./doubly_lst.h"
 # include "./env_var.h"
 # include <fcntl.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -128,6 +128,10 @@ void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 						t_exec_context *exContext);
+// call the function that handle heredoc in new process
+void	heredoc_in_new_proc(t_doubly_lst *old_list,
+							t_doubly_lst *node,
+							t_exec_context *exContext);
 /* remove quotes from str*/
 char				*remove_quotes(char *str);
 /* expand token*/
@@ -140,7 +144,7 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
 
 void				sigint_handler(int sig);
-
+void				heredoc_sigint_handler(int sig);
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
 void				ft_export(t_exec_context *exContext);
