@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/08 17:04:19 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 22:53:21 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 
 void	exec_builtins(t_exec_context *exContext)
 {
-	// pid_t	pid;
-	// char	*str[4];
-	// str[4] = {"ls", "-l", NULL};
-	//ft_dup(exContext);
+	
 	if (ft_strcmp(exContext->cmds->cmd, "env") == 0)
 		ft_env(exContext);
 	else if (ft_strcmp(exContext->cmds->cmd, "export") == 0)
@@ -33,13 +30,7 @@ void	exec_builtins(t_exec_context *exContext)
 		ft_pwd();
 	else if (ft_strcmp(exContext->cmds->cmd, "exit") == 0)
 		ft_exit(exContext->cmds->args);
-	//ft_close_fd(exContext);
-	// pid=fork();
-	// if (pid == 0)
-	// 	execve("/bin/ls", str, NULL);
-	// else
-	// 	wait(NULL);
-	// //execve("/bin/ls", str, NULL);
+
 }
 int	is_builtin(char *cmd)
 {
@@ -67,7 +58,6 @@ int	mutiple_cmd(t_exec_context *exContext, int *w)
 	int	end[2];
 	int	pid;
 
-	// static int w;
 	if (pipe(end) == -1)
 		ft_msg_error("pipe", 1);
 	pid = fork();
@@ -75,8 +65,7 @@ int	mutiple_cmd(t_exec_context *exContext, int *w)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
 	{
-		// if (dup2(end[1], STDOUT_FILENO) == -1)
-		// 	ft_msg_error("dup2", 1);
+		
 		if (!exContext->cmds->next)
 			dup2(*w, 0);
 		else
