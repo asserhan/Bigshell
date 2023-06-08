@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/08 15:34:07 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:39:45 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 			if (find_char_index(list->cmd, "><") >= 0)
 			{
 				if (fill_in_out(&list, &node, exContext))
+				{
+					(d_lstclear(&head));
 					return (NULL);
+				}
 				continue ;
 			}
 			if (node->cmd[0] == '\0')
