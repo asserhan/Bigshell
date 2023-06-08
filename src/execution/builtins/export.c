@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/07 19:59:08 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:26:21 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*ft_elimine_char(char *str, char c)
 void	_export_variable(char *arg, t_env *env)
 {
 	t_env_variable	*tmp;
-	//t_env_variable	*tmp2;
 	char			*var;
 	char			*str;
 	char			*s;
@@ -110,7 +109,7 @@ void	_export_variable(char *arg, t_env *env)
 			tmp = create_env_elem(s);
 		}
 		set_env_elem(env, tmp);
-		(free(s), free(str));
+		(free(s), free(str),free(var));
 	}
 	else
 	{
@@ -119,11 +118,11 @@ void	_export_variable(char *arg, t_env *env)
 		tmp = search_env_elem(env, s);
 		if(tmp != NULL)
 		{
-			ft_printf("heeere\n");
 			delete_env_elem(env, tmp);
 		}
 		tmp = create_env_elem(arg);
 		set_env_elem(env, tmp);
+		free(s);
 	}
 		
 		
@@ -132,7 +131,6 @@ void	_export_variable(char *arg, t_env *env)
 void	ft_export(t_exec_context *exContext)
 {
 	t_env			*copy;
-	//t_env_variable	*tmp;
 	int				i;
 
 	if (count_matrix(exContext->cmds->args) > 1)

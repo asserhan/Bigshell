@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 23:29:13 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:36:13 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		execution(&exContext);
 		d_lstclear(&exContext.cmds);
-		free_matrix(exContext.cmd_paths);
 	}
 	return (0);
 }

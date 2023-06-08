@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/06 21:37:55 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:51:28 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	one_cmd(t_exec_context *exContext)
 		ft_dup(exContext);
 		ft_execute_child(exContext);
 	}
+	
 }
 int	mutiple_cmd(t_exec_context *exContext, int *w)
 {
@@ -167,20 +168,19 @@ void	execution(t_exec_context *exContext)
 {
 	int			size;
 	struct stat	fileStat;
-	//int			pid;
 	t_exec_context *tmp;
 	int w;
 
 	w = 0;
-	// int i;
-	// i=-1 it me;
+
 	tmp = exContext;
 
 	if (exContext->cmds->cmd[0] == '\0' )
 	{
 		if(exContext->cmds->in == 0 && exContext->cmds->out == 1)
 		{
-		put_error_ex("minishell: ", exContext->cmds->cmd,
+			
+			put_error_ex("minishell: ", exContext->cmds->cmd,
 				": command not found\n", 127);
 		}
 		ft_close_fd(exContext);
@@ -203,7 +203,6 @@ void	execution(t_exec_context *exContext)
 			exec_builtins(exContext);
 			dup2(fdout, 1);
 			dup2(fdin, 0);
-			//exit(0);
 		}
 		else
 		{
