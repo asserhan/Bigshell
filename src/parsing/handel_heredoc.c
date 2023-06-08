@@ -21,7 +21,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 
 	line = readline("> ");
 	if (!line)
-		return (exit(g_exit_status), 0);
+		return (1);
 	if (ft_strcmp(delimiter, line) == 0 && line[0])
 	{
 		free(line);
@@ -50,6 +50,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	char	*delimiter;
 	int		quotes;
 
+	signal(SIGINT, heredoc_sigint_handler);
 	if (pipe(end) == -1)
 		return (put_error("Error in pipe heredoc\n", NULL, 0));
 	quotes = 0;
@@ -61,7 +62,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	else
 		delimiter = old_list->next->next->cmd;
 	g_exit_status = 0;
-	while (1)
+	while (g_exit_status != 1)
 	{
 		if (fill_line(quotes, exContext, delimiter, end) || g_exit_status)
 			break ;
@@ -69,27 +70,4 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	if (quotes)
 		free(delimiter);
 	node->in = end[0];
-}
-void	heredoc_in_new_proc(t_doubly_lst *old_list, t_doubly_lst *node,
-		t_exec_context *exContext)
-{
-	pid_t pid;
-	int status;
-
-	pid = fork();
-	if (pid == -1)
-		return (put_error("Error in fork\n", NULL, 0));
-	if (pid == 0)
-	{
-		signal(SIGINT, heredoc_sigint_handler);
-		handle_heredoc(old_list, node, exContext);
-		exit(0);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
-	}
-	signal(SIGINT, SIG_IGN);
 }
