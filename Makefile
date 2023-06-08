@@ -10,12 +10,12 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 LEAKS =  -g
 rlpath = $(shell brew --prefix readline)
 RL = -L$(rlpath)/lib -lreadline -I$(rlpath)/include
-FLAGS = -Wall -Werror -Wextra    -g  
+FLAGS = -Wall -Werror -Wextra -Qunused-arguments   -L/goinfre/otait-ta/homebrew/opt/readline/lib -I/goinfre/otait-ta/homebrew/opt/readline/include  -lreadline -g  
 # Targets
 all: $(NAME)
 
 $(NAME): $(OBJ) obj_libft obj_printf
-	@$(CC)  $(FLAGS) $(OBJ) $(LIBTFT) $(PRINTF) ${RL} -o $@ $(RL)
+	@$(CC)  $(FLAGS) $(OBJ) $(LIBTFT) $(PRINTF) -o $@ 
 
 $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(@D)

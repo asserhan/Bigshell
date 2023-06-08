@@ -15,6 +15,7 @@
     "optional": "c",
     "unordered_map": "c",
     "vector": "c",
-    "sstream": "c"
+    "sstream": "c",
+    "ioctl.h": "c"
   }
 }

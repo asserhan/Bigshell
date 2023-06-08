@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conver_list_forma.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 16:38:24 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 10:57:10 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 	if (type == APPEND)
 		handle_append((*list), *node);
 	else if (type == HERE_DOC)
-		handle_heredoc((*list), *node, exContext);
+		heredoc_in_new_proc((*list), *node, exContext);
 	else if (type == OUT)
 		handle_output((*list), *node);
 	else if (type == IN)
@@ -49,7 +49,6 @@ void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 		t_doubly_lst **list)
 {
-
 	if (ft_strcmp((*list)->cmd, "|") && (!(*list)->prev || ((*list)->prev
 				&& !ft_strcmp((*list)->prev->cmd, "|"))))
 	{
@@ -58,12 +57,10 @@ void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 		else
 			(*node) = d_lstnew((*list)->cmd);
 		d_lstadd_back(head, (*node));
-	
 		if (find_char_index((*list)->cmd, "<>") < 0)
 			(*list) = (*list)->next;
 	}
 }
-
 
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext)

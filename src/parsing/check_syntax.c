@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:48:18 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/04 18:00:43 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 08:51:09 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_syntax(t_doubly_lst *head)
 	{
 		if (start_with(head->cmd, "!)") || end_with(head->cmd, "!)"))
 		{
-			put_error("syntax error near unexpected token `", "newline", 2);
+			put_error("syntax error near unexpected token `", "newline", 258);
 			return (1);
 		}
 		if (end_with(head->cmd, "><!()") && head->next
