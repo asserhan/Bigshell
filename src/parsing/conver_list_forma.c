@@ -6,11 +6,13 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/08 14:41:43 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:34:07 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int		g_exit_status;
 
 int	redirection_type(t_doubly_lst *list)
 {
@@ -27,7 +29,7 @@ int	redirection_type(t_doubly_lst *list)
 	return (-1);
 }
 
-void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
+int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		t_exec_context *exContext)
 {
 	int	type;
@@ -37,6 +39,8 @@ void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		handle_append((*list), *node);
 	else if (type == HERE_DOC)
 		handle_heredoc((*list), *node, exContext);
+	if (g_exit_status == 1)
+		return (1);
 	else if (type == OUT)
 		handle_output((*list), *node);
 	else if (type == IN)
@@ -45,6 +49,7 @@ void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		(*list) = (*list)->next->next->next;
 	else
 		(*list) = (*list)->next->next;
+	return (0);
 }
 void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 		t_doubly_lst **list)
@@ -77,7 +82,8 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 		{
 			if (find_char_index(list->cmd, "><") >= 0)
 			{
-				fill_in_out(&list, &node, exContext);
+				if (fill_in_out(&list, &node, exContext))
+					return (NULL);
 				continue ;
 			}
 			if (node->cmd[0] == '\0')
