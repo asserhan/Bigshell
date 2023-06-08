@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/26 22:58:50 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:58:56 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_cd(char **arg, t_env *env)
 		path = arg[1];
 		if (chdir(path) == -1)
 		{
-			put_error_ex("minishell: cd: ", path, "No such file or directory",
+			put_error_ex("minishell: cd: ", path, ": No such file or directory\n",
 					1);
 			return ;
 		}
