@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 20:23:34 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 21:48:41 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,24 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
+	t_doubly_lst	*tmp2;
 	int				k;
 	int				fdout;
 	int				fdin;
 	int				pid;
+	struct stat		fileStat;
 
 	k = 0;
 	tmp = exContext;
+	tmp2 = tmp->cmds;
+	while (tmp2 && ft_strchr(tmp2->cmd, '/'))
+	{
+		stat(tmp2->cmd, &fileStat);
+		if (S_ISDIR(fileStat.st_mode))
+			return (put_error_ex("minishell: ", tmp2->cmd, ": is a directory\n",
+					126));
+		tmp2 = tmp2->next;
+	}
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
