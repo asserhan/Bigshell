@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
+ 
 
 char	*get_dir(char *path)
 {

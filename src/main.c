@@ -20,12 +20,12 @@ int	main(int ac, char **av, char **env)
 	char			*input;
 
 	(void)ac;
-	if (init_data(&exContext, av, env))
-		exit(1);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		if (init_data(&exContext, av, env))
+			exit(1);
 		input = readline("minishell $ ");
 		if (!input)
 			exit(g_exit_status);
@@ -37,6 +37,8 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		execution(&exContext);
+		d_lstclear(&exContext.cmds);
+		free_env(&(exContext.env));
 	}
 	return (0);
 }

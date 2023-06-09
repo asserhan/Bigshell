@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
+ 
 
 static char	*subtoken(char *str, int i, t_exec_context *exContext)
 {

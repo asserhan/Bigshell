@@ -13,8 +13,6 @@
 #include "../../includes/minishell.h"
 #include <sys/ioctl.h>
 
-int		g_exit_status;
-
 void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)

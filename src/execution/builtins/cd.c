@@ -12,7 +12,7 @@
 
 #include "../../../includes/minishell.h"
 
-extern int	g_exit_status;
+ 
 static char	*get_env_path(t_env *env, char *name)
 {
 	t_env_variable	*tmp;

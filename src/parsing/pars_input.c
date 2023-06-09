@@ -17,13 +17,18 @@ extern int		g_exit_status;
 t_doubly_lst	*create_node_after_heredeoc(t_doubly_lst *list)
 {
 	t_doubly_lst	*node;
+	char			*no_quotes;
 
 	node = NULL;
 	if (list->prev && list->prev->prev && !ft_strcmp(list->prev->cmd, "<")
 		&& !ft_strcmp(list->prev->prev->cmd, "<"))
 		node = d_lstnew(list->cmd);
 	else
-		node = d_lstnew(remove_quotes(list->cmd));
+	{
+		no_quotes = remove_quotes(list->cmd);
+		node = d_lstnew(no_quotes);
+		free(no_quotes);
+	}
 	return (node);
 }
 

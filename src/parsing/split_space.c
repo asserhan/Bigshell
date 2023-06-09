@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
+ 
 
 int	count_words(char **str, const char *delimiters, char *quote_char,
 		int *in_quotes)

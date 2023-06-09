@@ -37,4 +37,6 @@ void						update_env_elem(t_env *env, char *name,
 /* free all env variables*/
 void						env_lstclear(t_env *env);
 
+void						free_env(t_env **env);
+
 #endif

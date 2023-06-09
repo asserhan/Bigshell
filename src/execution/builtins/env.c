@@ -12,7 +12,7 @@
 
 #include "../../../includes/minishell.h"
 
-extern int	g_exit_status;
+ 
 void	ft_env(t_exec_context *exContext)
 {
 	t_doubly_lst	*cmds;

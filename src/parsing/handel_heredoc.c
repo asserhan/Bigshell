@@ -12,8 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
-
 int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 {
 	char	*line;
