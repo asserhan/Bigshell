@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:34:07 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 14:11:14 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:19:27 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	sigint_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_exit_status = 1;
-		// ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
 	}
 }
 void	heredoc_sigint_handler(int sig)
