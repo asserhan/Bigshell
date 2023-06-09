@@ -68,7 +68,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 		{
 			if (quotes)
 				free(delimiter);
-			g_exit_status = 1;
+			// g_exit_status = 1;
 			close(end[0]);
 			close(end[1]);
 			return ;
