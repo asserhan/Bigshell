@@ -6,9 +6,9 @@
 # include "./env_var.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -154,6 +154,8 @@ void				ft_unset(t_exec_context *exContext);
 void				ft_cd(char **arg, t_env *env);
 int					ft_pwd(void);
 void				ft_exit(char **arg);
+int					is_builtin(char *cmd);
+void				exec_builtins(t_exec_context *exContext);
 /* copy env list */
 t_env				*copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/
@@ -161,7 +163,6 @@ void				sort_env_var(t_env_variable *head);
 ////////////////////////////////////* Execution*////////////////////////////////////
 
 /*fuction that execute builtins*/
-void				exec_builtins(t_exec_context *exContext);
 /*get path from enviroment and split it*/
 void				ft_get_path(t_exec_context *exContext);
 /*function that join the command with her path */
@@ -174,4 +175,7 @@ void				execution(t_exec_context *exContext);
 void				ft_dup(t_exec_context *exContext);
 /*fuction that close file descriptor*/
 void				ft_close_fd(t_exec_context *exContext);
+/*fuction that execute  child process*/
+void				ft_child_process(t_exec_context *exContext, int *k,
+						int *end);
 #endif

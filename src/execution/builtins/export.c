@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/08 15:26:21 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:13:44 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,7 @@ void	_export_variable(char *arg, t_env *env)
 		s = ft_substr(var, 0, i );
 		tmp = search_env_elem(env, s);
 		if(tmp != NULL)
-		{
 			delete_env_elem(env, tmp);
-		}
 		tmp = create_env_elem(arg);
 		set_env_elem(env, tmp);
 		free(s);
