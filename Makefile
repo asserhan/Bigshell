@@ -11,7 +11,7 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 LEAKS =  -g
 rlpath = $(shell brew --prefix readline)
 RL = -L$(rlpath)/lib -lreadline -I$(rlpath)/include
-FLAGS = -Wall -Werror -Wextra -Qunused-arguments   $(RL)  
+FLAGS = -Wall -Werror -Wextra -Qunused-arguments -g  $(RL)  
 # Targets
 all: $(NAME)
 

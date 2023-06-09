@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 13:06:35 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 14:18:50 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 	t_doubly_lst	*final_list;
 
 	tokens = split_space(input);
-	free(input);
 	if (!tokens)
 		return (1);
 	final_tokens = split_tokens(tokens, exContext);
