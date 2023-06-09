@@ -80,6 +80,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_tokens = split_tokens(tokens, exContext);
 	free_matrix(tokens);
+	free(tokens);
 	if (!final_tokens)
 		return (1);
 	cmd_list = matrix_to_list(final_tokens);

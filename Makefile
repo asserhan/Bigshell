@@ -1,7 +1,7 @@
 # Variables
 NAME = minishell
 CC = cc
-#FLAGS = -Wall -Werror -Wextra -g -I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
+FLAGS = -Wall -Werror -Wextra -g -I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
 RM = rm -rf
 LIBTFT = libft/libft.a
 PRINTF = ft_printf/libftprintf.a
@@ -11,7 +11,7 @@ OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 LEAKS =  -g
 rlpath = $(shell brew --prefix readline)
 RL = -L$(rlpath)/lib -lreadline -I$(rlpath)/include
-FLAGS = -Wall -Werror -Wextra -Qunused-arguments -g  $(RL)  
+# FLAGS = -Wall -Werror -Wextra -Qunused-arguments -g  $(RL)  
 # Targets
 all: $(NAME)
 
