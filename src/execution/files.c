@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 19:58:32 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 18:39:08 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:28:45 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,15 @@ void	ft_close_fd(t_exec_context *exContext)
 
 		tmp->cmds = tmp->cmds->next;
 	}
+}
+void ft_dup_built(t_exec_context *exContext)
+{
+	int fd_out;
+	int fd_in;
+	fd_out = dup(STDOUT_FILENO);
+	fd_in = dup(STDIN_FILENO);
+	ft_dup(exContext);
+	exec_builtins(exContext);
+	dup2(fd_out, STDOUT_FILENO);
+	dup2(fd_in, STDIN_FILENO);
 }

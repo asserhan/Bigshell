@@ -173,4 +173,6 @@ void				execution(t_exec_context *exContext);
 void				ft_dup(t_exec_context *exContext);
 /*fuction that close file descriptor*/
 void				ft_close_fd(t_exec_context *exContext);
+/*fuction that execute  child process*/
+void	ft_child_process(t_exec_context *exContext, int *k, int *end);
 #endif
