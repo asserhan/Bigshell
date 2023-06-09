@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 14:18:50 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:50:25 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	final_tokens = split_tokens(tokens, exContext);
 	free_matrix(tokens);
-	free(tokens);
 	if (!final_tokens)
 		return (1);
 	cmd_list = matrix_to_list(final_tokens);

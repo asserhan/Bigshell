@@ -168,6 +168,5 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
 		free_matrix(sub_tokens);
 	}
-	// print_matrix(final_tokens, '.');
 	return (final_tokens);
 }
