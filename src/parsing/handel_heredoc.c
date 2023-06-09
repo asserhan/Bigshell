@@ -21,7 +21,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 
 	line = readline("> ");
 	if (!line)
-		return (1);
+		return (-1);
 	if (ft_strcmp(delimiter, line) == 0 && line[0])
 	{
 		free(line);
@@ -49,6 +49,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	int		end[2];
 	char	*delimiter;
 	int		quotes;
+	int		result;
 
 	signal(SIGINT, heredoc_sigint_handler);
 	if (pipe(end) == -1)
@@ -64,7 +65,17 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	g_exit_status = 0;
 	while (g_exit_status != 1)
 	{
-		if (fill_line(quotes, exContext, delimiter, end))
+		result = fill_line(quotes, exContext, delimiter, end);
+		if (result == -1)
+		{
+			if (quotes)
+				free(delimiter);
+			g_exit_status = 1;
+			close(end[0]);
+			close(end[1]);
+			return ;
+		}
+		else if (result == 1)
 			break ;
 	}
 	if (quotes)
