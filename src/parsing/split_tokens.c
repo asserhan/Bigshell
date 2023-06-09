@@ -1,7 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	line_to_tokens_delimiters(char const *line, char *delimiters,
-		char **tokens)
+void	line_to_tokens_delimiters(char *line, char *delimiters, char **tokens)
 {
 	int	s_quote;
 	int	d_quote;
@@ -23,7 +22,9 @@ void	line_to_tokens_delimiters(char const *line, char *delimiters,
 		}
 		else
 			i[0]++;
+		ft_printf("line: %s\n", line);
 		tokens[i[2]] = ft_substr(line, i[1], i[0] - i[1]);
+		ft_printf("line: %s\n", line);
 		if (!tokens[i[2]])
 			return (free_matrix(tokens));
 		if (!ft_strcmp(tokens[i[2]], " "))
@@ -33,7 +34,7 @@ void	line_to_tokens_delimiters(char const *line, char *delimiters,
 	}
 	tokens[i[2]] = NULL;
 }
-int	words_number_delimiters(const char *str, const char *delimiters)
+int	words_number_delimiters(char *str, char *delimiters)
 {
 	int	s_quote;
 	int	d_quote;
@@ -138,6 +139,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 	char	*line_expended;
 	int		command_count;
 	int		i;
+	int		count;
 
 	command_count = count_matrix(tokens);
 	i = 0;
@@ -157,15 +159,14 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			line_expended = expand_token(tokens[i++], exContext);
 			if (!line_expended)
 				return (NULL);
-			sub_tokens = ft_calloc((words_number_delimiters(line_expended,
-															"<>| ") +
-									1),
-									sizeof(char *));
+			ft_printf("line_expended: %s\n", line_expended);
+			count = words_number_delimiters(line_expended,
+											"<>| ");
+			sub_tokens = malloc((count + 1) * sizeof(char *));
 			if (!sub_tokens)
 				return (NULL);
 			line_to_tokens_delimiters(line_expended, "<>| ", sub_tokens);
-			ft_printf("foo");
-			print_matrix(sub_tokens, '.');
+			print_matrix(sub_tokens, ' ');
 		}
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
 		free_matrix(sub_tokens);

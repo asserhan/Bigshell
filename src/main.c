@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 16:22:14 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:45:26 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **env)
 			// free_env(&(exContext.env));
 			continue ;
 		}
-		//execution(&exContext);
+		execution(&exContext);
 		d_lstclear(&exContext.cmds);
 	}
 	free_env(&(exContext.env));
