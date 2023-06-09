@@ -6,35 +6,18 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:19 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 17:20:27 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:22:19 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_get_path(t_exec_context *exContext)
+void	join_path(t_exec_context *exContext)
 {
-	char			*tmp;
-	t_env_variable	*envp;
-	int				i;
+	char	*tmp;
+	int		i;
 
-	exContext->cmd_paths = NULL;
-	envp = exContext->env->first;
 	i = -1;
-	while (envp)
-	{
-		exContext->paths = search_env_elem(exContext->env, "PATH");
-		envp = envp->next;
-	}
-	if (!exContext->paths)
-		return ;
-	exContext->cmd_paths = ft_split(exContext->paths->content, ':');
-	if (!exContext->cmd_paths)
-	{
-		free_matrix(exContext->cmd_paths);
-		ft_msg_error("Error\n", 1);
-		
-	}
 	while (exContext->cmd_paths[++i])
 	{
 		tmp = exContext->cmd_paths[i];
@@ -48,6 +31,29 @@ void	ft_get_path(t_exec_context *exContext)
 		free(tmp);
 	}
 }
+
+void	ft_get_path(t_exec_context *exContext)
+{
+	t_env_variable	*envp;
+
+	exContext->cmd_paths = NULL;
+	envp = exContext->env->first;
+	while (envp)
+	{
+		exContext->paths = search_env_elem(exContext->env, "PATH");
+		envp = envp->next;
+	}
+	if (!exContext->paths)
+		return ;
+	exContext->cmd_paths = ft_split(exContext->paths->content, ':');
+	if (!exContext->cmd_paths)
+	{
+		free_matrix(exContext->cmd_paths);
+		ft_msg_error("Error\n", 1);
+	}
+	join_path(exContext);
+}
+
 char	*ft_get_cmd_path(t_exec_context *exContext)
 {
 	char *my_cmd;
