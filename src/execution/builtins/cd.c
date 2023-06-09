@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/08 20:44:58 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:28:29 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,37 +44,44 @@ static void	update_pwd(t_env *env, char *name)
 	t_env_variable	*tmp;
 	char			pwd[PATH_MAX];
 	char			*home;
-	char			*oldpwd;
 
 	tmp = env->first;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, name) == 0)
 		{
-			if (ft_strcmp(name, "OLDPWD") == 0)
-			{
-				oldpwd = tmp->content;
-				free(tmp->content);
-				if(getcwd(oldpwd, PATH_MAX))
-					tmp->content = ft_strdup(oldpwd);
-			}
+			free(tmp->content);
+			if (getcwd(pwd, PATH_MAX))
+				tmp->content = ft_strdup(pwd);
 			else
 			{
-				if (getcwd(pwd, PATH_MAX))
-					tmp->content = ft_strdup(pwd);
+				if (search_env_elem(env, "OLDPWD"))
+					tmp->content = ft_strdup(search_env_elem(env,
+																"OLDPWD")
+													->content);
 				else
 				{
-					if (search_env_elem(env, "OLDPWD"))
-						tmp->content = ft_strdup(search_env_elem(env,
-																	"OLDPWD")
-														->content);
-					else
-					{
-						home = get_env_path(env, "HOME");
-						tmp->content = ft_strdup(home);
-					}
+					home = get_env_path(env, "HOME");
+					tmp->content = ft_strdup(home);
 				}
 			}
+		}
+		tmp = tmp->next;
+	}
+}
+void update_oldpwd(t_env *env,char *name,char *path)
+{
+	t_env_variable	*tmp;
+	
+
+	tmp = env->first;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+		{
+			free(tmp->content);
+			tmp->content = ft_strdup(path);
+			return ;
 		}
 		tmp = tmp->next;
 	}
@@ -83,6 +90,7 @@ void	ft_cd(char **arg, t_env *env)
 {
 	char	*path;
 	char	str[PATH_MAX];
+	char  *oldpwd;
 
 	if (count_matrix(arg) == 1)
 	{
@@ -100,6 +108,7 @@ void	ft_cd(char **arg, t_env *env)
 					": No such file or directory\n", 1);
 			return ;
 		}
+		oldpwd = get_env_path(env, "PWD");
 		path = getcwd(str, PATH_MAX);
 		if (!path && errno == ENOENT)
 		{
@@ -109,8 +118,8 @@ void	ft_cd(char **arg, t_env *env)
 			g_exit_status = 1;
 			return ;
 		}
+		update_oldpwd(env, "OLDPWD",oldpwd); //to do
 		update_pwd(env, "PWD");
-		update_pwd(env, "OLDPWD"); //to do
 	}
 	g_exit_status = 0;
 }

@@ -1,5 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include <stdio.h>
 # include "../ft_printf/ft_printf.h"
 # include "../libft/libft.h"
 # include "./doubly_lst.h"
@@ -7,7 +8,6 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
