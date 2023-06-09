@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **env)
 			// free_env(&(exContext.env));
 			continue ;
 		}
-		execution(&exContext);
+		//execution(&exContext);
 		d_lstclear(&exContext.cmds);
 	}
 	free_env(&(exContext.env));

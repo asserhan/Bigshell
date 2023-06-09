@@ -12,8 +12,6 @@
 
 #include "../../includes/minishell.h"
 
- 
-
 static char	*subtoken(char *str, int i, t_exec_context *exContext)
 {
 	char	*var_value;
@@ -65,8 +63,10 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	result = ft_strjoin(sub, var_value);
 	free(sub);
 	free(var_value);
+	sub = result;
 	if (str[i] != '\0')
 		result = ft_strjoin(result, &str[i + d_quote]);
+	free(sub);
 	return (result);
 }
 
