@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:06 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 18:52:12 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:33:40 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,12 @@ char	*expand_token(char *token, t_exec_context *exContext)
 	char	*var_result;
 	char	*result;
 	char	*path;
+	char	*expand;
 
 	var_result = var_expand(token, exContext);
-	if (!*var_result)
-		return (NULL);
+	expand = ft_strdup(var_result);
 	path = get_env_value("HOME", exContext);
-	if (!var_result || !path)
-		return (NULL);
-	result = path_expand(var_result, path);
-	ft_printf("var_result = %s\n", result);
+	result = path_expand(expand, path);
 	free(path);
 	return (result);
 }
