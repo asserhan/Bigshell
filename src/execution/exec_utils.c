@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:19 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 18:22:19 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:32:20 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ void	ft_get_path(t_exec_context *exContext)
 
 char	*ft_get_cmd_path(t_exec_context *exContext)
 {
-	char *my_cmd;
-	int i;
-	i = -1;
+	char	*my_cmd;
+	int		i;
 
+	i = -1;
 	if (!exContext->cmd_paths)
-		return (exContext->cmds->cmd); // update
+		return (exContext->cmds->cmd);
 	while (exContext->cmd_paths[++i])
 	{
 		my_cmd = ft_strjoin(exContext->cmd_paths[i], exContext->cmds->cmd);
