@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/08 16:39:45 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:55:36 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		handle_append((*list), *node);
 	else if (type == HERE_DOC)
 		handle_heredoc((*list), *node, exContext);
-	if (g_exit_status == 1)
-		return (1);
 	else if (type == OUT)
 		handle_output((*list), *node);
 	else if (type == IN)
@@ -49,6 +47,8 @@ int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		(*list) = (*list)->next->next->next;
 	else
 		(*list) = (*list)->next->next;
+	if (g_exit_status != 0)
+		return (1);
 	return (0);
 }
 void	create_node(t_doubly_lst **node, t_doubly_lst **head,

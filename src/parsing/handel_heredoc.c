@@ -51,7 +51,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 
 	signal(SIGINT, heredoc_sigint_handler);
 	if (pipe(end) == -1)
-		return (put_error("Error in pipe heredoc\n", NULL, 0));
+		return (perror("pipe"));
 	quotes = 0;
 	if (ft_strchr(old_list->next->next->cmd, '\"'))
 	{
