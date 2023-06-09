@@ -1,18 +1,13 @@
-//
 /* ************************************************************************** */
-//
 /*                                                                            */
-//
 /*                                                        :::      ::::::::   */
-//
-
-//
-/*   Created: 2023/05/01 11:07:14 by hasserao          #+#    #+#             */
-//
-/*   Updated: 2023/05/01 16:01:03 by hasserao         ###   ########.fr       */
-//
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 15:38:40 by hasserao          #+#    #+#             */
+/*   Updated: 2023/06/09 15:46:03 by hasserao         ###   ########.fr       */
 /*                                                                            */
-//
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
@@ -22,16 +17,9 @@ int	ft_pwd(void)
 {
 	char	buff[PATH_MAX];
 
-	if (getcwd(buff, PATH_MAX) != NULL)
-	{
-		ft_putstr_fd(buff, 1);
-		ft_putstr_fd("\n", 1);
-		g_exit_status = 0;
-	}
-	else
-	{
-		perror("getcwd()");
-		return (1);
-	}
+	getcwd(buff, PATH_MAX);
+	ft_putstr_fd(buff, 1);
+	ft_putstr_fd("\n", 1);
+	g_exit_status = 0;
 	return (0);
 }

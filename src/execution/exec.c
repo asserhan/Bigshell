@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/08 22:53:21 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:15:03 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	one_cmd(t_exec_context *exContext)
 		ft_execute_child(exContext);
 	}
 }
-int	mutiple_cmd(t_exec_context *exContext, int *w)
+int	mutiple_cmd(t_exec_context *exContext, int *k)
 {
 	int	end[2];
 	int	pid;
@@ -67,12 +67,12 @@ int	mutiple_cmd(t_exec_context *exContext, int *w)
 	{
 		
 		if (!exContext->cmds->next)
-			dup2(*w, 0);
+			dup2(*k, 0);
 		else
 		{
 			if (dup2(end[1], STDOUT_FILENO) == -1)
 				ft_msg_error("dup2", 1);
-			if (dup2(*w, STDIN_FILENO) == -1)
+			if (dup2(*k, STDIN_FILENO) == -1)
 				ft_msg_error("dup2", 1);
 		}
 		close(end[0]);
@@ -92,9 +92,9 @@ int	mutiple_cmd(t_exec_context *exContext, int *w)
 	}
 	else
 	{
-		if (*w)
-			close(*w);
-		*w = dup(end[0]);
+		if (*k)
+			close(*k);
+		*k = dup(end[0]);
 		close(end[1]);
 		close(end[0]);
 	}
@@ -155,19 +155,19 @@ int	create_pipes(t_exec_context *exContext, int size)
 void	execution(t_exec_context *exContext)
 {
 	int				size;
-	struct stat		fileStat;
+	//struct stat		fileStat;
 	t_exec_context	*tmp;
-	int				w;
+	int				k;
 	int				fdout;
 	int				fdin;
-		int pid;
+	int pid;
 
-	w = 0;
+	k = 0;
 	tmp = exContext;
-	stat(exContext->cmds->cmd, &fileStat);
-	if (S_ISDIR(fileStat.st_mode))
-		return (put_error_ex("minishell: ", exContext->cmds->cmd,
-				": is a directory\n", 126));
+	// stat(exContext->cmds->cmd, &fileStat);
+	// if (S_ISDIR(fileStat.st_mode))
+	// 	return (put_error_ex("minishell: ", exContext->cmds->cmd,
+	// 			": is a directory\n", 126));
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
@@ -191,7 +191,7 @@ void	execution(t_exec_context *exContext)
 	{
 		while (tmp->cmds)
 		{
-			pid = mutiple_cmd(tmp, &w);
+			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}
 		waitpid(pid, NULL, 0);
