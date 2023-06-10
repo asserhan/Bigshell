@@ -116,6 +116,7 @@ char	*expand_token(char *token, t_exec_context *exContext)
 	expand = ft_strdup(var_result);
 	path = get_env_value("HOME", exContext);
 	result = path_expand(expand, path);
+	free(expand);
 	free(path);
 	return (result);
 }
