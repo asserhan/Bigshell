@@ -102,5 +102,6 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1)
 			;
 	}
+	d_lstclear(&(exContext->cmds));
 	ft_close_fd(exContext);
 }
