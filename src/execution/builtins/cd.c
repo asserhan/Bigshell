@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 12:28:29 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/10 17:13:36 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,15 @@ void	ft_cd(char **arg, t_env *env)
 		{
 			put_error_ex("minishell: cd: ", path,
 					": No such file or directory\n", 1);
+			return ;
+		}
+		if(!search_env_elem(env,"OLDPWD") || !search_env_elem(env,"PWD"))
+		{
+			if(!search_env_elem(env,"PWD"))
+			{
+				puts("here");
+				update_env_elem(env,"OLDPWD","\0");
+			}
 			return ;
 		}
 		oldpwd = get_env_path(env, "PWD");
