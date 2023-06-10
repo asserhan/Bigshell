@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/10 11:29:08 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:21:12 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	execution(t_exec_context *exContext)
 			;
 	}
 	ft_close_fd(exContext);
+	d_lstclear(&(exContext->cmds));
 }
