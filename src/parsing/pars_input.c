@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 20:44:25 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:50:25 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@ extern int		g_exit_status;
 t_doubly_lst	*create_node_after_heredeoc(t_doubly_lst *list)
 {
 	t_doubly_lst	*node;
+	char			*no_quotes;
 
 	node = NULL;
 	if (list->prev && list->prev->prev && !ft_strcmp(list->prev->cmd, "<")
 		&& !ft_strcmp(list->prev->prev->cmd, "<"))
 		node = d_lstnew(list->cmd);
 	else
-		node = d_lstnew(remove_quotes(list->cmd));
+	{
+		no_quotes = remove_quotes(list->cmd);
+		node = d_lstnew(no_quotes);
+		free(no_quotes);
+	}
 	return (node);
 }
 
@@ -71,7 +76,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 	t_doubly_lst	*final_list;
 
 	tokens = split_space(input);
-	free(input);
 	if (!tokens)
 		return (1);
 	final_tokens = split_tokens(tokens, exContext);
@@ -85,8 +89,11 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (check_syntax(list_without_quotes))
 		return (1);
 	final_list = convert_list_format(list_without_quotes, exContext);
+	d_lstclear(&list_without_quotes);
+	if (!final_list)
+		return (1);
 	add_cmd_to_args(final_list);
-	print_list(final_list);
+	// print_list(final_list);
 	exContext->cmds = final_list;
-	return (d_lstclear(&list_without_quotes), 0);
+	return (0);
 }

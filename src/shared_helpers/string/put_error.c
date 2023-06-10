@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-extern int	g_exit_status;
+ 
 
 void	put_error(char *message, char *param, int status_code)
 {

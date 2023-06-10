@@ -1,7 +1,5 @@
 #include "../../includes/minishell.h"
 
-extern int	g_exit_status;
-
 int	count_words(char **str, const char *delimiters, char *quote_char,
 		int *in_quotes)
 {
@@ -100,8 +98,6 @@ char	**split_space(char *line)
 							NULL,
 							2),
 				NULL);
-	if (!line)
-		return (NULL);
 	tokens = malloc((words + 1) * sizeof(char *));
 	if (tokens == NULL)
 		return (NULL);

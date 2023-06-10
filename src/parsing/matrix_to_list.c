@@ -91,6 +91,7 @@ t_doubly_lst	*matrix_to_list(char **matrix)
 			tail = node;
 			if (!head)
 				head = node;
+			free(cmd);
 		}
 	}
 	return (head);

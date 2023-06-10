@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 21:28:36 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 21:03:43 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,41 @@ int	g_exit_status;
 
 int	main(int ac, char **av, char **env)
 {
-	t_exec_context	exContext;
 	char			*input;
+	t_exec_context	exContext;
 
 	(void)ac;
+	// (void)av;
+	// (void)env;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	input = NULL;
 	if (init_data(&exContext, av, env))
 		exit(1);
 	while (1)
 	{
+		if (input)
+			free(input);
 		input = readline("minishell $ ");
+		if (input && !*input)
+		{
+			d_lstclear(&exContext.cmds);
+			// free_env(&(exContext.env));
+			continue ;
+		}
+		if (!input)
+			exit(g_exit_status);
 		if (input[0] != '\0')
 			add_history(input);
-		if (!input || pars_input(&exContext, input))
+		if (pars_input(&exContext, input))
+		{
+			d_lstclear(&exContext.cmds);
+			// free_env(&(exContext.env));
 			continue ;
-		//print_matrix(exContext.env->env_array,'\n');
-		//exec_builtins(&exContext);
+		}
 		execution(&exContext);
-		
-		//wait(NULL);
+		d_lstclear(&exContext.cmds);
 	}
+	free_env(&(exContext.env));
 	return (0);
 }

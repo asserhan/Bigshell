@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 22:36:54 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/18 17:05:41 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:34:57 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void	free_matrix(char **matrix)
 		while (matrix[i])
 		{
 			free(matrix[i]);
+			matrix[i] = NULL;
 			i++;
 		}
-		free(matrix);
 	}
+	free(matrix);
+	matrix = NULL;
 }

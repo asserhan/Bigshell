@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conver_list_forma.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 16:38:24 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:55:36 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int		g_exit_status;
 
 int	redirection_type(t_doubly_lst *list)
 {
@@ -27,7 +29,7 @@ int	redirection_type(t_doubly_lst *list)
 	return (-1);
 }
 
-void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
+int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		t_exec_context *exContext)
 {
 	int	type;
@@ -45,11 +47,13 @@ void	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		(*list) = (*list)->next->next->next;
 	else
 		(*list) = (*list)->next->next;
+	if (g_exit_status != 0)
+		return (1);
+	return (0);
 }
 void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 		t_doubly_lst **list)
 {
-
 	if (ft_strcmp((*list)->cmd, "|") && (!(*list)->prev || ((*list)->prev
 				&& !ft_strcmp((*list)->prev->cmd, "|"))))
 	{
@@ -58,12 +62,10 @@ void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 		else
 			(*node) = d_lstnew((*list)->cmd);
 		d_lstadd_back(head, (*node));
-	
 		if (find_char_index((*list)->cmd, "<>") < 0)
 			(*list) = (*list)->next;
 	}
 }
-
 
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext)
@@ -80,7 +82,11 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 		{
 			if (find_char_index(list->cmd, "><") >= 0)
 			{
-				fill_in_out(&list, &node, exContext);
+				if (fill_in_out(&list, &node, exContext))
+				{
+					(d_lstclear(&head));
+					return (NULL);
+				}
 				continue ;
 			}
 			if (node->cmd[0] == '\0')

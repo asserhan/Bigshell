@@ -6,13 +6,11 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:06 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 17:23:52 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:33:40 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 static char	*subtoken(char *str, int i, t_exec_context *exContext)
 {
@@ -65,8 +63,10 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	result = ft_strjoin(sub, var_value);
 	free(sub);
 	free(var_value);
+	sub = result;
 	if (str[i] != '\0')
 		result = ft_strjoin(result, &str[i + d_quote]);
+	free(sub);
 	return (result);
 }
 
@@ -110,12 +110,12 @@ char	*expand_token(char *token, t_exec_context *exContext)
 	char	*var_result;
 	char	*result;
 	char	*path;
+	char	*expand;
 
 	var_result = var_expand(token, exContext);
+	expand = ft_strdup(var_result);
 	path = get_env_value("HOME", exContext);
-	if (!var_result || !path)
-		return (NULL);
-	result = path_expand(var_result, path);
+	result = path_expand(expand, path);
 	free(path);
 	return (result);
 }
