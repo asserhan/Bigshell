@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 20:55:36 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/10 11:10:46 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,23 @@ int	redirection_type(t_doubly_lst *list)
 }
 
 int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
-		t_exec_context *exContext)
+		t_exec_context *exContext, int *red_type)
 {
-	int	type;
-
-	type = redirection_type((*list));
-	if (type == APPEND)
+	*red_type = redirection_type((*list));
+	if (*red_type == APPEND)
 		handle_append((*list), *node);
-	else if (type == HERE_DOC)
+	else if (*red_type == HERE_DOC)
 		handle_heredoc((*list), *node, exContext);
-	else if (type == OUT)
+	else if (*red_type == OUT)
 		handle_output((*list), *node);
-	else if (type == IN)
+	else if (*red_type == IN)
 		handle_input((*list), *node);
-	if (type == APPEND || type == HERE_DOC)
+	if (g_exit_status != 0)
+		return (1);
+	if (*red_type == APPEND || *red_type == HERE_DOC)
 		(*list) = (*list)->next->next->next;
 	else
 		(*list) = (*list)->next->next;
-	if (g_exit_status != 0)
-		return (1);
 	return (0);
 }
 void	create_node(t_doubly_lst **node, t_doubly_lst **head,
@@ -72,6 +70,7 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 {
 	t_doubly_lst	*node;
 	t_doubly_lst	*head;
+	int				red_type;
 
 	head = NULL;
 	node = NULL;
@@ -82,11 +81,14 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 		{
 			if (find_char_index(list->cmd, "><") >= 0)
 			{
-				if (fill_in_out(&list, &node, exContext))
+				if (fill_in_out(&list, &node, exContext, &red_type))
 				{
-					(d_lstclear(&head));
+					d_lstclear(&head);
 					return (NULL);
 				}
+				if (red_type == HERE_DOC && ((list && ft_strchr(list->cmd, '|')
+							&& node->cmd[0] == '\0') || !(list)))
+					d_lstdelone(&head, node);
 				continue ;
 			}
 			if (node->cmd[0] == '\0')

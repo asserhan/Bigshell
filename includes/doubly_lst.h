@@ -29,4 +29,6 @@ void					print_list(t_doubly_lst *head);
 
 void					d_lstclear(t_doubly_lst **lst);
 
+void					d_lstdelone(t_doubly_lst **head,
+							t_doubly_lst *nodeToDelete);
 #endif
