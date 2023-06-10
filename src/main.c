@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 21:03:43 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:34:49 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	main(int ac, char **av, char **env)
 	t_exec_context	exContext;
 
 	(void)ac;
-	// (void)av;
-	// (void)env;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	input = NULL;
@@ -35,7 +33,6 @@ int	main(int ac, char **av, char **env)
 		if (input && !*input)
 		{
 			d_lstclear(&exContext.cmds);
-			// free_env(&(exContext.env));
 			continue ;
 		}
 		if (!input)
@@ -45,7 +42,6 @@ int	main(int ac, char **av, char **env)
 		if (pars_input(&exContext, input))
 		{
 			d_lstclear(&exContext.cmds);
-			// free_env(&(exContext.env));
 			continue ;
 		}
 		execution(&exContext);

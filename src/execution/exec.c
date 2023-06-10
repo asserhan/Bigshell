@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 21:48:41 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:31:32 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
-	t_doubly_lst	*tmp2;
+	t_doubly_lst	*cmds;
 	int				k;
 	int				fdout;
 	int				fdin;
@@ -61,14 +61,16 @@ void	execution(t_exec_context *exContext)
 
 	k = 0;
 	tmp = exContext;
-	tmp2 = tmp->cmds;
-	while (tmp2 && ft_strchr(tmp2->cmd, '/'))
+	cmds = tmp->cmds;
+	while (cmds && ft_strchr(cmds->cmd, '/'))
 	{
-		stat(tmp2->cmd, &fileStat);
+		stat(cmds->cmd, &fileStat);
 		if (S_ISDIR(fileStat.st_mode))
-			return (put_error_ex("minishell: ", tmp2->cmd, ": is a directory\n",
-					126));
-		tmp2 = tmp2->next;
+		{
+			(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n", 126));
+			d_lstdelone(&(tmp->cmds), cmds);
+		}
+		cmds = cmds->next;
 	}
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
@@ -101,4 +103,5 @@ void	execution(t_exec_context *exContext)
 			;
 	}
 	ft_close_fd(exContext);
+	d_lstclear(&(exContext->cmds));
 }

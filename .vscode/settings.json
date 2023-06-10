@@ -16,6 +16,18 @@
     "unordered_map": "c",
     "vector": "c",
     "sstream": "c",
-    "ioctl.h": "c"
+    "ioctl.h": "c",
+    "__node_handle": "c",
+    "__functional_base": "c",
+    "__functional_base_03": "c",
+    "__tuple": "c",
+    "algorithm": "c",
+    "array": "c",
+    "chrono": "c",
+    "type_traits": "c",
+    "iterator": "c",
+    "limits": "c",
+    "ratio": "c",
+    "tuple": "c"
   }
 }
