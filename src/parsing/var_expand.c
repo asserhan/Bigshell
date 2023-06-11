@@ -66,7 +66,8 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	sub = result;
 	if (str[i] != '\0')
 		result = ft_strjoin(result, &str[i + d_quote]);
-	free(sub);
+	if (ft_strcmp(result, sub))
+		free(sub);
 	return (result);
 }
 

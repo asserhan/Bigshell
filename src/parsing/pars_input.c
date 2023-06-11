@@ -93,7 +93,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (!final_list)
 		return (1);
 	add_cmd_to_args(final_list);
-	// print_list(final_list);
 	exContext->cmds = final_list;
 	return (0);
 }
