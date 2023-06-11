@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 14:59:53 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:36:55 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	one_cmd(t_exec_context *exContext)
 		ft_msg_error("fork", 1);
 	if (exContext->pid == 0)
 	{
-		ft_dup(exContext);
-		ft_execute_child(exContext);
+		ft_dup(exContext->cmds);
+		ft_execute_child(exContext, exContext->cmds);
 	}
 }
 
-int	mutiple_cmd(t_exec_context *exContext, int *k)
+int	mutiple_cmd(t_exec_context *exContext, t_doubly_lst *commend, int *k)
 {
 	int	end[2];
 	int	pid;
@@ -36,7 +36,7 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	if (pid == -1)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
-		ft_child_process(exContext, k, end);
+		ft_child_process(exContext, commend, k, end);
 	else
 	{
 		if (*k)
@@ -91,8 +91,8 @@ void	execution(t_exec_context *exContext)
 		{
 			fdout = dup(1);
 			fdin = dup(0);
-			ft_dup(exContext);
-			exec_builtins(exContext);
+			ft_dup(exContext->cmds);
+			exec_builtins(exContext, exContext->cmds);
 			dup2(fdout, 1);
 			dup2(fdin, 0);
 		}
@@ -105,10 +105,10 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
-		cmd_tmp = tmp->cmds;
+		cmd_tmp = exContext->cmds;
 		while (cmd_tmp)
 		{
-			pid = mutiple_cmd(tmp, &k);
+			pid = mutiple_cmd(tmp, cmd_tmp, &k);
 			cmd_tmp = cmd_tmp->next;
 		}
 		waitpid(pid, NULL, 0);

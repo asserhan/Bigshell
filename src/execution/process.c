@@ -6,47 +6,46 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 13:59:16 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:37:15 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_execute_child(t_exec_context *exContext)
+void	ft_execute_child(t_exec_context *exContext, t_doubly_lst *commend)
 {
-	if (exContext->cmds->cmd[0] == '\0')
+	if (commend->cmd[0] == '\0')
 	{
-		if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
+		if (commend->in == 0 && commend->out == 1)
 		{
-			put_error_ex("minishell: ", exContext->cmds->cmd,
-					": command not found\n", 127);
+			put_error_ex("minishell: ", commend->cmd, ": command not found\n",
+					127);
 		}
 		ft_close_fd(exContext);
 		return ;
 	}
-	if (exContext->paths && ft_strchr(exContext->cmds->cmd, '/') == NULL)
+	if (exContext->paths && ft_strchr(commend->cmd, '/') == NULL)
 	{
-		exContext->cmds->cmd = ft_get_cmd_path(exContext);
+		commend->cmd = ft_get_cmd_path(exContext);
 		free_matrix(exContext->cmd_paths);
 	}
 	else
 		free_matrix(exContext->cmd_paths);
-	if (!exContext->cmds->cmd)
+	if (!commend->cmd)
 	{
-		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
-				127);
-		free(exContext->cmds->cmd);
+		put_error_ex("minishell: ", commend->cmd, "command not found\n", 127);
+		free(commend->cmd);
 		exit(127);
 	}
-	execve(exContext->cmds->cmd, exContext->cmds->args,
-			exContext->env->env_array);
+	execve(commend->cmd, commend->args, exContext->env->env_array);
 	ft_msg_error("execve", 127);
 	exit(127);
 }
 
-void	ft_child_process(t_exec_context *exContext, int *k, int *end)
+void	ft_child_process(t_exec_context *exContext, t_doubly_lst *commend,
+		int *k, int *end)
 {
-	if (!exContext->cmds->next)
+	if (!commend->next)
 		dup2(*k, 0);
 	else
 	{
@@ -57,16 +56,16 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 	}
 	close(end[0]);
 	close(end[1]);
-	if (is_builtin(exContext->cmds->cmd))
+	if (is_builtin(commend->cmd))
 	{
-		ft_dup(exContext);
-		exec_builtins(exContext);
+		ft_dup(commend);
+		exec_builtins(exContext, commend);
 		exit(0);
 	}
 	else
 	{
 		ft_get_path(exContext);
-		ft_dup(exContext);
-		ft_execute_child(exContext);
+		ft_dup(commend);
+		ft_execute_child(exContext, commend);
 	}
 }

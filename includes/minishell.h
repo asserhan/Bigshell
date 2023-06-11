@@ -149,14 +149,15 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 void				sigint_handler(int sig);
 void				heredoc_sigint_handler(int sig);
 ////////////////////////////////////* Builtins*////////////////////////////////////
-void				ft_env(t_exec_context *exContext);
-void				ft_export(t_exec_context *exContext);
-void				ft_unset(t_exec_context *exContext);
+void				ft_env(t_exec_context *exContext, t_doubly_lst *commend);
+void				ft_export(t_exec_context *exContext, t_doubly_lst *commend);
+void				ft_unset(t_exec_context *exContext, t_doubly_lst *commend);
 void				ft_cd(char **arg, t_env *env);
 int					ft_pwd(void);
 void				ft_exit(char **arg);
 int					is_builtin(char *cmd);
-void				exec_builtins(t_exec_context *exContext);
+void	exec_builtins(t_exec_context *exContext,
+					t_doubly_lst *commend);
 /* copy env list */
 t_env				*copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/
@@ -169,14 +170,17 @@ void				ft_get_path(t_exec_context *exContext);
 /*function that join the command with her path */
 char				*ft_get_cmd_path(t_exec_context *exContext);
 /*function that excute command in child process*/
-void				ft_execute_child(t_exec_context *exContext);
+void	ft_execute_child(t_exec_context *exContext,
+						t_doubly_lst *commend);
 /*excute the program*/
 void				execution(t_exec_context *exContext);
 /*fuction that duplicate in and out to stdin and stdout*/
-void				ft_dup(t_exec_context *exContext);
+void				ft_dup(t_doubly_lst *commend);
 /*fuction that close file descriptor*/
 void				ft_close_fd(t_exec_context *exContext);
 /*fuction that execute  child process*/
-void				ft_child_process(t_exec_context *exContext, int *k,
+void	ft_child_process(t_exec_context *exContext,
+						t_doubly_lst *commend,
+						int *k,
 						int *end);
 #endif
