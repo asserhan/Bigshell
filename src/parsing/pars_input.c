@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/10 11:13:10 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 01:38:55 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (!final_list)
 		return (1);
 	add_cmd_to_args(final_list);
-	// print_list(final_list);
+	print_list(final_list);
 	exContext->cmds = final_list;
 	return (0);
 }

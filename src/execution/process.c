@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 20:23:40 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/11 02:19:51 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 
 void	ft_execute_child(t_exec_context *exContext)
 {
+	struct stat		fileStat;
+	if(ft_strchr(exContext->cmds->cmd, '/'))
+	{
+		stat(exContext->cmds->cmd, &fileStat);
+		if (S_ISDIR(fileStat.st_mode))
+		{
+			put_error_ex("minishell: ", exContext->cmds->cmd, ": is a directory\n", 126);
+		}
+		return ;
+	}
 	if (exContext->cmds->cmd[0] == '\0')
 	{
 		if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
@@ -38,6 +48,7 @@ void	ft_execute_child(t_exec_context *exContext)
 		free(exContext->cmds->cmd);
 		exit(127);
 	}
+	
 	execve(exContext->cmds->cmd, exContext->cmds->args,
 			exContext->env->env_array);
 	ft_msg_error("execve", 127);
@@ -50,6 +61,7 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 		dup2(*k, 0);
 	else
 	{
+
 		if (dup2(end[1], STDOUT_FILENO) == -1)
 			ft_msg_error("dup2", 1);
 		if (dup2(*k, STDIN_FILENO) == -1)
@@ -65,6 +77,7 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 	}
 	else
 	{
+				
 		ft_get_path(exContext);
 		ft_dup(exContext);
 		ft_execute_child(exContext);

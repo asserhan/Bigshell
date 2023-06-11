@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/10 20:31:32 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 02:20:36 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	if (pid == -1)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
+	{
 		ft_child_process(exContext, k, end);
+	}
 	else
 	{
 		if (*k)
@@ -52,27 +54,28 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
-	t_doubly_lst	*cmds;
+	//t_doubly_lst	*cmds;
 	int				k;
 	int				fdout;
 	int				fdin;
 	int				pid;
-	struct stat		fileStat;
+	//struct stat		fileStat;
 
 	k = 0;
 	tmp = exContext;
-	cmds = tmp->cmds;
-	while (cmds && ft_strchr(cmds->cmd, '/'))
-	{
-		stat(cmds->cmd, &fileStat);
-		if (S_ISDIR(fileStat.st_mode))
-		{
-			(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n", 126));
-			d_lstdelone(&(tmp->cmds), cmds);
-		}
-		cmds = cmds->next;
-	}
+	// cmds = tmp->cmds;
+	// while (cmds && ft_strchr(cmds->cmd, '/'))
+	// {
+	// 	stat(cmds->cmd, &fileStat);
+	// 	if (S_ISDIR(fileStat.st_mode))
+	// 	{
+	// 		(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n", 126));
+	// 		d_lstdelone(&(tmp->cmds), cmds);
+	// 	}
+	// 	cmds = cmds->next;
+	// }
 	size = d_lstsize(exContext->cmds);
+	//ft_printf("size = %d\n", size);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
 	{
@@ -93,8 +96,10 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
+		
 		while (tmp->cmds)
 		{
+			//ft_printf("cmd = %s\n", tmp->cmds->cmd);
 			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}

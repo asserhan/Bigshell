@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/10 17:13:36 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/11 02:01:30 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void	ft_cd(char **arg, t_env *env)
 		{
 			if(!search_env_elem(env,"PWD"))
 			{
-				puts("here");
 				update_env_elem(env,"OLDPWD","\0");
 			}
 			return ;
