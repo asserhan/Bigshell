@@ -96,7 +96,7 @@ char	**heredoc_in_token(char *token)
 		rtr = ft_calloc(4, sizeof(char *));
 		rtr[0] = ft_strdup("<");
 		rtr[1] = ft_strdup("<");
-		rtr[2] = ft_strdup(ft_substr(token, here_index + 2, ft_strlen(token)));
+		rtr[2] = ft_substr(token, here_index + 2, ft_strlen(token));
 		rtr[3] = NULL;
 	}
 	else
@@ -152,9 +152,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			sub_tokens = heredoc_befor(tokens[i++]);
 		}
 		else if (ft_strnstr(tokens[i], "<<", ft_strlen(tokens[i])))
-		{
 			sub_tokens = heredoc_in_token(tokens[i++]);
-		}
 		else
 		{
 			line_expended = expand_token(tokens[i++], exContext);
