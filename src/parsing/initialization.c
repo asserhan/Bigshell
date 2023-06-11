@@ -6,13 +6,12 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:00:57 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/06 19:30:04 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 10:55:52 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
- 
 void	set_start_vars(t_env *env)
 {
 	char			*tmp;
@@ -23,7 +22,7 @@ void	set_start_vars(t_env *env)
 	if (shl_lvl_elem == NULL || ft_atoi(shl_lvl_elem->content) <= 0)
 		tmp = ft_strdup("1");
 	else
-		tmp = ft_itoa(ft_atoi(shl_lvl_elem->content));
+		tmp = ft_itoa(ft_atoi(shl_lvl_elem->content) + 1);
 	update_env_elem(env, "SHLVL", tmp);
 	free(tmp);
 	tmp = getcwd(NULL, 0);
@@ -33,6 +32,7 @@ void	set_start_vars(t_env *env)
 	if (!path_elem)
 		update_env_elem(env, "PATH",
 				"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
+	env->env_array = env_to_matrix(env->first);
 }
 
 int	init_data(t_exec_context *exContext, char **av, char **env_str)

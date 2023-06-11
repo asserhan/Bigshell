@@ -96,6 +96,8 @@ void				ft_msg_error(char *message, int exit);
 /* parse first element in exit*/
 int					parse_arg(char *str);
 
+char				*ft_strcat(char *dest, const char *src);
+
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
 /* TODO */
