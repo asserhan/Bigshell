@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 19:58:32 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 20:28:45 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:56:01 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,25 @@ void	ft_dup(t_exec_context *exContext)
 }
 void	ft_close_fd(t_exec_context *exContext)
 {
-	t_exec_context *tmp;
-	tmp = exContext;
-	while (tmp->cmds)
-	{
-		if (tmp->cmds->in != STDIN_FILENO)
-		{
-			if (close(tmp->cmds->in) == -1)
-				ft_msg_error("close", 1);
-		}
-		if (tmp->cmds->out != STDOUT_FILENO)
-		{
-			if (close(tmp->cmds->out) == -1)
-				ft_msg_error("close", 1);
-		}
+	t_doubly_lst	*tmp;
 
-		tmp->cmds = tmp->cmds->next;
+	tmp = exContext->cmds;
+	while (tmp)
+	{
+		if (tmp->in != STDIN_FILENO)
+		{
+			if (close(tmp->in) == -1)
+				ft_msg_error("close", 1);
+		}
+		if (tmp->out != STDOUT_FILENO)
+		{
+			if (close(tmp->out) == -1)
+				ft_msg_error("close", 1);
+		}
+		tmp = tmp->next;
 	}
 }
-void ft_dup_built(t_exec_context *exContext)
+void	ft_dup_built(t_exec_context *exContext)
 {
 	int fd_out;
 	int fd_in;

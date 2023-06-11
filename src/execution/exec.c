@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 12:14:53 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:55:04 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	execution(t_exec_context *exContext)
 	int				fdin;
 	int				pid;
 	struct stat		fileStat;
+	t_doubly_lst	*cmd_tmp;
 
 	k = 0;
 	tmp = exContext;
@@ -103,15 +104,16 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
-		while (tmp->cmds)
+		cmd_tmp = tmp->cmds;
+		while (cmd_tmp)
 		{
 			pid = mutiple_cmd(tmp, &k);
-			tmp->cmds = tmp->cmds->next;
+			cmd_tmp = cmd_tmp->next;
 		}
 		waitpid(pid, NULL, 0);
 		while (wait(NULL) != -1)
 			;
 	}
 	ft_close_fd(exContext);
-	d_lstclear(&(exContext->cmds));
+	// d_lstclear(&(exContext->cmds));
 }

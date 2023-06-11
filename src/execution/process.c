@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 09:48:00 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 13:50:59 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_execute_child(t_exec_context *exContext)
 		free(exContext->cmds->cmd);
 		exit(127);
 	}
+	ft_printf("foo");
 	execve(exContext->cmds->cmd, exContext->cmds->args,
 			exContext->env->env_array);
 	ft_msg_error("execve", 127);

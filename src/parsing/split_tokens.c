@@ -166,6 +166,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			if (!sub_tokens)
 				return (NULL);
 			line_to_tokens_delimiters(line_expended, "<>| ", sub_tokens);
+			free(line_expended);
 		}
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
 		free_matrix(sub_tokens);
