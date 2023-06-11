@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/10 20:31:32 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 12:14:53 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ void	execution(t_exec_context *exContext)
 			{
 				(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n",
 							126));
+				d_lstdelone(&(tmp->cmds), cmds);
+			}
+			else if (access(cmds->cmd, F_OK) == -1)
+			{
+				(put_error_ex("minishell: ", cmds->cmd,
+							": No such file or directory\n", 127));
 				d_lstdelone(&(tmp->cmds), cmds);
 			}
 		}
