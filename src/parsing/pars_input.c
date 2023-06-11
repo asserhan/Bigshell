@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/10 11:13:10 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:52:58 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 	list_without_quotes = remove_quotes_from_list(cmd_list);
 	d_lstclear(&cmd_list);
 	if (check_syntax(list_without_quotes))
-		return (1);
+		return (d_lstclear(&list_without_quotes), 1);
 	final_list = convert_list_format(list_without_quotes, exContext);
 	d_lstclear(&list_without_quotes);
 	if (!final_list)
