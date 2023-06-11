@@ -62,13 +62,17 @@ void	execution(t_exec_context *exContext)
 	k = 0;
 	tmp = exContext;
 	cmds = tmp->cmds;
-	while (cmds && ft_strchr(cmds->cmd, '/'))
+	while (cmds)
 	{
-		stat(cmds->cmd, &fileStat);
-		if (S_ISDIR(fileStat.st_mode))
+		if (ft_strchr(cmds->cmd, '/'))
 		{
-			(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n", 126));
-			d_lstdelone(&(tmp->cmds), cmds);
+			stat(cmds->cmd, &fileStat);
+			if (S_ISDIR(fileStat.st_mode))
+			{
+				(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n",
+							126));
+				d_lstdelone(&(tmp->cmds), cmds);
+			}
 		}
 		cmds = cmds->next;
 	}
