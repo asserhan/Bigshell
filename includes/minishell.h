@@ -146,7 +146,6 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 
 void				sigint_handler(int sig);
 void				heredoc_sigint_handler(int sig);
-void				sigquit_handler(int sig);
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
 void				ft_export(t_exec_context *exContext);
