@@ -22,20 +22,20 @@ int	is_builtin(char *cmd)
 		return (1);
 }
 
-void	exec_builtins(t_exec_context *exContext, t_doubly_lst *commend)
+void	exec_builtins(t_exec_context *exContext)
 {
-	if (ft_strcmp(commend->cmd, "env") == 0)
-		ft_env(exContext, commend);
-	else if (ft_strcmp(commend->cmd, "export") == 0)
-		ft_export(exContext, commend);
-	else if (ft_strcmp(commend->cmd, "echo") == 0)
-		ft_echo(commend->args);
-	else if (ft_strcmp(commend->cmd, "unset") == 0)
-		ft_unset(exContext, commend);
-	else if (ft_strcmp(commend->cmd, "cd") == 0)
-		ft_cd(commend->args, exContext->env);
-	else if (ft_strcmp(commend->cmd, "pwd") == 0)
+	if (ft_strcmp(exContext->cmds->cmd, "env") == 0)
+		ft_env(exContext, exContext->cmds);
+	else if (ft_strcmp(exContext->cmds->cmd, "export") == 0)
+		ft_export(exContext, exContext->cmds);
+	else if (ft_strcmp(exContext->cmds->cmd, "echo") == 0)
+		ft_echo(exContext->cmds->args);
+	else if (ft_strcmp(exContext->cmds->cmd, "unset") == 0)
+		ft_unset(exContext, exContext->cmds);
+	else if (ft_strcmp(exContext->cmds->cmd, "cd") == 0)
+		ft_cd(exContext->cmds->args, exContext->env);
+	else if (ft_strcmp(exContext->cmds->cmd, "pwd") == 0)
 		ft_pwd();
-	else if (ft_strcmp(commend->cmd, "exit") == 0)
-		ft_exit(commend->args);
+	else if (ft_strcmp(exContext->cmds->cmd, "exit") == 0)
+		ft_exit(exContext->cmds->args);
 }

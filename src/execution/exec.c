@@ -21,11 +21,11 @@ void	one_cmd(t_exec_context *exContext)
 	if (exContext->pid == 0)
 	{
 		ft_dup(exContext->cmds);
-		ft_execute_child(exContext, exContext->cmds);
+		ft_execute_child(exContext);
 	}
 }
 
-int	mutiple_cmd(t_exec_context *exContext, t_doubly_lst *commend, int *k)
+int	mutiple_cmd(t_exec_context *exContext, int *k)
 {
 	int	end[2];
 	int	pid;
@@ -36,7 +36,7 @@ int	mutiple_cmd(t_exec_context *exContext, t_doubly_lst *commend, int *k)
 	if (pid == -1)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
-		ft_child_process(exContext, commend, k, end);
+		ft_child_process(exContext, k, end);
 	else
 	{
 		if (*k)
@@ -58,7 +58,6 @@ void	execution(t_exec_context *exContext)
 	int				fdin;
 	int				pid;
 	struct stat		fileStat;
-	t_doubly_lst	*cmd_tmp;
 
 	k = 0;
 	tmp = exContext;
@@ -94,7 +93,7 @@ void	execution(t_exec_context *exContext)
 			fdout = dup(1);
 			fdin = dup(0);
 			ft_dup(exContext->cmds);
-			exec_builtins(exContext, exContext->cmds);
+			exec_builtins(exContext);
 			dup2(fdout, 1);
 			dup2(fdin, 0);
 		}
@@ -107,11 +106,11 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
-		cmd_tmp = exContext->cmds;
-		while (cmd_tmp)
+		// cmd_tmp = exContext->cmds;
+		while (tmp->cmds)
 		{
-			pid = mutiple_cmd(tmp, cmd_tmp, &k);
-			cmd_tmp = cmd_tmp->next;
+			pid = mutiple_cmd(tmp, &k);
+			tmp->cmds = tmp->cmds->next;
 		}
 		waitpid(pid, NULL, 0);
 		while (wait(NULL) != -1)

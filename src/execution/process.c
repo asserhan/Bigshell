@@ -12,40 +12,43 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_execute_child(t_exec_context *exContext, t_doubly_lst *commend)
+void	ft_execute_child(t_exec_context *exContext)
 {
-	if (commend->cmd[0] == '\0')
+	if (exContext->cmds->cmd[0] == '\0')
 	{
-		if (commend->in == 0 && commend->out == 1)
+		if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
 		{
-			put_error_ex("minishell: ", commend->cmd, ": command not found\n",
-					127);
+			put_error_ex("minishell: ", exContext->cmds->cmd,
+					": command not found\n", 127);
 		}
 		ft_close_fd(exContext);
 		return ;
 	}
-	if (exContext->paths && ft_strchr(commend->cmd, '/') == NULL)
+	if (exContext->paths && ft_strchr(exContext->cmds->cmd, '/') == NULL)
 	{
-		commend->cmd = ft_get_cmd_path(exContext);
+		exContext->cmds->cmd = ft_get_cmd_path(exContext);
 		free_matrix(exContext->cmd_paths);
 	}
 	else
 		free_matrix(exContext->cmd_paths);
-	if (!commend->cmd)
+	if (!exContext->cmds->cmd)
 	{
-		put_error_ex("minishell: ", commend->cmd, "command not found\n", 127);
-		free(commend->cmd);
+		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
+				127);
+		free(exContext->cmds->cmd);
 		exit(127);
 	}
-	execve(commend->cmd, commend->args, exContext->env->env_array);
+	execve(exContext->cmds->cmd, exContext->cmds->args,
+			exContext->env->env_array);
 	ft_msg_error("execve", 127);
 	exit(127);
 }
 
-void	ft_child_process(t_exec_context *exContext, t_doubly_lst *commend,
-		int *k, int *end)
+void	ft_child_process(t_exec_context *exContext,
+						int *k,
+						int *end)
 {
-	if (!commend->next)
+	if (!exContext->cmds->next)
 		dup2(*k, 0);
 	else
 	{
@@ -56,16 +59,16 @@ void	ft_child_process(t_exec_context *exContext, t_doubly_lst *commend,
 	}
 	close(end[0]);
 	close(end[1]);
-	if (is_builtin(commend->cmd))
+	if (is_builtin(exContext->cmds->cmd))
 	{
-		ft_dup(commend);
-		exec_builtins(exContext, commend);
+		ft_dup(exContext->cmds);
+		exec_builtins(exContext);
 		exit(0);
 	}
 	else
 	{
 		ft_get_path(exContext);
-		ft_dup(commend);
-		ft_execute_child(exContext, commend);
+		ft_dup(exContext->cmds);
+		ft_execute_child(exContext);
 	}
 }

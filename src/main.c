@@ -47,6 +47,7 @@ int	main(int ac, char **av, char **env)
 			d_lstclear(&exContext.cmds);
 			continue ;
 		}
+		//print_list(exContext.cmds);
 		execution(&exContext);
 		d_lstclear(&(exContext.cmds));
 	}

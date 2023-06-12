@@ -6,9 +6,9 @@
 # include "./env_var.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -157,8 +157,7 @@ void				ft_cd(char **arg, t_env *env);
 int					ft_pwd(void);
 void				ft_exit(char **arg);
 int					is_builtin(char *cmd);
-void	exec_builtins(t_exec_context *exContext,
-					t_doubly_lst *commend);
+void				exec_builtins(t_exec_context *exContext);
 /* copy env list */
 t_env				*copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/
@@ -171,8 +170,7 @@ void				ft_get_path(t_exec_context *exContext);
 /*function that join the command with her path */
 char				*ft_get_cmd_path(t_exec_context *exContext);
 /*function that excute command in child process*/
-void	ft_execute_child(t_exec_context *exContext,
-						t_doubly_lst *commend);
+void				ft_execute_child(t_exec_context *exContext);
 /*excute the program*/
 void				execution(t_exec_context *exContext);
 /*fuction that duplicate in and out to stdin and stdout*/
@@ -181,7 +179,6 @@ void				ft_dup(t_doubly_lst *commend);
 void				ft_close_fd(t_exec_context *exContext);
 /*fuction that execute  child process*/
 void	ft_child_process(t_exec_context *exContext,
-						t_doubly_lst *commend,
 						int *k,
 						int *end);
 #endif
