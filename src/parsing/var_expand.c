@@ -72,7 +72,7 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	return (result);
 }
 
-char	*var_expand(char *token, t_exec_context *exContext, int times)
+char	*var_expand(char *token, t_exec_context *exContext)
 {
 	int		s_quote;
 	int		d_quote;
@@ -100,9 +100,9 @@ char	*var_expand(char *token, t_exec_context *exContext, int times)
 				new_token = subtoken(token, i, exContext);
 				if (!new_token)
 					return (NULL);
-				if (times != 0)
-					free(token);
-				return (var_expand(new_token, exContext, 1));
+				free(token);
+				token = NULL;
+				return (var_expand(new_token, exContext));
 			}
 		}
 	}
@@ -111,18 +111,17 @@ char	*var_expand(char *token, t_exec_context *exContext, int times)
 
 char	*expand_token(char *token, t_exec_context *exContext)
 {
-	char	*var_result;
 	char	*result;
 	char	*path;
 	char	*expand;
+	char	*token_dup;
 
-	var_result = var_expand(token, exContext, 0);
-	expand = ft_strdup(var_result);
-	free(var_result);
+	token_dup = ft_strdup(token);
+	expand = var_expand(token_dup, exContext);
 	path = get_env_value("HOME", exContext);
 	result = path_expand(expand, path);
-	if (ft_strcmp(result, expand))
-		free(expand);
 	free(path);
+	if (result != expand)
+		free(expand);
 	return (result);
 }
