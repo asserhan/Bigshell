@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/12 13:13:47 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:20:06 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	one_cmd(t_exec_context *exContext)
 		ft_msg_error("fork", 1);
 	if (exContext->pid == 0)
 	{
-		ft_dup(exContext->cmds);
+		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0' )
+			ft_dup(exContext->cmds);
 		ft_execute_child(exContext);
 	}
 }
@@ -116,5 +117,5 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1)
 			;
 	}
-	ft_close_fd(exContext);
+	//ft_close_fd(exContext);
 }
