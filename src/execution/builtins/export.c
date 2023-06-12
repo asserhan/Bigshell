@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 15:27:08 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:28:15 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,18 +124,18 @@ void	_export_variable(char *arg, t_env *env)
 	}
 }
 
-void	ft_export(t_exec_context *exContext, t_doubly_lst *commend)
+void	ft_export(t_exec_context *exContext)
 {
 	t_env	*copy;
 	int		i;
 
-	if (count_matrix(commend->args) > 1)
+	if (count_matrix(exContext->cmds->args) > 1)
 	{
 		i = 1;
-		while (commend->args[i])
+		while (exContext->cmds->args[i])
 		{
-			if (!_export_parse(commend->args[i]))
-				_export_variable(commend->args[i], exContext->env);
+			if (!_export_parse(exContext->cmds->args[i]))
+				_export_variable(exContext->cmds->args[i], exContext->env);
 			else
 				return ;
 			i++;
