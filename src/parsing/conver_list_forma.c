@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/12 15:05:54 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/13 00:17:29 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 	t_doubly_lst	*node;
 	t_doubly_lst	*head;
 	int				red_type;
+	char			**args;
 
 	head = NULL;
 	node = NULL;
+	args = NULL;
 	while (list)
 	{
 		create_node(&node, &head, &list);
@@ -95,7 +97,11 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 			if (node->cmd[0] == '\0')
 				node->cmd = ft_strdup(list->cmd);
 			else
-				node->args = matrix_push_back(node->args, list->cmd);
+			{
+				args = matrix_push_back(node->args, list->cmd);
+				free(node->args);
+				node->args = args;
+			}
 			list = list->next;
 		}
 		if (list && !ft_strcmp(list->cmd, "|"))
