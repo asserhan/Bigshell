@@ -150,9 +150,9 @@ void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
 void				heredoc_sigint_handler(int sig);
 ////////////////////////////////////* Builtins*////////////////////////////////////
-void				ft_env(t_exec_context *exContext, t_doubly_lst *commend);
-void				ft_export(t_exec_context *exContext, t_doubly_lst *commend);
-void				ft_unset(t_exec_context *exContext, t_doubly_lst *commend);
+void				ft_env(t_exec_context *exContext);
+void				ft_export(t_exec_context *exContext);
+void				ft_unset(t_exec_context *exContext);
 void				ft_cd(char **arg, t_env *env);
 int					ft_pwd(void);
 void				ft_exit(char **arg);

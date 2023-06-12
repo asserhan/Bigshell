@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_matrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 10:46:35 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/11 10:52:30 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:49:04 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	**env_to_matrix(t_env_variable *head)
 	i = 0;
 	while (current != NULL)
 	{
-		nameLength = strlen(current->name);
-		contentLength = strlen(current->content);
+		nameLength = ft_strlen(current->name);
+		contentLength = ft_strlen(current->content);
 		result[i] = (char *)malloc((nameLength + contentLength + 2)
 				* sizeof(char));
 		if (result[i] == NULL)

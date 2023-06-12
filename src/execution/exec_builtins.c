@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:33:41 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 15:29:08 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:48:15 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	is_builtin(char *cmd)
 void	exec_builtins(t_exec_context *exContext)
 {
 	if (ft_strcmp(exContext->cmds->cmd, "env") == 0)
-		ft_env(exContext, exContext->cmds);
+		ft_env(exContext);
 	else if (ft_strcmp(exContext->cmds->cmd, "export") == 0)
-		ft_export(exContext, exContext->cmds);
+		ft_export(exContext);
 	else if (ft_strcmp(exContext->cmds->cmd, "echo") == 0)
 		ft_echo(exContext->cmds->args);
 	else if (ft_strcmp(exContext->cmds->cmd, "unset") == 0)
-		ft_unset(exContext, exContext->cmds);
+		ft_unset(exContext);
 	else if (ft_strcmp(exContext->cmds->cmd, "cd") == 0)
 		ft_cd(exContext->cmds->args, exContext->env);
 	else if (ft_strcmp(exContext->cmds->cmd, "pwd") == 0)
