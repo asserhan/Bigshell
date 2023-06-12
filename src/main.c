@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/11 19:45:07 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:06:36 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int ac, char **av, char **env)
 	input = NULL;
 	if (init_data(&exContext, av, env))
 		exit(1);
+	rl_catch_signals = 0;
 	while (ac)
 	{
 		signal(SIGINT, sigint_handler);
@@ -35,7 +36,10 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		if (!input)
+		{
+			ft_printf("exit\n");
 			exit(g_exit_status);
+		}
 		if (input[0] != '\0')
 			add_history(input);
 		if (pars_input(&exContext, input))

@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:00:57 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/11 10:55:52 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:43:27 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int	init_data(t_exec_context *exContext, char **av, char **env_str)
 	g_exit_status = 0;
 	if (!exContext->env)
 		return (1);
+	// rl_catch_signals = 0;
 	return (0);
 }

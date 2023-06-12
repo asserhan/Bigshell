@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 18:44:12 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:13:47 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	execution(t_exec_context *exContext)
 	k = 0;
 	tmp = exContext;
 	cmds = tmp->cmds;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	while (cmds)
 	{
 		if (ft_strchr(cmds->cmd, '/'))
