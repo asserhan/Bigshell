@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 15:37:15 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:50:01 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 
 void	ft_execute_child(t_exec_context *exContext)
 {
+	struct stat	fileStat;
+
+	if (ft_strchr(exContext->cmds->cmd, '/'))
+	{
+		stat(exContext->cmds->cmd, &fileStat);
+		if (S_ISDIR(fileStat.st_mode))
+		{
+			(put_error_ex("minishell: ", exContext->cmds->cmd,
+						": is a directory\n", 126));
+			d_lstdelone(&(exContext->cmds), exContext->cmds);
+		}
+		else if (access(exContext->cmds->cmd, F_OK) == -1)
+		{
+			(put_error_ex("minishell: ", exContext->cmds->cmd,
+						": No such file or directory\n", 127));
+			d_lstdelone(&(exContext->cmds), exContext->cmds);
+		}
+		exit(g_exit_status);
+	}
 	if (exContext->cmds->cmd[0] == '\0')
 	{
 		if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
@@ -59,16 +78,21 @@ void	ft_child_process(t_exec_context *exContext,
 	}
 	close(end[0]);
 	close(end[1]);
-	if (is_builtin(exContext->cmds->cmd))
+	if (exContext->cmds->cmd[0] != '\0')
 	{
-		ft_dup(exContext->cmds);
-		exec_builtins(exContext);
-		exit(0);
+		if (is_builtin(exContext->cmds->cmd))
+		{
+			ft_dup(exContext->cmds);
+			exec_builtins(exContext);
+			exit(0);
+		}
+		else
+		{
+			ft_get_path(exContext);
+			ft_dup(exContext->cmds);
+			ft_execute_child(exContext);
+		}
 	}
 	else
-	{
-		ft_get_path(exContext);
-		ft_dup(exContext->cmds);
-		ft_execute_child(exContext);
-	}
+		exit(g_exit_status);
 }

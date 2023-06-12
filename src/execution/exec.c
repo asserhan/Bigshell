@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/12 19:20:06 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:56:32 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	one_cmd(t_exec_context *exContext)
 		ft_msg_error("fork", 1);
 	if (exContext->pid == 0)
 	{
-		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0' )
+		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0')
 			ft_dup(exContext->cmds);
 		ft_execute_child(exContext);
 	}
@@ -58,33 +58,12 @@ void	execution(t_exec_context *exContext)
 	int				fdout;
 	int				fdin;
 	int				pid;
-	struct stat		fileStat;
 
 	k = 0;
 	tmp = exContext;
 	cmds = tmp->cmds;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
-	while (cmds)
-	{
-		if (ft_strchr(cmds->cmd, '/'))
-		{
-			stat(cmds->cmd, &fileStat);
-			if (S_ISDIR(fileStat.st_mode))
-			{
-				(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n",
-							126));
-				d_lstdelone(&(tmp->cmds), cmds);
-			}
-			else if (access(cmds->cmd, F_OK) == -1)
-			{
-				(put_error_ex("minishell: ", cmds->cmd,
-							": No such file or directory\n", 127));
-				d_lstdelone(&(tmp->cmds), cmds);
-			}
-		}
-		cmds = cmds->next;
-	}
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
