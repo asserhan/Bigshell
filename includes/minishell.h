@@ -6,9 +6,9 @@
 # include "./env_var.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -116,7 +116,8 @@ int					words_number(const char *str, const char *delimiters);
 /*splite all tokens given by split_space() to sub tokens taking expand in consideration */
 char				**split_tokens(char **tokens, t_exec_context *exContext);
 /* checks if token have a $ if so it expnded if not it return the token  */
-char				*var_expand(char *token, t_exec_context *exContext);
+char				*var_expand(char *token, t_exec_context *exContext,
+						int times);
 /* checks if token have a ~ if so it expnded if not it return the token  */
 char				*path_expand(char *str, char *home);
 /* * Retrieves the value of an environment variable by its name, from the
