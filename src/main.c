@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/12 21:55:45 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:08:11 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int ac, char **av, char **env)
 {
 	char			*input;
 	t_exec_context	exContext;
+	t_doubly_lst	*head;
 
 	input = NULL;
 	if (init_data(&exContext, av, env))
@@ -47,8 +48,9 @@ int	main(int ac, char **av, char **env)
 			d_lstclear(&exContext.cmds);
 			continue ;
 		}
+		head = exContext.cmds;
 		execution(&exContext);
-		d_lstclear(&(exContext.cmds));
+		d_lstclear(&head);
 	}
 	free_env(&(exContext.env));
 	return (0);
