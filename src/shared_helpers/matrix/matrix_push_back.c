@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 11:29:20 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/05/11 14:25:11 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:35:11 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ char	**matrix_push_back(char **matrix, char *back)
 		return (NULL);
 	ft_strcpy(new_row, back);
 	new_matrix[count] = new_row;
+	new_matrix[count + 1] = NULL;
 	return (new_matrix);
 }
