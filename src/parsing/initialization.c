@@ -19,7 +19,7 @@ void	set_start_vars(t_env *env)
 	t_env_variable	*path_elem;
 
 	shl_lvl_elem = search_env_elem(env, "SHLVL");
-	if (shl_lvl_elem == NULL || ft_atoi(shl_lvl_elem->content) <= 1)
+	if (shl_lvl_elem == NULL || ft_atoi(shl_lvl_elem->content) <= 0)
 		tmp = ft_strdup("1");
 	else
 		tmp = ft_itoa(ft_atoi(shl_lvl_elem->content) + 1);
@@ -32,7 +32,6 @@ void	set_start_vars(t_env *env)
 	if (!path_elem)
 		update_env_elem(env, "PATH",
 				"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
-	print_env(env, 1);
 	env->env_array = env_to_matrix(env->first);
 }
 
