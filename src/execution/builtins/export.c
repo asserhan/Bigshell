@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/12 22:42:18 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:25:48 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,6 @@ void	ft_export(t_exec_context *exContext)
 		{
 			if (!_export_parse(exContext->cmds->args[i]))
 				_export_variable(exContext->cmds->args[i], exContext->env);
-			else
-				return ;
 			i++;
 		}
 	}
