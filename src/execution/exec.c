@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/13 15:50:06 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:08:04 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	one_cmd(t_exec_context *exContext)
 	{
 		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0')
 			ft_dup(exContext->cmds);
-		if(exContext->cmds->cmd[0] != '\0')
+		if (exContext->cmds->cmd[0] != '\0')
 			ft_execute_child(exContext);
 		else
 			exit(g_exit_status);
@@ -40,9 +40,7 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	if (pid == -1)
 		ft_msg_error("fork", 1);
 	if (pid == 0)
-	{
 		ft_child_process(exContext, k, end);
-	}
 	else
 	{
 		if (*k)
@@ -58,6 +56,7 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
+	t_doubly_lst	*cmds;
 	int				k;
 	int				fdout;
 	int				fdin;
@@ -65,6 +64,7 @@ void	execution(t_exec_context *exContext)
 
 	k = 0;
 	tmp = exContext;
+	cmds = tmp->cmds;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	size = d_lstsize(exContext->cmds);
@@ -89,6 +89,7 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
+		// cmd_tmp = exContext->cmds;
 		while (tmp->cmds)
 		{
 			pid = mutiple_cmd(tmp, &k);

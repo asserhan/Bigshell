@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/13 13:08:11 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:07:14 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	ft_execute_child(t_exec_context *exContext)
 {
 	struct stat	fileStat;
 
-	if (ft_strchr(exContext->cmds->cmd, '/'))
+	if (ft_strchr(exContext->cmds->cmd, '/') && ft_strncmp(exContext->cmds->cmd,
+			"./",2) != 0)
 	{
 		stat(exContext->cmds->cmd, &fileStat);
 		if (S_ISDIR(fileStat.st_mode))
@@ -57,7 +58,6 @@ void	ft_execute_child(t_exec_context *exContext)
 		free(exContext->cmds->cmd);
 		exit(127);
 	}
-	
 	execve(exContext->cmds->cmd, exContext->cmds->args,
 			exContext->env->env_array);
 	ft_msg_error("execve", 127);
@@ -72,7 +72,6 @@ void	ft_child_process(t_exec_context *exContext,
 		dup2(*k, 0);
 	else
 	{
-
 		if (dup2(end[1], STDOUT_FILENO) == -1)
 			ft_msg_error("dup2", 1);
 		if (dup2(*k, STDIN_FILENO) == -1)
