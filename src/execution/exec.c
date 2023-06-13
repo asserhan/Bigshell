@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/12 21:56:32 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:05:16 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	one_cmd(t_exec_context *exContext)
 	{
 		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0')
 			ft_dup(exContext->cmds);
-		ft_execute_child(exContext);
+		if (exContext->cmds->cmd[0] != '\0')
+			ft_execute_child(exContext);
+		else
+			exit(g_exit_status);
 	}
 }
 
