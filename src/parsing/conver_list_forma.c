@@ -64,49 +64,48 @@ void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 			(*list) = (*list)->next;
 	}
 }
+int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
+		t_doubly_lst **node, t_exec_context *exContext)
+{
+	int		red_type;
+	char	**args;
 
+	while (*list && ft_strcmp((*list)->cmd, "|") && *node)
+	{
+		if (find_char_index((*list)->cmd, "><") >= 0)
+		{
+			if (fill_in_out(list, node, exContext, &red_type))
+				return (d_lstclear(head), 1);
+			continue ;
+		}
+		if ((*node)->cmd[0] == '\0')
+		{
+			free((*node)->cmd);
+			(*node)->cmd = ft_strdup((*list)->cmd);
+		}
+		else
+		{
+			args = matrix_push_back((*node)->args, (*list)->cmd);
+			free((*node)->args);
+			(*node)->args = args;
+		}
+		(*list) = (*list)->next;
+	}
+	return (0);
+}
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext)
 {
 	t_doubly_lst	*node;
 	t_doubly_lst	*head;
-	int				red_type;
-	char			**args;
 
 	head = NULL;
 	node = NULL;
-	args = NULL;
 	while (list)
 	{
 		create_node(&node, &head, &list);
-		while (list && ft_strcmp(list->cmd, "|") && node)
-		{
-			if (find_char_index(list->cmd, "><") >= 0)
-			{
-				if (fill_in_out(&list, &node, exContext, &red_type))
-				{
-					d_lstclear(&head);
-					return (NULL);
-				}
-				// if (red_type == HERE_DOC && ((list && ft_strchr(list->cmd,
-				// '|')
-				// 			&& node->cmd[0] == '\0') || !(list)))
-				// 	d_lstdelone(&head, node);
-				continue ;
-			}
-			if (node->cmd[0] == '\0')
-			{
-				free(node->cmd);
-				node->cmd = ft_strdup(list->cmd);
-			}
-			else
-			{
-				args = matrix_push_back(node->args, list->cmd);
-				free(node->args);
-				node->args = args;
-			}
-			list = list->next;
-		}
+		if (fill_cmd_and_args(&head, &list, &node, exContext))
+			return (NULL);
 		if (list && !ft_strcmp(list->cmd, "|"))
 			list = list->next;
 	}
