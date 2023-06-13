@@ -11,7 +11,10 @@ void	d_lstclear(t_doubly_lst **lst)
 		if ((*lst)->args)
 			free_matrix((*lst)->args);
 		if ((*lst)->cmd)
+		{
 			free((*lst)->cmd);
+			(*lst)->cmd = NULL;
+		}
 		temp = *lst;
 		*lst = temp->next;
 		free(temp);
