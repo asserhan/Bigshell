@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 02:19:51 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:08:11 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 
 void	ft_execute_child(t_exec_context *exContext)
 {
-	struct stat		fileStat;
-	if(ft_strchr(exContext->cmds->cmd, '/'))
+	struct stat	fileStat;
+
+	if (ft_strchr(exContext->cmds->cmd, '/'))
 	{
 		stat(exContext->cmds->cmd, &fileStat);
 		if (S_ISDIR(fileStat.st_mode))
 		{
-			put_error_ex("minishell: ", exContext->cmds->cmd, ": is a directory\n", 126);
+			(put_error_ex("minishell: ", exContext->cmds->cmd,
+						": is a directory\n", 126));
+			d_lstdelone(&(exContext->cmds), exContext->cmds);
 		}
-		return ;
+		else if (access(exContext->cmds->cmd, F_OK) == -1)
+		{
+			(put_error_ex("minishell: ", exContext->cmds->cmd,
+						": No such file or directory\n", 127));
+			d_lstdelone(&(exContext->cmds), exContext->cmds);
+		}
+		exit(g_exit_status);
 	}
 	if (exContext->cmds->cmd[0] == '\0')
 	{
@@ -55,7 +64,9 @@ void	ft_execute_child(t_exec_context *exContext)
 	exit(127);
 }
 
-void	ft_child_process(t_exec_context *exContext, int *k, int *end)
+void	ft_child_process(t_exec_context *exContext,
+						int *k,
+						int *end)
 {
 	if (!exContext->cmds->next)
 		dup2(*k, 0);
@@ -69,17 +80,21 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 	}
 	close(end[0]);
 	close(end[1]);
-	if (is_builtin(exContext->cmds->cmd))
+	if (exContext->cmds->cmd[0] != '\0')
 	{
-		ft_dup(exContext);
-		exec_builtins(exContext);
-		exit(0);
+		if (is_builtin(exContext->cmds->cmd))
+		{
+			ft_dup(exContext->cmds);
+			exec_builtins(exContext);
+			exit(0);
+		}
+		else
+		{
+			ft_get_path(exContext);
+			ft_dup(exContext->cmds);
+			ft_execute_child(exContext);
+		}
 	}
 	else
-	{
-				
-		ft_get_path(exContext);
-		ft_dup(exContext);
-		ft_execute_child(exContext);
-	}
+		exit(g_exit_status);
 }

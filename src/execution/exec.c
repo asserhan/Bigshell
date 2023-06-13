@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 02:20:36 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:07:40 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	one_cmd(t_exec_context *exContext)
 		ft_msg_error("fork", 1);
 	if (exContext->pid == 0)
 	{
-		ft_dup(exContext);
+		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0')
+			ft_dup(exContext->cmds);
 		ft_execute_child(exContext);
 	}
 }
@@ -59,21 +60,12 @@ void	execution(t_exec_context *exContext)
 	int				fdout;
 	int				fdin;
 	int				pid;
-	//struct stat		fileStat;
 
 	k = 0;
 	tmp = exContext;
-	// cmds = tmp->cmds;
-	// while (cmds && ft_strchr(cmds->cmd, '/'))
-	// {
-	// 	stat(cmds->cmd, &fileStat);
-	// 	if (S_ISDIR(fileStat.st_mode))
-	// 	{
-	// 		(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n", 126));
-	// 		d_lstdelone(&(tmp->cmds), cmds);
-	// 	}
-	// 	cmds = cmds->next;
-	// }
+	//cmds = tmp->cmds;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	size = d_lstsize(exContext->cmds);
 	//ft_printf("size = %d\n", size);
 	exContext->pipe_num = size - 1;
@@ -83,7 +75,7 @@ void	execution(t_exec_context *exContext)
 		{
 			fdout = dup(1);
 			fdin = dup(0);
-			ft_dup(exContext);
+			ft_dup(exContext->cmds);
 			exec_builtins(exContext);
 			dup2(fdout, 1);
 			dup2(fdin, 0);
@@ -92,11 +84,12 @@ void	execution(t_exec_context *exContext)
 		{
 			one_cmd(exContext);
 			wait(NULL);
+			free_matrix(exContext->cmd_paths);
 		}
 	}
 	else
 	{
-		
+		// cmd_tmp = exContext->cmds;
 		while (tmp->cmds)
 		{
 			//ft_printf("cmd = %s\n", tmp->cmds->cmd);
@@ -107,6 +100,5 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1)
 			;
 	}
-	ft_close_fd(exContext);
-	d_lstclear(&(exContext->cmds));
+	//ft_close_fd(exContext);
 }

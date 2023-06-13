@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/09 16:13:44 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:59:54 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	_export_parse(char *arg)
 char	*ft_elimine_char(char *str, char c)
 {
 	char	*new;
-	int i;
-	i = 0;
+	int		i;
 
+	i = 0;
 	new = malloc(sizeof(char) * ft_strlen(str));
 	if (!new)
 		return (NULL);
@@ -75,10 +75,30 @@ char	*ft_elimine_char(char *str, char c)
 	{
 		if (*str == c)
 			str++;
-		new[i++] = *str++;;
+		new[i++] = *str++;
+		;
 	}
 	new[i] = '\0';
 	return (new);
+}
+char	*ft_joining(char const *s1, char const *s2)
+{
+	char	*p;
+	size_t	len;
+
+	if (!s1)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	p = (char *)malloc(len + 1 * sizeof(char));
+	if (!p)
+		return (NULL);
+	else
+	{
+		ft_strlcpy(p, s1, ft_strlen(s1) + 1);
+		ft_strlcat(p, s2, len + 1);
+		free((char *)s1);
+	}
+	return (p);
 }
 void	_export_variable(char *arg, t_env *env)
 {
@@ -94,7 +114,7 @@ void	_export_variable(char *arg, t_env *env)
 		i++;
 	if (var[i] == '+')
 	{
-		s = ft_substr(var, 0, i );
+		s = ft_substr(var, 0, i);
 		var = ft_elimine_char(var, '+');
 		str = ft_substr(var, i + 1, ft_strlen(var));
 		tmp = search_env_elem(env, s);
@@ -102,34 +122,31 @@ void	_export_variable(char *arg, t_env *env)
 			tmp = create_env_elem(var);
 		else
 		{
-			s = ft_strjoin(s, "=");
-			s = ft_strjoin(s, tmp->content);
-			s = ft_strjoin(s, str);
+			s = ft_joining(s, "=");
+			s = ft_joining(s, tmp->content);
+			s = ft_joining(s, str);
 			delete_env_elem(env, tmp);
 			tmp = create_env_elem(s);
 		}
 		set_env_elem(env, tmp);
-		(free(s), free(str),free(var));
+		(free(s), free(str), free(var));
 	}
 	else
 	{
-		
-		s = ft_substr(var, 0, i );
+		s = ft_substr(var, 0, i);
 		tmp = search_env_elem(env, s);
-		if(tmp != NULL)
+		if (tmp != NULL)
 			delete_env_elem(env, tmp);
 		tmp = create_env_elem(arg);
 		set_env_elem(env, tmp);
 		free(s);
 	}
-		
-		
 }
 
 void	ft_export(t_exec_context *exContext)
 {
-	t_env			*copy;
-	int				i;
+	t_env	*copy;
+	int		i;
 
 	if (count_matrix(exContext->cmds->args) > 1)
 	{
@@ -138,8 +155,6 @@ void	ft_export(t_exec_context *exContext)
 		{
 			if (!_export_parse(exContext->cmds->args[i]))
 				_export_variable(exContext->cmds->args[i], exContext->env);
-			else
-				return ;
 			i++;
 		}
 	}
@@ -147,5 +162,6 @@ void	ft_export(t_exec_context *exContext)
 	{
 		copy = copy_env_list(exContext);
 		print_export(copy);
+		free_env(&copy);
 	}
 }

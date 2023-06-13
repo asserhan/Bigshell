@@ -16,6 +16,8 @@ void	delete_env_elem(t_env *list, t_env_variable *elem)
 {
 	if (elem != NULL)
 	{
+		if (elem == list->first)
+			list->first = elem->next;
 		if (elem->prev != NULL)
 			elem->prev->next = elem->next;
 		if (elem->next != NULL)

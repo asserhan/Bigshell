@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/11 02:23:42 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:07:00 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@ int	main(int ac, char **av, char **env)
 {
 	char			*input;
 	t_exec_context	exContext;
+	t_doubly_lst	*head;
 
-	(void)ac;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
 	input = NULL;
 	if (init_data(&exContext, av, env))
 		exit(1);
-	while (1)
+	//rl_catch_signals = 0;
+	while (ac)
 	{
+		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
 		if (input)
 			free(input);
 		input = readline("minishell $ ");
@@ -36,7 +37,10 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		if (!input)
+		{
+			ft_printf("exit\n");
 			exit(g_exit_status);
+		}
 		if (input[0] != '\0')
 			add_history(input);
 		if (pars_input(&exContext, input))
@@ -44,8 +48,9 @@ int	main(int ac, char **av, char **env)
 			d_lstclear(&exContext.cmds);
 			continue ;
 		}
+		head = exContext.cmds;
 		execution(&exContext);
-		d_lstclear(&exContext.cmds);
+		d_lstclear(&head);
 	}
 	free_env(&(exContext.env));
 	return (0);

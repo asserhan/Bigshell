@@ -6,9 +6,9 @@
 # include "./env_var.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -96,6 +96,8 @@ void				ft_msg_error(char *message, int exit);
 /* parse first element in exit*/
 int					parse_arg(char *str);
 
+char				*ft_strcat(char *dest, const char *src);
+
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
 /* TODO */
@@ -145,8 +147,8 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
 
 void				sigint_handler(int sig);
-void				heredoc_sigint_handler(int sig);
 void				sigquit_handler(int sig);
+void				heredoc_sigint_handler(int sig);
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
 void				ft_export(t_exec_context *exContext);
@@ -172,10 +174,11 @@ void				ft_execute_child(t_exec_context *exContext);
 /*excute the program*/
 void				execution(t_exec_context *exContext);
 /*fuction that duplicate in and out to stdin and stdout*/
-void				ft_dup(t_exec_context *exContext);
+void				ft_dup(t_doubly_lst *commend);
 /*fuction that close file descriptor*/
 void				ft_close_fd(t_exec_context *exContext);
 /*fuction that execute  child process*/
-void				ft_child_process(t_exec_context *exContext, int *k,
+void	ft_child_process(t_exec_context *exContext,
+						int *k,
 						int *end);
 #endif

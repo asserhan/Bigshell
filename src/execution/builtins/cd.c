@@ -6,13 +6,12 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 02:01:30 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:08:49 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
- 
 static char	*get_env_path(t_env *env, char *name)
 {
 	t_env_variable	*tmp;
@@ -69,10 +68,9 @@ static void	update_pwd(t_env *env, char *name)
 		tmp = tmp->next;
 	}
 }
-void update_oldpwd(t_env *env,char *name,char *path)
+void	update_oldpwd(t_env *env, char *name, char *path)
 {
 	t_env_variable	*tmp;
-	
 
 	tmp = env->first;
 	while (tmp)
@@ -90,7 +88,7 @@ void	ft_cd(char **arg, t_env *env)
 {
 	char	*path;
 	char	str[PATH_MAX];
-	char  *oldpwd;
+	char	*oldpwd;
 
 	if (count_matrix(arg) == 1)
 	{
@@ -108,11 +106,11 @@ void	ft_cd(char **arg, t_env *env)
 					": No such file or directory\n", 1);
 			return ;
 		}
-		if(!search_env_elem(env,"OLDPWD") || !search_env_elem(env,"PWD"))
+		if (!search_env_elem(env, "OLDPWD") || !search_env_elem(env, "PWD"))
 		{
-			if(!search_env_elem(env,"PWD"))
+			if (!search_env_elem(env, "PWD"))
 			{
-				update_env_elem(env,"OLDPWD","\0");
+				update_env_elem(env, "OLDPWD", "\0");
 			}
 			return ;
 		}
@@ -126,7 +124,7 @@ void	ft_cd(char **arg, t_env *env)
 			g_exit_status = 1;
 			return ;
 		}
-		update_oldpwd(env, "OLDPWD",oldpwd); //to do
+		update_oldpwd(env, "OLDPWD", oldpwd); //to do
 		update_pwd(env, "PWD");
 	}
 	g_exit_status = 0;
