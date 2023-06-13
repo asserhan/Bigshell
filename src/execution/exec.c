@@ -56,7 +56,6 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
-	t_doubly_lst	*cmds;
 	int				k;
 	int				fdout;
 	int				fdin;
@@ -64,7 +63,6 @@ void	execution(t_exec_context *exContext)
 
 	k = 0;
 	tmp = exContext;
-	cmds = tmp->cmds;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	size = d_lstsize(exContext->cmds);

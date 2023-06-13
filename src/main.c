@@ -41,10 +41,7 @@ int	main(int ac, char **av, char **env)
 		if (input[0] != '\0')
 			add_history(input);
 		if (pars_input(&exContext, input))
-		{
-			d_lstclear(&exContext.cmds);
 			continue ;
-		}
 		head = exContext.cmds;
 		execution(&exContext);
 		d_lstclear(&head);
