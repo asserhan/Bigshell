@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/13 13:08:49 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:27:57 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,7 @@ void	ft_cd(char **arg, t_env *env)
 		if (!search_env_elem(env, "OLDPWD") || !search_env_elem(env, "PWD"))
 		{
 			if (!search_env_elem(env, "PWD"))
-			{
 				update_env_elem(env, "OLDPWD", "\0");
-			}
 			return ;
 		}
 		oldpwd = get_env_path(env, "PWD");
