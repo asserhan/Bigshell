@@ -16,7 +16,8 @@ void	ft_execute_child(t_exec_context *exContext)
 {
 	struct stat	fileStat;
 
-	if (ft_strchr(exContext->cmds->cmd, '/'))
+	if (ft_strchr(exContext->cmds->cmd, '/') && ft_strncmp(exContext->cmds->cmd,
+			"./", 2) != 0)
 	{
 		stat(exContext->cmds->cmd, &fileStat);
 		if (S_ISDIR(fileStat.st_mode))
