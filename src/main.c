@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/13 15:48:40 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:13:41 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int ac, char **av, char **env)
 			add_history(input);
 		if (pars_input(&exContext, input))
 		{
-			d_lstclear(&exContext.cmds);
+			//d_lstclear(&exContext.cmds);
 			continue ;
 		}
 		head = exContext.cmds;
