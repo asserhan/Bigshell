@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/13 13:38:49 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:50:06 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
-	//t_doubly_lst	*cmds;
 	int				k;
 	int				fdout;
 	int				fdin;
@@ -66,11 +65,9 @@ void	execution(t_exec_context *exContext)
 
 	k = 0;
 	tmp = exContext;
-	//cmds = tmp->cmds;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	size = d_lstsize(exContext->cmds);
-	//ft_printf("size = %d\n", size);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
 	{
@@ -92,10 +89,8 @@ void	execution(t_exec_context *exContext)
 	}
 	else
 	{
-		// cmd_tmp = exContext->cmds;
 		while (tmp->cmds)
 		{
-			//ft_printf("cmd = %s\n", tmp->cmds->cmd);
 			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}

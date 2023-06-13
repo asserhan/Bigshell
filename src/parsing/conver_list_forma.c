@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/13 13:53:13 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:51:14 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 				continue ;
 			}
 			if (node->cmd[0] == '\0')
+			{
+				free(node->cmd);
 				node->cmd = ft_strdup(list->cmd);
+			}
 			else
 			{
 				args = matrix_push_back(node->args, list->cmd);
