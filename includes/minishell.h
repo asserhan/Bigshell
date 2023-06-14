@@ -6,9 +6,9 @@
 # include "./env_var.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdio.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -34,6 +34,7 @@ typedef struct s_exec_context
 	int is; //unset PATH
 	int				pipe_num;
 	int				**pipe_fd;
+	t_list			*fds;
 
 }					t_exec_context;
 
@@ -66,6 +67,8 @@ char				**matrix_concat(char **matrix, char **back);
 char				**matrix_push_back(char **matrix, char *back);
 /*Appends a new row to the front of the matrix*/
 char				**matrix_add_front(char *str, char **matrix);
+/* Get last pointer in a matrix*/
+char				*last_element_matrix(char **matrix);
 
 /*--STRING--*/
 /*  equal == 0 || not = 1 */

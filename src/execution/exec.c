@@ -52,6 +52,17 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	return (pid);
 }
 
+void	update_underScore(t_exec_context *exContext)
+{
+	if (!(exContext->cmds->next))
+	{
+		update_env_elem(exContext->env, "_",
+				last_element_matrix(exContext->cmds->args));
+		free_matrix(exContext->env->env_array);
+		exContext->env->env_array = env_to_matrix(exContext->env->first);
+	}
+}
+
 void	execution(t_exec_context *exContext)
 {
 	int				size;
@@ -69,6 +80,7 @@ void	execution(t_exec_context *exContext)
 	exContext->pipe_num = size - 1;
 	if (size == 1)
 	{
+		update_underScore(exContext);
 		if (is_builtin(exContext->cmds->cmd))
 		{
 			fdout = dup(1);
@@ -90,6 +102,7 @@ void	execution(t_exec_context *exContext)
 		// cmd_tmp = exContext->cmds;
 		while (tmp->cmds)
 		{
+			update_underScore(exContext);
 			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}
