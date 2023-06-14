@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/14 17:40:43 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:48:44 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	ft_cd(char **arg, t_env *env)
 			ft_putstr_fd(" cd: error retrieving current directory: ", 2);
 			ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
 			ft_putstr_fd("No such file or directory\n", 2);
-			g_exit_status = 1;
+			g_exit_status = 0;
 			return ;
 		}
 		update_oldpwd(env, "OLDPWD", oldpwd); 
