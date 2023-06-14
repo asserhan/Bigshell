@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/13 18:07:29 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/14 21:00:56 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ int	pars_input(t_exec_context *exContext, char *input)
 		return (1);
 	add_cmd_to_args(final_list);
 	exContext->cmds = final_list;
+	print_list(final_list);
 	return (0);
 }

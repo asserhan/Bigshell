@@ -6,21 +6,12 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 15:46:04 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/26 17:52:42 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:50:37 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-/*static int count_arg(char **arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i] != NULL)
-		i++;
-	return (i);
-})*/
 static void	ft_display(char **arg, int i, int fd)
 {
 	while (arg[i])
@@ -31,6 +22,7 @@ static void	ft_display(char **arg, int i, int fd)
 		i++;
 	}
 }
+
 int	ft_check_flag(char *str)
 {
 	int	i;
@@ -48,6 +40,7 @@ int	ft_check_flag(char *str)
 		return (1);
 	return (0);
 }
+
 void	ft_echo(char **arg)
 {
 	int	i;

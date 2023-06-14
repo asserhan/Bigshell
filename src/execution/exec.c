@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/13 18:08:04 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/14 21:55:18 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,33 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	}
 	return (pid);
 }
+void	exec_single(t_exec_context *exContext)
+{
+	int	fdout;
+	int	fdin;
 
+	if (is_builtin(exContext->cmds->cmd))
+	{
+		fdout = dup(1);
+		fdin = dup(0);
+		ft_dup(exContext->cmds);
+		exec_builtins(exContext);
+		dup2(fdout, 1);
+		dup2(fdin, 0);
+	}
+	else
+	{
+		one_cmd(exContext);
+		wait(NULL);
+		free_matrix(exContext->cmd_paths);
+	}
+}
 void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
 	t_doubly_lst	*cmds;
 	int				k;
-	int				fdout;
-	int				fdin;
 	int				pid;
 
 	k = 0;
@@ -70,26 +88,9 @@ void	execution(t_exec_context *exContext)
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
-	{
-		if (is_builtin(exContext->cmds->cmd))
-		{
-			fdout = dup(1);
-			fdin = dup(0);
-			ft_dup(exContext->cmds);
-			exec_builtins(exContext);
-			dup2(fdout, 1);
-			dup2(fdin, 0);
-		}
-		else
-		{
-			one_cmd(exContext);
-			wait(NULL);
-			free_matrix(exContext->cmd_paths);
-		}
-	}
+		exec_single(exContext);
 	else
 	{
-		// cmd_tmp = exContext->cmds;
 		while (tmp->cmds)
 		{
 			pid = mutiple_cmd(tmp, &k);
@@ -99,5 +100,4 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1)
 			;
 	}
-	//ft_close_fd(exContext);
 }

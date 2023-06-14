@@ -158,6 +158,12 @@ int					ft_pwd(void);
 void				ft_exit(char **arg);
 int					is_builtin(char *cmd);
 void				exec_builtins(t_exec_context *exContext);
+char				*go_home(t_env *env);
+char				*get_env_path(t_env *env, char *name);
+void				update_pwd(t_env *env, char *name);
+void				update_oldpwd(t_env *env, char *name, char *path);
+
+void				_export_variable(char *arg, t_env *env);
 /* copy env list */
 t_env				*copy_env_list(t_exec_context *exContext);
 /*sort env variable list*/
