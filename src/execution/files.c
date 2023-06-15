@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 19:58:32 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/11 15:30:10 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:31:10 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_dup(t_doubly_lst *commend)
 			ft_msg_error("dup2", 1);
 	}
 }
+
 void	ft_close_fd(t_exec_context *exContext)
 {
 	t_doubly_lst	*tmp;
@@ -45,14 +46,3 @@ void	ft_close_fd(t_exec_context *exContext)
 		tmp = tmp->next;
 	}
 }
-// void	ft_dup_built(t_exec_context *exContext)
-// {
-// 	int fd_out;
-// 	int fd_in;
-// 	fd_out = dup(STDOUT_FILENO);
-// 	fd_in = dup(STDIN_FILENO);
-// 	ft_dup(exContext);
-// 	exec_builtins(exContext);
-// 	dup2(fd_out, STDOUT_FILENO);
-// 	dup2(fd_in, STDIN_FILENO);
-// }

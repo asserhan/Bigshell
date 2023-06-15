@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/14 21:55:18 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:20:02 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,17 @@ void	one_cmd(t_exec_context *exContext)
 		if (exContext->cmds->cmd[0] != '\0')
 			ft_execute_child(exContext);
 		else
+		{
+			if (exContext->cmds->cmd[0] == '\0')
+			{
+				if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
+				{
+					put_error_ex("minishell: ", exContext->cmds->cmd,
+							": command not found\n", 127);
+				}
+			}
 			exit(g_exit_status);
+		}
 	}
 }
 
@@ -51,7 +61,8 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	}
 	return (pid);
 }
-void	exec_single(t_exec_context *exContext)
+
+static void	exec_single(t_exec_context *exContext)
 {
 	int	fdout;
 	int	fdin;
@@ -72,6 +83,13 @@ void	exec_single(t_exec_context *exContext)
 		free_matrix(exContext->cmd_paths);
 	}
 }
+
+void	ft_signals(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
+}
+
 void	execution(t_exec_context *exContext)
 {
 	int				size;
@@ -83,12 +101,13 @@ void	execution(t_exec_context *exContext)
 	k = 0;
 	tmp = exContext;
 	cmds = tmp->cmds;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
+	ft_signals();
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
+	{
 		exec_single(exContext);
+	}
 	else
 	{
 		while (tmp->cmds)
