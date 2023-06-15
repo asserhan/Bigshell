@@ -137,11 +137,13 @@ void	handle_input(t_exec_context *exContext,
 					t_doubly_lst *old_list,
 					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_output(t_exec_context *exContext,
-						t_doubly_lst *old_list, t_doubly_lst *node);
+void	handle_output(t_exec_context *exContext,
+					t_doubly_lst *old_list,
+					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_append(t_exec_context *exContext,
-						t_doubly_lst *old_list, t_doubly_lst *node);
+void	handle_append(t_exec_context *exContext,
+					t_doubly_lst *old_list,
+					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 						t_exec_context *exContext);
@@ -156,6 +158,9 @@ int					check_syntax(t_doubly_lst *head);
 /* convert list o have args and in , out*/
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
+
+void				line_to_tokens_delimiters(char *line, char *delimiters,
+						char **tokens);
 
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
