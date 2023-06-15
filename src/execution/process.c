@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/15 17:19:53 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:44:29 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,20 @@ static int	is_directory(t_exec_context *exContext)
 		if (S_ISDIR(fileStat.st_mode))
 		{
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
-						": is a directory\n", 126));
+					": is a directory\n", 126));
 			d_lstdelone(&(exContext->cmds), exContext->cmds);
 		}
 		else if (access(exContext->cmds->cmd, F_OK) == -1)
 		{
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
-						": No such file or directory\n", 127));
+					": No such file or directory\n", 127));
 			d_lstdelone(&(exContext->cmds), exContext->cmds);
 		}
 		return (1);
 	}
 	return (0);
 }
+
 void	ft_execute_child(t_exec_context *exContext)
 {
 	if (is_directory(exContext))
@@ -50,14 +51,21 @@ void	ft_execute_child(t_exec_context *exContext)
 	if (!exContext->cmds->cmd)
 	{
 		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
-				127);
+			127);
 		free(exContext->cmds->cmd);
 		exit(127);
 	}
 	execve(exContext->cmds->cmd, exContext->cmds->args,
-			exContext->env->env_array);
+		exContext->env->env_array);
 	ft_msg_error("execve", 127);
 	exit(127);
+}
+
+static void	ft_run(t_exec_context *exContext)
+{
+	ft_get_path(exContext);
+	ft_dup(exContext->cmds);
+	ft_execute_child(exContext);
 }
 
 void	ft_child_process(t_exec_context *exContext, int *k, int *end)
@@ -82,11 +90,7 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 			exit(0);
 		}
 		else
-		{
-			ft_get_path(exContext);
-			ft_dup(exContext->cmds);
-			ft_execute_child(exContext);
-		}
+			ft_run(exContext);
 	}
 	else
 		exit(g_exit_status);

@@ -6,13 +6,13 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/15 17:20:02 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:27:05 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	one_cmd(t_exec_context *exContext)
+static void	one_cmd(t_exec_context *exContext)
 {
 	ft_get_path(exContext);
 	exContext->pid = fork();
@@ -26,20 +26,17 @@ void	one_cmd(t_exec_context *exContext)
 			ft_execute_child(exContext);
 		else
 		{
-			if (exContext->cmds->cmd[0] == '\0')
+			if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
 			{
-				if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
-				{
-					put_error_ex("minishell: ", exContext->cmds->cmd,
-							": command not found\n", 127);
-				}
+				put_error_ex("minishell: ", exContext->cmds->cmd,
+					": command not found\n", 127);
 			}
 			exit(g_exit_status);
 		}
 	}
 }
 
-int	mutiple_cmd(t_exec_context *exContext, int *k)
+static int	mutiple_cmd(t_exec_context *exContext, int *k)
 {
 	int	end[2];
 	int	pid;
@@ -84,7 +81,7 @@ static void	exec_single(t_exec_context *exContext)
 	}
 }
 
-void	ft_signals(void)
+static void	ft_signals(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
@@ -105,9 +102,7 @@ void	execution(t_exec_context *exContext)
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
-	{
 		exec_single(exContext);
-	}
 	else
 	{
 		while (tmp->cmds)
