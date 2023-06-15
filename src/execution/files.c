@@ -27,23 +27,15 @@ void	ft_dup(t_doubly_lst *commend)
 }
 void	ft_close_fd(t_exec_context *exContext)
 {
-	t_doubly_lst	*tmp;
+	t_list	*tmp;
 
-	tmp = exContext->cmds;
+	tmp = exContext->fds;
 	while (tmp)
 	{
-		if (tmp->in != STDIN_FILENO)
-		{
-			if (close(tmp->in) == -1)
-				ft_msg_error("close", 1);
-		}
-		if (tmp->out != STDOUT_FILENO)
-		{
-			if (close(tmp->out) == -1)
-				ft_msg_error("close", 1);
-		}
+		close(((int *)tmp->content)[0]);
 		tmp = tmp->next;
 	}
+	ft_lstclear(&(exContext->fds), free);
 }
 // void	ft_dup_built(t_exec_context *exContext)
 // {

@@ -26,7 +26,8 @@ char	*get_dir(char *path)
 	return (dir);
 }
 
-void	handle_input(t_doubly_lst *old_list, t_doubly_lst *node)
+void	handle_input(t_exec_context *exContext, t_doubly_lst *old_list,
+		t_doubly_lst *node)
 {
 	int		fd;
 	char	*path;
@@ -41,8 +42,10 @@ void	handle_input(t_doubly_lst *old_list, t_doubly_lst *node)
 	if (fd == -1)
 		return (put_error("minishell: No such file or directory ", "", 1));
 	node->in = fd;
+	add_fd(exContext, fd);
 }
-void	handle_output(t_doubly_lst *old_list, t_doubly_lst *node)
+void	handle_output(t_exec_context *exContext, t_doubly_lst *old_list,
+		t_doubly_lst *node)
 {
 	char		*path;
 	char		*dir;
@@ -64,8 +67,10 @@ void	handle_output(t_doubly_lst *old_list, t_doubly_lst *node)
 	else if (access(path, W_OK) == -1 && access(path, F_OK) == 0)
 		return (put_error("minishell: permission denied: ", path, 126));
 	node->out = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	add_fd(exContext, node->out);
 }
-void	handle_append(t_doubly_lst *old_list, t_doubly_lst *node)
+void	handle_append(t_exec_context *exContext, t_doubly_lst *old_list,
+		t_doubly_lst *node)
 {
 	char		*path;
 	char		*dir;
@@ -87,4 +92,5 @@ void	handle_append(t_doubly_lst *old_list, t_doubly_lst *node)
 	else if (access(path, W_OK) == -1 && access(path, F_OK) == 0)
 		return (put_error("minishell: permission denied: ", path, 126));
 	node->out = open(path, O_CREAT | O_WRONLY | O_APPEND, 0666);
+	add_fd(exContext, node->out);
 }

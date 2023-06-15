@@ -33,8 +33,8 @@ typedef struct s_exec_context
 	char			**cmd_paths;
 	int is; //unset PATH
 	int				pipe_num;
-	int				**pipe_fd;
 	t_list			*fds;
+	int				**pipe_fd;
 
 }					t_exec_context;
 
@@ -69,6 +69,8 @@ char				**matrix_push_back(char **matrix, char *back);
 char				**matrix_add_front(char *str, char **matrix);
 /* Get last pointer in a matrix*/
 char				*last_element_matrix(char **matrix);
+/*alloc fd and return a pointer to it*/
+int					*alloc_fd(int fd);
 
 /*--STRING--*/
 /*  equal == 0 || not = 1 */
@@ -101,6 +103,8 @@ int					parse_arg(char *str);
 
 char				*ft_strcat(char *dest, const char *src);
 
+void				add_fd(t_exec_context *exContext, int fd);
+
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
 /* TODO */
@@ -129,11 +133,15 @@ char				*path_expand(char *str, char *home);
 char	*get_env_value(char *name,
 					t_exec_context *exContext);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_input(t_doubly_lst *old_list, t_doubly_lst *node);
+void	handle_input(t_exec_context *exContext,
+					t_doubly_lst *old_list,
+					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
+void				handle_output(t_exec_context *exContext,
+						t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
+void				handle_append(t_exec_context *exContext,
+						t_doubly_lst *old_list, t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 						t_exec_context *exContext);

@@ -34,13 +34,13 @@ int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 {
 	*red_type = redirection_type((*list));
 	if (*red_type == APPEND)
-		handle_append((*list), *node);
+		handle_append(exContext, (*list), *node);
 	else if (*red_type == HERE_DOC)
 		handle_heredoc((*list), *node, exContext);
 	else if (*red_type == OUT)
-		handle_output((*list), *node);
+		handle_output(exContext, (*list), *node);
 	else if (*red_type == IN)
-		handle_input((*list), *node);
+		handle_input(exContext, (*list), *node);
 	if (g_exit_status != 0)
 		return (1);
 	if (*red_type == APPEND || *red_type == HERE_DOC)

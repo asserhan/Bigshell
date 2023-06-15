@@ -44,6 +44,7 @@ int	init_data(t_exec_context *exContext, char **av, char **env_str)
 	g_exit_status = 0;
 	if (!exContext->env)
 		return (1);
+	exContext->fds = NULL;
 	// rl_catch_signals = 0;
 	return (0);
 }

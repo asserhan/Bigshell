@@ -110,5 +110,5 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1)
 			;
 	}
-	//ft_close_fd(exContext);
+	ft_close_fd(exContext);
 }

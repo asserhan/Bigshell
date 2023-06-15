@@ -24,7 +24,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	{
 		free(line);
 		line = NULL;
-		return (close(end[1]), 1);
+		return (1);
 	}
 	if (!quotes)
 	{
@@ -84,4 +84,6 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	g_exit_status = 0;
 	boucle_file_line(quotes, exContext, delimiter, end);
 	node->in = end[0];
+	add_fd(exContext, end[0]);
+	add_fd(exContext, end[1]);
 }
