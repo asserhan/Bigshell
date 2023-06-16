@@ -28,37 +28,47 @@ int	words_number_delimiters(char *str, char *delimiters)
 	return (count);
 }
 
+int	split_with_del(char ***final_tokens, char **tokens,
+		t_exec_context *exContext, int *i)
+{
+	char	**sub_tokens;
+	char	*line_expended;
+	int		count;
+
+	ft_printf("foo\n");
+	if (*final_tokens && ends_with_heredoc(*final_tokens))
+		sub_tokens = heredoc_befor(tokens[*i]);
+	else
+	{
+		line_expended = expand_token(tokens[*i], exContext);
+		if (!line_expended)
+			return (1);
+		count = words_number_delimiters(line_expended, "<>| ");
+		sub_tokens = malloc((count + 1) * sizeof(char *));
+		if (!sub_tokens)
+			return (1);
+		line_to_tokens_delimiters(line_expended, "<>| ", sub_tokens);
+		free(line_expended);
+	}
+	*final_tokens = matrix_concat(*final_tokens, sub_tokens);
+	free_matrix(sub_tokens);
+	return (0);
+}
+
 char	**split_tokens(char **tokens, t_exec_context *exContext)
 {
 	char	**final_tokens;
-	char	**sub_tokens;
-	char	*line_expended;
 	int		command_count;
 	int		i;
-	int		count;
 
 	command_count = count_matrix(tokens);
 	i = 0;
 	final_tokens = NULL;
 	while (i < command_count)
 	{
-		if (final_tokens && ends_with_heredoc(final_tokens))
-			sub_tokens = heredoc_befor(tokens[i++]);
-		else
-		{
-			line_expended = expand_token(tokens[i++], exContext);
-			if (!line_expended)
-				return (NULL);
-			count = words_number_delimiters(line_expended,
-											"<>| ");
-			sub_tokens = malloc((count + 1) * sizeof(char *));
-			if (!sub_tokens)
-				return (NULL);
-			line_to_tokens_delimiters(line_expended, "<>| ", sub_tokens);
-			free(line_expended);
-		}
-		final_tokens = matrix_concat(final_tokens, sub_tokens);
-		free_matrix(sub_tokens);
+		if (split_with_del(&final_tokens, tokens, exContext, &i))
+			return (NULL);
+		i++;
 	}
 	return (final_tokens);
 }
