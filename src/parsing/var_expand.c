@@ -39,7 +39,7 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 								2),
 					NULL);
 	}
-	if (str[i + 1] == '?')
+	else if (str[i + 1] == '?')
 	{
 		var_value = ft_itoa(g_exit_status);
 		i += 2;
