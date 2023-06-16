@@ -159,12 +159,19 @@ int					check_syntax(t_doubly_lst *head);
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
 
+int					words_number_delimiters(char *str, char *delimiters);
+
 void				line_to_tokens_delimiters(char *line, char *delimiters,
 						char **tokens);
 
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
 void				heredoc_sigint_handler(int sig);
+
+//heredoc functs///
+char				**heredoc_in_token(char *token);
+char				**heredoc_befor(char *token);
+int					ends_with_heredoc(char **matrix);
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
 void				ft_export(t_exec_context *exContext);
