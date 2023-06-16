@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/14 21:48:17 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:40:35 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **env)
 	input = NULL;
 	if (init_data(&exContext, av, env))
 		exit(1);
-	//rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	while (ac)
 	{
 		signal(SIGINT, sigint_handler);
@@ -41,10 +41,7 @@ int	main(int ac, char **av, char **env)
 		if (input[0] != '\0')
 			add_history(input);
 		if (pars_input(&exContext, input))
-		{
-			//d_lstclear(&exContext.cmds);
 			continue ;
-		}
 		head = exContext.cmds;
 		execution(&exContext);
 		d_lstclear(&head);

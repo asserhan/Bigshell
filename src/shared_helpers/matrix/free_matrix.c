@@ -21,8 +21,11 @@ void	free_matrix(char **matrix)
 	{
 		while (matrix[i])
 		{
-			free(matrix[i]);
-			matrix[i] = NULL;
+			if (matrix[i])
+			{
+				free(matrix[i]);
+				matrix[i] = NULL;
+			}
 			i++;
 		}
 	}

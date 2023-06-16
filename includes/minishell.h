@@ -33,6 +33,7 @@ typedef struct s_exec_context
 	char			**cmd_paths;
 	int is; //unset PATH
 	int				pipe_num;
+	t_list			*fds;
 	int				**pipe_fd;
 
 }					t_exec_context;
@@ -66,6 +67,10 @@ char				**matrix_concat(char **matrix, char **back);
 char				**matrix_push_back(char **matrix, char *back);
 /*Appends a new row to the front of the matrix*/
 char				**matrix_add_front(char *str, char **matrix);
+/* Get last pointer in a matrix*/
+char				*last_element_matrix(char **matrix);
+/*alloc fd and return a pointer to it*/
+int					*alloc_fd(int fd);
 
 /*--STRING--*/
 /*  equal == 0 || not = 1 */
@@ -98,6 +103,8 @@ int					parse_arg(char *str);
 
 char				*ft_strcat(char *dest, const char *src);
 
+void				add_fd(t_exec_context *exContext, int fd);
+
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
 /* TODO */
@@ -126,11 +133,17 @@ char				*path_expand(char *str, char *home);
 char	*get_env_value(char *name,
 					t_exec_context *exContext);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_input(t_doubly_lst *old_list, t_doubly_lst *node);
+void	handle_input(t_exec_context *exContext,
+					t_doubly_lst *old_list,
+					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_output(t_doubly_lst *old_list, t_doubly_lst *node);
+void	handle_output(t_exec_context *exContext,
+					t_doubly_lst *old_list,
+					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void				handle_append(t_doubly_lst *old_list, t_doubly_lst *node);
+void	handle_append(t_exec_context *exContext,
+					t_doubly_lst *old_list,
+					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 						t_exec_context *exContext);
@@ -142,13 +155,25 @@ char				*expand_token(char *token, t_exec_context *exContext);
 /* check syntax for every node in list*/
 int					check_syntax(t_doubly_lst *head);
 
+char				*subtoken(char *str, int i, t_exec_context *exContext);
+
 /* convert list o have args and in , out*/
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
 
+int					words_number_delimiters(char *str, char *delimiters);
+
+void				line_to_tokens_delimiters(char *line, char *delimiters,
+						char **tokens);
+
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
 void				heredoc_sigint_handler(int sig);
+
+//heredoc functs///
+char				**heredoc_in_token(char *token);
+char				**heredoc_befor(char *token);
+int					ends_with_heredoc(char **matrix);
 ////////////////////////////////////* Builtins*////////////////////////////////////
 void				ft_env(t_exec_context *exContext);
 void				ft_export(t_exec_context *exContext);

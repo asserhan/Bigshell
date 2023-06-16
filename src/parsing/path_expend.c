@@ -14,9 +14,8 @@
 
 char	*path_expand(char *str, char *home)
 {
-	char	*before_tilde;
+	char	*tmp;
 	char	*tilde_expansion;
-	char	*after_tilde;
 	int		quotes[2];
 	int		i;
 	char	*result;
@@ -30,12 +29,12 @@ char	*path_expand(char *str, char *home)
 		if (!quotes[0] && !quotes[1] && str[i] == '~' && (i == 0 || (str[i
 					- 1] != '$' && str[i - 1] != '\\')))
 		{
-			before_tilde = ft_substr(str, 0, i);
-			tilde_expansion = ft_strjoin(before_tilde, home);
-			free(before_tilde);
-			after_tilde = ft_strdup(str + i + 1);
-			result = ft_strjoin(tilde_expansion, after_tilde);
-			free(after_tilde);
+			tmp = ft_substr(str, 0, i);
+			tilde_expansion = ft_strjoin(tmp, home);
+			free(tmp);
+			tmp = ft_strdup(str + i + 1);
+			result = ft_strjoin(tilde_expansion, tmp);
+			free(tmp);
 			return (free(tilde_expansion), path_expand(result, home));
 		}
 	}

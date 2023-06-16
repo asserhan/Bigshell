@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/15 17:27:05 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:47:30 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,23 @@ static int	mutiple_cmd(t_exec_context *exContext, int *k)
 	return (pid);
 }
 
+
+void	update_underScore(t_exec_context *exContext)
+{
+	if (!(exContext->cmds->next))
+	{
+		update_env_elem(exContext->env, "_",
+				last_element_matrix(exContext->cmds->args));
+		free_matrix(exContext->env->env_array);
+		exContext->env->env_array = env_to_matrix(exContext->env->first);
+	}
+}
 static void	exec_single(t_exec_context *exContext)
 {
 	int	fdout;
 	int	fdin;
-
+	
+	update_underScore(exContext);
 	if (is_builtin(exContext->cmds->cmd))
 	{
 		fdout = dup(1);
@@ -91,13 +103,11 @@ void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
-	t_doubly_lst	*cmds;
 	int				k;
 	int				pid;
 
 	k = 0;
 	tmp = exContext;
-	cmds = tmp->cmds;
 	ft_signals();
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
@@ -107,6 +117,7 @@ void	execution(t_exec_context *exContext)
 	{
 		while (tmp->cmds)
 		{
+			update_underScore(exContext);
 			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}

@@ -24,7 +24,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	{
 		free(line);
 		line = NULL;
-		return (close(end[1]), 1);
+		return (1);
 	}
 	if (!quotes)
 	{
@@ -41,13 +41,34 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	return (0);
 }
 
+void	boucle_file_line(int quotes, t_exec_context *exContext, char *delimiter,
+		int *end)
+{
+	int	result;
+
+	while (g_exit_status != 1)
+	{
+		result = fill_line(quotes, exContext, delimiter, end);
+		if (result == -1)
+		{
+			if (quotes)
+				free(delimiter);
+			close(end[0]);
+			close(end[1]);
+			return ;
+		}
+		else if (result == 1)
+			break ;
+	}
+	if (quotes)
+		free(delimiter);
+}
 void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 		t_exec_context *exContext)
 {
 	int		end[2];
 	char	*delimiter;
 	int		quotes;
-	int		result;
 
 	signal(SIGINT, heredoc_sigint_handler);
 	if (pipe(end) == -1)
@@ -61,22 +82,8 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	else
 		delimiter = old_list->next->next->cmd;
 	g_exit_status = 0;
-	while (g_exit_status != 1)
-	{
-		result = fill_line(quotes, exContext, delimiter, end);
-		if (result == -1)
-		{
-			if (quotes)
-				free(delimiter);
-			// g_exit_status = 1;
-			close(end[0]);
-			close(end[1]);
-			return ;
-		}
-		else if (result == 1)
-			break ;
-	}
-	if (quotes)
-		free(delimiter);
+	boucle_file_line(quotes, exContext, delimiter, end);
 	node->in = end[0];
+	add_fd(exContext, end[0]);
+	add_fd(exContext, end[1]);
 }
