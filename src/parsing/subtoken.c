@@ -19,20 +19,26 @@ int	betwen_bracets(int *i, char *str, t_exec_context *exContext,
 	return (0);
 }
 
+
 void	default_case(int *i, char *str, t_exec_context *exContext,
 		char **var_value)
 {
 	int		var_len;
 	char	*sub;
+	int start;
 
-	var_len = find_char_index(&str[*i + 1],
-								"|\"' $.&-@:+=[]{}%~;#^*\\1234567890");
+
+	start = *i;
+	var_len = *i;
+	while (ft_isalpha(str[*i + 1]) || str[*i + 1] == '_')
+		(*i)++;
+	var_len = *i - var_len;
 	if (var_len == -1)
-		var_len = ft_strlen(&str[*i + 1]);
-	sub = ft_substr(&str[*i + 1], 0, var_len);
+		var_len = ft_strlen(&str[start + 1]);
+	sub = ft_substr(&str[start + 1], 0, var_len);
 	*var_value = get_env_value(sub, exContext);
 	free(sub);
-	*i += var_len + 1;
+	*i += 1;
 }
 
 void	join_expand_to_str(int *i, int start, char *str, char **var_value,
