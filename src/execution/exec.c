@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/16 16:47:30 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:24:38 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	mutiple_cmd(t_exec_context *exContext, int *k)
 		close(end[1]);
 		close(end[0]);
 	}
+	add_fd(exContext, *k);
 	return (pid);
 }
 
