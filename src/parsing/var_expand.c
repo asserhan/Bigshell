@@ -72,13 +72,24 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	return (result);
 }
 
+char	*expand(char *token, int i, t_exec_context *exContext)
+{
+	char	*new_token;
+
+	new_token = subtoken(token, i, exContext);
+	if (!new_token)
+		return (NULL);
+	free(token);
+	token = NULL;
+	return (var_expand(new_token, exContext));
+}
+
 char	*var_expand(char *token, t_exec_context *exContext)
 {
-	int		s_quote;
-	int		d_quote;
-	int		i;
-	int		should_expand;
-	char	*new_token;
+	int	s_quote;
+	int	d_quote;
+	int	i;
+	int	should_expand;
 
 	s_quote = 0;
 	d_quote = 0;
@@ -96,14 +107,7 @@ char	*var_expand(char *token, t_exec_context *exContext)
 					should_expand = 0;
 			}
 			if (should_expand)
-			{
-				new_token = subtoken(token, i, exContext);
-				if (!new_token)
-					return (NULL);
-				free(token);
-				token = NULL;
-				return (var_expand(new_token, exContext));
-			}
+				return (expand(token, i, exContext));
 		}
 	}
 	return (token);

@@ -5,7 +5,6 @@ char	**heredoc_befor(char *token)
 	char	**sub_tokens;
 	int		count;
 
-	ft_printf("the : token [%s]\n", token);
 	count = words_number_delimiters(token,
 									"<>| ");
 	sub_tokens = malloc((count + 1) * sizeof(char *));

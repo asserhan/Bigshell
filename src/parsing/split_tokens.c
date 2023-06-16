@@ -35,7 +35,6 @@ int	split_with_del(char ***final_tokens, char **tokens,
 	char	*line_expended;
 	int		count;
 
-	ft_printf("foo\n");
 	if (*final_tokens && ends_with_heredoc(*final_tokens))
 		sub_tokens = heredoc_befor(tokens[*i]);
 	else
