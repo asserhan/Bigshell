@@ -6,91 +6,58 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 20:56:51 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/10 17:13:36 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:32:58 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
- 
-static char	*get_env_path(t_env *env, char *name)
+static int	cd_errno(char *path)
 {
-	t_env_variable	*tmp;
-
-	tmp = env->first;
-	while (tmp)
+	if (!path && errno == ENOENT)
 	{
-		if (ft_strcmp(tmp->name, name) == 0)
-			return (tmp->content);
-		tmp = tmp->next;
+		ft_putstr_fd(" cd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
+		g_exit_status = 0;
+		return (1);
 	}
-	return (NULL);
-}
-char	*go_home(t_env *env)
-{
-	char	*home;
-
-	home = get_env_path(env, "HOME");
-	if (!home)
-	{
-		put_error_ex("minishell: cd: HOME not set\n", NULL, NULL, 1);
-		return (NULL);
-	}
-	return (home);
+	return (0);
 }
 
-static void	update_pwd(t_env *env, char *name)
+static int	unset_pwd(t_env *env)
 {
-	t_env_variable	*tmp;
-	char			pwd[PATH_MAX];
-	char			*home;
-
-	tmp = env->first;
-	while (tmp)
+	if (!search_env_elem(env, "OLDPWD") || !search_env_elem(env, "PWD"))
 	{
-		if (ft_strcmp(tmp->name, name) == 0)
-		{
-			free(tmp->content);
-			if (getcwd(pwd, PATH_MAX))
-				tmp->content = ft_strdup(pwd);
-			else
-			{
-				if (search_env_elem(env, "OLDPWD"))
-					tmp->content = ft_strdup(search_env_elem(env,
-																"OLDPWD")
-													->content);
-				else
-				{
-					home = get_env_path(env, "HOME");
-					tmp->content = ft_strdup(home);
-				}
-			}
-		}
-		tmp = tmp->next;
+		if (!search_env_elem(env, "PWD"))
+			update_env_elem(env, "OLDPWD", "\"\0\"");
+		return (1);
 	}
+	return (0);
 }
-void update_oldpwd(t_env *env,char *name,char *path)
+
+static int	ft_chdir(char *path)
 {
-	t_env_variable	*tmp;
-	
-
-	tmp = env->first;
-	while (tmp)
+	if (chdir(path) == -1)
 	{
-		if (ft_strcmp(tmp->name, name) == 0)
-		{
-			free(tmp->content);
-			tmp->content = ft_strdup(path);
-			return ;
-		}
-		tmp = tmp->next;
+		put_error_ex("minishell: cd: ", path, ": No such file or directory\n",
+			1);
+		return (1);
 	}
+	return (0);
 }
+
+static void	ft_update(t_env *env, char *oldpwd)
+{
+	update_oldpwd(env, "OLDPWD", oldpwd);
+	update_pwd(env, "PWD");
+}
+
 void	ft_cd(char **arg, t_env *env)
 {
 	char	*path;
 	char	str[PATH_MAX];
-	char  *oldpwd;
+	char	*oldpwd;
 
 	if (count_matrix(arg) == 1)
 	{
@@ -102,33 +69,15 @@ void	ft_cd(char **arg, t_env *env)
 		path = arg[1];
 		if (!path)
 			return ;
-		if (chdir(path) == -1)
-		{
-			put_error_ex("minishell: cd: ", path,
-					": No such file or directory\n", 1);
+		if (ft_chdir(path))
 			return ;
-		}
-		if(!search_env_elem(env,"OLDPWD") || !search_env_elem(env,"PWD"))
-		{
-			if(!search_env_elem(env,"PWD"))
-			{
-				puts("here");
-				update_env_elem(env,"OLDPWD","\0");
-			}
+		if (unset_pwd(env))
 			return ;
-		}
 		oldpwd = get_env_path(env, "PWD");
 		path = getcwd(str, PATH_MAX);
-		if (!path && errno == ENOENT)
-		{
-			ft_putstr_fd(" cd: error retrieving current directory: ", 2);
-			ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-			ft_putstr_fd("No such file or directory\n", 2);
-			g_exit_status = 1;
+		if (cd_errno(path))
 			return ;
-		}
-		update_oldpwd(env, "OLDPWD",oldpwd); //to do
-		update_pwd(env, "PWD");
+		ft_update(env, oldpwd);
 	}
 	g_exit_status = 0;
 }

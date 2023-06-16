@@ -96,7 +96,7 @@ char	**heredoc_in_token(char *token)
 		rtr = ft_calloc(4, sizeof(char *));
 		rtr[0] = ft_strdup("<");
 		rtr[1] = ft_strdup("<");
-		rtr[2] = ft_strdup(ft_substr(token, here_index + 2, ft_strlen(token)));
+		rtr[2] = ft_substr(token, here_index + 2, ft_strlen(token));
 		rtr[3] = NULL;
 	}
 	else
@@ -111,12 +111,16 @@ char	**heredoc_in_token(char *token)
 
 char	**heredoc_befor(char *token)
 {
-	char	**rtr;
+	char	**sub_tokens;
+	int		count;
 
-	rtr = ft_calloc(2, sizeof(char *));
-	rtr[0] = ft_strdup(token);
-	rtr[1] = NULL;
-	return (rtr);
+	count = words_number_delimiters(token,
+									"<>| ");
+	sub_tokens = malloc((count + 1) * sizeof(char *));
+	if (!sub_tokens)
+		return (NULL);
+	line_to_tokens_delimiters(token, "<>| ", sub_tokens);
+	return (sub_tokens);
 }
 
 int	ends_with_heredoc(char **matrix)
@@ -152,9 +156,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			sub_tokens = heredoc_befor(tokens[i++]);
 		}
 		else if (ft_strnstr(tokens[i], "<<", ft_strlen(tokens[i])))
-		{
 			sub_tokens = heredoc_in_token(tokens[i++]);
-		}
 		else
 		{
 			line_expended = expand_token(tokens[i++], exContext);
@@ -166,6 +168,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 			if (!sub_tokens)
 				return (NULL);
 			line_to_tokens_delimiters(line_expended, "<>| ", sub_tokens);
+			free(line_expended);
 		}
 		final_tokens = matrix_concat(final_tokens, sub_tokens);
 		free_matrix(sub_tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:34:45 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/10 11:13:10 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:32:23 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,14 @@ t_doubly_lst	*remove_quotes_from_list(t_doubly_lst *list)
 
 void	add_cmd_to_args(t_doubly_lst *final_list)
 {
-	while ((final_list))
+	t_doubly_lst	*tmp;
+
+	tmp = final_list;
+	while ((tmp))
 	{
-		(final_list)->args = matrix_add_front((final_list)->cmd,
-												(final_list)->args);
-		(final_list) = (final_list)->next;
+		(tmp)->args = matrix_add_front((tmp)->cmd,
+										(tmp)->args);
+		(tmp) = (tmp)->next;
 	}
 }
 int	pars_input(t_exec_context *exContext, char *input)
@@ -87,13 +90,13 @@ int	pars_input(t_exec_context *exContext, char *input)
 	list_without_quotes = remove_quotes_from_list(cmd_list);
 	d_lstclear(&cmd_list);
 	if (check_syntax(list_without_quotes))
-		return (1);
+		return (d_lstclear(&list_without_quotes), 1);
 	final_list = convert_list_format(list_without_quotes, exContext);
 	d_lstclear(&list_without_quotes);
 	if (!final_list)
 		return (1);
 	add_cmd_to_args(final_list);
-	// print_list(final_list);
 	exContext->cmds = final_list;
+	//print_list(final_list);
 	return (0);
 }

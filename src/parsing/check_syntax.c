@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:48:18 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/08 08:51:09 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:48:57 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	delimiter_check(t_doubly_lst *head)
 		|| (head->prev && head->next && ft_strchr("<>|", *head->cmd)
 			&& ft_strchr("|", *head->next->cmd)))
 	{
-		put_error("syntax error near unexpected token `", head->cmd, 258);
+		put_error("syntax error near unexpected tdoken `", head->cmd, 258);
 		return (1);
 	}
 	else

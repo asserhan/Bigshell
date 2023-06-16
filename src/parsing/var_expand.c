@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:06 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/10 20:29:50 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:31:54 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ static char	*subtoken(char *str, int i, t_exec_context *exContext)
 	free(var_value);
 	sub = result;
 	if (str[i] != '\0')
+	{
 		result = ft_strjoin(result, &str[i + d_quote]);
-	free(sub);
+		free(sub);
+	}
 	return (result);
 }
 
@@ -98,6 +100,8 @@ char	*var_expand(char *token, t_exec_context *exContext)
 				new_token = subtoken(token, i, exContext);
 				if (!new_token)
 					return (NULL);
+				free(token);
+				token = NULL;
 				return (var_expand(new_token, exContext));
 			}
 		}
@@ -107,16 +111,17 @@ char	*var_expand(char *token, t_exec_context *exContext)
 
 char	*expand_token(char *token, t_exec_context *exContext)
 {
-	char	*var_result;
 	char	*result;
 	char	*path;
 	char	*expand;
+	char	*token_dup;
 
-	var_result = var_expand(token, exContext);
-	expand = ft_strdup(var_result);
+	token_dup = ft_strdup(token);
+	expand = var_expand(token_dup, exContext);
 	path = get_env_value("HOME", exContext);
 	result = path_expand(expand, path);
-	// free(expand);
 	free(path);
+	if (result != expand)
+		free(expand);
 	return (result);
 }

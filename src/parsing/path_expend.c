@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:48:57 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 20:38:21 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:01:30 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*path_expand(char *str, char *home)
 			after_tilde = ft_strdup(str + i + 1);
 			result = ft_strjoin(tilde_expansion, after_tilde);
 			free(after_tilde);
-			free(str);
 			return (free(tilde_expansion), path_expand(result, home));
 		}
 	}

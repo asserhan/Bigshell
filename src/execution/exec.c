@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/10 20:31:32 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:27:05 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	one_cmd(t_exec_context *exContext)
+static void	one_cmd(t_exec_context *exContext)
 {
 	ft_get_path(exContext);
 	exContext->pid = fork();
@@ -20,12 +20,23 @@ void	one_cmd(t_exec_context *exContext)
 		ft_msg_error("fork", 1);
 	if (exContext->pid == 0)
 	{
-		ft_dup(exContext);
-		ft_execute_child(exContext);
+		if (exContext->cmds->next || exContext->cmds->cmd[0] != '\0')
+			ft_dup(exContext->cmds);
+		if (exContext->cmds->cmd[0] != '\0')
+			ft_execute_child(exContext);
+		else
+		{
+			if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
+			{
+				put_error_ex("minishell: ", exContext->cmds->cmd,
+					": command not found\n", 127);
+			}
+			exit(g_exit_status);
+		}
 	}
 }
 
-int	mutiple_cmd(t_exec_context *exContext, int *k)
+static int	mutiple_cmd(t_exec_context *exContext, int *k)
 {
 	int	end[2];
 	int	pid;
@@ -48,49 +59,50 @@ int	mutiple_cmd(t_exec_context *exContext, int *k)
 	return (pid);
 }
 
+static void	exec_single(t_exec_context *exContext)
+{
+	int	fdout;
+	int	fdin;
+
+	if (is_builtin(exContext->cmds->cmd))
+	{
+		fdout = dup(1);
+		fdin = dup(0);
+		ft_dup(exContext->cmds);
+		exec_builtins(exContext);
+		dup2(fdout, 1);
+		dup2(fdin, 0);
+	}
+	else
+	{
+		one_cmd(exContext);
+		wait(NULL);
+		free_matrix(exContext->cmd_paths);
+	}
+}
+
+static void	ft_signals(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
+}
+
 void	execution(t_exec_context *exContext)
 {
 	int				size;
 	t_exec_context	*tmp;
 	t_doubly_lst	*cmds;
 	int				k;
-	int				fdout;
-	int				fdin;
 	int				pid;
-	struct stat		fileStat;
 
 	k = 0;
 	tmp = exContext;
 	cmds = tmp->cmds;
-	while (cmds && ft_strchr(cmds->cmd, '/'))
-	{
-		stat(cmds->cmd, &fileStat);
-		if (S_ISDIR(fileStat.st_mode))
-		{
-			(put_error_ex("minishell: ", cmds->cmd, ": is a directory\n", 126));
-			d_lstdelone(&(tmp->cmds), cmds);
-		}
-		cmds = cmds->next;
-	}
+	ft_signals();
 	size = d_lstsize(exContext->cmds);
 	exContext->pipe_num = size - 1;
 	if (size == 1)
-	{
-		if (is_builtin(exContext->cmds->cmd))
-		{
-			fdout = dup(1);
-			fdin = dup(0);
-			ft_dup(exContext);
-			exec_builtins(exContext);
-			dup2(fdout, 1);
-			dup2(fdin, 0);
-		}
-		else
-		{
-			one_cmd(exContext);
-			wait(NULL);
-		}
-	}
+		exec_single(exContext);
 	else
 	{
 		while (tmp->cmds)
@@ -102,6 +114,4 @@ void	execution(t_exec_context *exContext)
 		while (wait(NULL) != -1)
 			;
 	}
-	ft_close_fd(exContext);
-	d_lstclear(&(exContext->cmds));
 }

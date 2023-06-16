@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 17:18:39 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/01 10:51:46 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/11 10:38:24 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_env	*env_to_list(char **str)
 	env = ft_calloc(sizeof(t_env), 1);
 	if (!env)
 		return (NULL);
-	env->env_array = str;
 	i = 0;
 	while (str[i])
 	{

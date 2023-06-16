@@ -39,4 +39,6 @@ void						env_lstclear(t_env *env);
 
 void						free_env(t_env **env);
 
+char						**env_to_matrix(t_env_variable *head);
+
 #endif
