@@ -155,6 +155,8 @@ char				*expand_token(char *token, t_exec_context *exContext);
 /* check syntax for every node in list*/
 int					check_syntax(t_doubly_lst *head);
 
+char				*subtoken(char *str, int i, t_exec_context *exContext);
+
 /* convert list o have args and in , out*/
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext);
