@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/15 17:44:29 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:14:36 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ static int	is_directory(t_exec_context *exContext)
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
 					": is a directory\n", 126));
 			d_lstdelone(&(exContext->cmds), exContext->cmds);
+			return (1);
 		}
 		else if (access(exContext->cmds->cmd, F_OK) == -1)
 		{
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
 					": No such file or directory\n", 127));
 			d_lstdelone(&(exContext->cmds), exContext->cmds);
+			return (1);
 		}
-		return (1);
 	}
 	return (0);
 }
