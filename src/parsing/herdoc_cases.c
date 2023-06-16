@@ -23,8 +23,6 @@ int	ends_with_heredoc(char **matrix)
 		i++;
 	if (i > 1 && !ft_strcmp(matrix[i - 1], "<") && !ft_strcmp(matrix[i - 2],
 			"<"))
-	{
 		return (1);
-	}
 	return (0);
 }

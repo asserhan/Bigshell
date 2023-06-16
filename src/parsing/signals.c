@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:34:07 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/12 15:47:06 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:19:56 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_exit_status = 1;
-		rl_on_new_line();
-		write(1, "\n", 1);
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	g_exit_status = 1;
+  	rl_on_new_line(); 
+    rl_replace_line("", 0); 
+	write(1, "\n", 1);
+    rl_redisplay();	
 	}
 }
 void	sigquit_handler(int sig)
@@ -28,9 +29,9 @@ void	sigquit_handler(int sig)
 	if (sig == SIGQUIT)
 	{
 		g_exit_status = 131;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		// rl_replace_line("jskdjfkj", 0);
-		// rl_on_new_line();
+    rl_replace_line("", 0); 
+	write(1,"Quit: 3\n", 9);
+	rl_redisplay();
 	}
 }
 void	heredoc_sigint_handler(int sig)
@@ -39,7 +40,5 @@ void	heredoc_sigint_handler(int sig)
 	{
 		g_exit_status = 1;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		// rl_replace_line("f", 0);
-		// rl_on_new_line();
 	}
 }
