@@ -43,11 +43,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 	while (i < command_count)
 	{
 		if (final_tokens && ends_with_heredoc(final_tokens))
-		{
 			sub_tokens = heredoc_befor(tokens[i++]);
-		}
-		else if (ft_strnstr(tokens[i], "<<", ft_strlen(tokens[i])))
-			sub_tokens = heredoc_in_token(tokens[i++]);
 		else
 		{
 			line_expended = expand_token(tokens[i++], exContext);

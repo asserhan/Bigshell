@@ -82,6 +82,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 	if (!tokens)
 		return (1);
 	final_tokens = split_tokens(tokens, exContext);
+	print_matrix(final_tokens, '\n');
 	free_matrix(tokens);
 	if (!final_tokens)
 		return (1);
