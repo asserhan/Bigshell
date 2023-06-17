@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expand.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:47:06 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/11 19:31:54 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/17 21:02:56 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ char	*var_expand(char *token, t_exec_context *exContext)
 			should_expand = 1;
 			if (i == 0 || token[i - 1] != '\\')
 			{
-				if (ft_strchr("/~%^}:; ", token[i + 1])
+				if (ft_strchr("@#*/~%^}:;+-= ", token[i + 1])
 					|| (find_char_index("\"", &token[i + 1]) < 0 && d_quote))
-					should_expand = 0;
+					{
+						// ft_printf("minishell: %s: bad substitution\n", token);
+						should_expand = 0;
+					}
 			}
 			if (should_expand)
 				return (expand(token, i, exContext));
