@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/17 10:42:57 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:52:50 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	one_cmd(t_exec_context *exContext)
 			ft_execute_child(exContext);
 		else
 		{
-			if (exContext->cmds->in == 0 && exContext->cmds->out == 1)
+			if (exContext->cmds->in == 0 && exContext->cmds->out == 1 && exContext->cmds->is_heredoc == 0)
 			{
 				put_error_ex("minishell: ", exContext->cmds->cmd,
 						": command not found\n", 127);

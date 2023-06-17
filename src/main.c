@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/17 10:57:33 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:53:17 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int ac, char **av, char **env)
 		if (pars_input(&exContext, input))
 			continue ;
 		head = exContext.cmds;
-		print_list(head);
+		//print_list(head);
 		execution(&exContext);
 		d_lstclear(&head);
 		ft_close_fd(&exContext);

@@ -8,6 +8,7 @@ typedef struct s_doubly_lst
 	int					in;
 	int					out;
 	int					have_quotes;
+	int 				is_heredoc;
 	struct s_doubly_lst	*next;
 	struct s_doubly_lst	*prev;
 }						t_doubly_lst;

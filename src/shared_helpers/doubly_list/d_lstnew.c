@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:17:47 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/13 13:44:35 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:51:36 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_doubly_lst	*d_lstnew(char *cmd)
 	rtr->have_quotes = 0;
 	rtr->in = 0;
 	rtr->out = 1;
+	rtr->is_heredoc = 0;
 	rtr->next = NULL;
 	rtr->prev = NULL;
 	return (rtr);

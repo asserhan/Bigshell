@@ -72,6 +72,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	int		quotes;
 
 	signal(SIGINT, heredoc_sigint_handler);
+	node->is_heredoc = 1;
 	if (pipe(end) == -1)
 		return (perror("pipe"));
 	quotes = 0;
