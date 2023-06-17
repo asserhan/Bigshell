@@ -23,6 +23,11 @@ void	put_error_ex(char *message, char *param,char *suffix, int status_code)
 void  ft_msg_error(char *message,int exit_s)
 {
 	perror(message);
+	if(errno == EACCES)
+	{
+		g_exit_status = 126;
+		exit(g_exit_status);
+	}
 	g_exit_status = exit_s;
-	exit(exit_s);
+	exit(g_exit_status);
 }

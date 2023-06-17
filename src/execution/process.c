@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/17 19:16:26 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/17 22:00:24 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	ft_execute_child(t_exec_context *exContext)
 	}
 	execve(exContext->cmds->cmd, exContext->cmds->args,
 			exContext->env->env_array);
-	ft_msg_error("execve", 127);
-	exit(127);
+	ft_msg_error("minishell", 127);
+	exit(g_exit_status);
 }
 
 static void	ft_run(t_exec_context *exContext)
