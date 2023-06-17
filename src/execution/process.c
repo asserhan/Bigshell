@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/16 19:14:36 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:33:49 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static int	is_directory(t_exec_context *exContext)
 {
 	struct stat	fileStat;
 
-	if (ft_strchr(exContext->cmds->cmd, '/') && ft_strncmp(exContext->cmds->cmd,
-			"./", 2) != 0)
+	if (ft_strchr(exContext->cmds->cmd, '/') && access(exContext->cmds->cmd, X_OK) != -1)
 	{
 		stat(exContext->cmds->cmd, &fileStat);
 		if (S_ISDIR(fileStat.st_mode))
