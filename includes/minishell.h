@@ -169,6 +169,8 @@ void				line_to_tokens_delimiters(char *line, char *delimiters,
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
 void				heredoc_sigint_handler(int sig);
+void				ft_signals(void);
+void				ft_ign_signals(void);
 
 //heredoc functs///
 char				**heredoc_in_token(char *token);
