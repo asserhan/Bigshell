@@ -24,7 +24,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	{
 		free(line);
 		line = NULL;
-		return (1);
+		return (close(end[1]), 1);
 	}
 	if (!quotes)
 	{
