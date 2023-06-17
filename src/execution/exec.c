@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/17 17:12:11 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:23:58 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void ft_wait(int pid)
 		g_exit_status = WEXITSTATUS(status);
 	if(WIFSIGNALED(status))
 	{
+		if(WTERMSIG(status) == 2)
+			ft_putstr_fd("\n", 1);
 		if (WTERMSIG(status) == 3)
 			ft_putstr_fd("Quit: 3\n", 1);
 		g_exit_status = 128 + WTERMSIG(status);
