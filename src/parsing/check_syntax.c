@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 17:48:18 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/11 15:48:57 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:24:14 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	delimiter_check(t_doubly_lst *head)
 			&& ft_strchr("<|>)!", *head->cmd)) || (!head->next
 			&& ft_strchr("<>()|", *head->cmd)) || (head->next && !head->prev
 			&& ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd))
-		|| (head->prev && head->next && ft_strchr("<>|", *head->cmd)
-			&& ft_strchr("|", *head->next->cmd)))
+	)
 	{
 		put_error("syntax error near unexpected tdoken `", head->cmd, 258);
 		return (1);

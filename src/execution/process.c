@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/17 18:33:49 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:16:26 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,21 @@ static int	is_directory(t_exec_context *exContext)
 {
 	struct stat	fileStat;
 
-	if (ft_strchr(exContext->cmds->cmd, '/') && access(exContext->cmds->cmd, X_OK) != -1)
+	if (ft_strchr(exContext->cmds->cmd, '/') && access(exContext->cmds->cmd,
+			X_OK) != -1)
 	{
 		stat(exContext->cmds->cmd, &fileStat);
 		if (S_ISDIR(fileStat.st_mode))
 		{
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
-					": is a directory\n", 126));
+						": is a directory\n", 126));
 			d_lstdelone(&(exContext->cmds), exContext->cmds);
 			return (1);
 		}
 		else if (access(exContext->cmds->cmd, F_OK) == -1)
 		{
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
-					": No such file or directory\n", 127));
+						": No such file or directory\n", 127));
 			d_lstdelone(&(exContext->cmds), exContext->cmds);
 			return (1);
 		}
@@ -51,12 +52,12 @@ void	ft_execute_child(t_exec_context *exContext)
 	if (!exContext->cmds->cmd)
 	{
 		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
-			127);
+				127);
 		free(exContext->cmds->cmd);
 		exit(127);
 	}
 	execve(exContext->cmds->cmd, exContext->cmds->args,
-		exContext->env->env_array);
+			exContext->env->env_array);
 	ft_msg_error("execve", 127);
 	exit(127);
 }
@@ -93,5 +94,13 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 			ft_run(exContext);
 	}
 	else
+	{
+		if (exContext->cmds->in == 0 && exContext->cmds->out == 1
+			&& exContext->cmds->is_heredoc == 0)
+		{
+			put_error_ex("minishell: ", exContext->cmds->cmd,
+					": command not found\n", 127);
+		}
 		exit(g_exit_status);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handel_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:01:03 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/09 21:03:40 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:32:12 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,14 @@ void	handle_output(t_exec_context *exContext, t_doubly_lst *old_list,
 
 	path = old_list->next->cmd;
 	stat(path, &fileStat);
-	if (S_ISDIR(fileStat.st_mode))
+	if (*path == '\0')
+		return (put_error("minishell: No such file or directory: ", path, 1));
+	else if (S_ISDIR(fileStat.st_mode))
 		return (put_error_ex("minishell:", path, ": is a directory\n", 1));
 	else if (ft_strchr(path, '/'))
 	{
 		dir = get_dir(path);
+		ft_printf("dir = %s\n", dir);
 		if (access(dir, F_OK) == -1)
 		{
 			put_error("minishell: No such file or directory: ", path, 1);
@@ -80,6 +83,8 @@ void	handle_append(t_exec_context *exContext, t_doubly_lst *old_list,
 	stat(path, &fileStat);
 	if (S_ISDIR(fileStat.st_mode))
 		return (put_error("minishell: is a directory: ", path, 1));
+	else if (*path == '\0')
+		return (put_error("minishell: No such file or directory: ", path, 1));
 	else if (ft_strchr(path, '/'))
 	{
 		dir = get_dir(path);
