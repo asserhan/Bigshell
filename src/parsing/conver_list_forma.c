@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:43:12 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/16 19:27:04 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/16 22:31:22 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
 
 	while (*list && ft_strcmp((*list)->cmd, "|") && *node)
 	{
-		if (find_char_index((*list)->cmd, "><") >= 0)
+		if (find_char_index((*list)->cmd, "><") >= 0 &&
+				!(*list)->have_quotes)
 		{
 			if (fill_in_out(list, node, exContext, &red_type))
 				return (d_lstclear(head),d_lstclear(list), 1);
