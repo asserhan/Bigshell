@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/17 15:52:50 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:12:11 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,24 @@ void	update_underScore(t_exec_context *exContext)
 		exContext->env->env_array = env_to_matrix(exContext->env->first);
 	}
 }
+void ft_wait(int pid)
+{
+	int status;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if(WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 3)
+			ft_putstr_fd("Quit: 3\n", 1);
+		g_exit_status = 128 + WTERMSIG(status);
+	}
+}
 static void	exec_single(t_exec_context *exContext)
 {
 	int	fdout;
 	int	fdin;
+
 
 	update_underScore(exContext);
 	if (is_builtin(exContext->cmds->cmd))
@@ -94,7 +108,7 @@ static void	exec_single(t_exec_context *exContext)
 	else
 	{
 		one_cmd(exContext);
-		wait(NULL);
+		ft_wait(exContext->pid);
 		free_matrix(exContext->cmd_paths);
 	}
 }
@@ -132,7 +146,7 @@ void	execution(t_exec_context *exContext)
 			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}
-		waitpid(pid, NULL, 0);
+		ft_wait(pid);
 		while (wait(NULL) != -1)
 			;
 	}
