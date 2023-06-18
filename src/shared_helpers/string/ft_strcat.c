@@ -12,7 +12,9 @@
 
 char	*ft_strcat(char *dest, const char *src)
 {
-	char *result = dest;
+	char	*result;
+
+	result = dest;
 	while (*dest)
 		dest++;
 	while (*src)

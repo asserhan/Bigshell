@@ -13,7 +13,7 @@ int	*alloc_fd(int fd)
 
 void	add_fd(t_exec_context *exContext, int fd)
 {
-	t_list *fd_node;
+	t_list	*fd_node;
 
 	fd_node = ft_lstnew(alloc_fd(fd));
 	ft_lstadd_back(&exContext->fds, fd_node);

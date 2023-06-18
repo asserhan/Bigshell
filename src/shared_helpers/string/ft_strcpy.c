@@ -12,15 +12,15 @@
 
 #include "../../../includes/minishell.h"
 
-char *ft_strcpy(char *dest, const char *src)
+char	*ft_strcpy(char *dest, const char *src)
 {
-    char *p;
+	char	*p;
 
-    p = dest;
-    while (*src)
-    {
-        *p++ = *src++;
-    }
-    *p = '\0';
-    return dest;
+	p = dest;
+	while (*src)
+	{
+		*p++ = *src++;
+	}
+	*p = '\0';
+	return (dest);
 }

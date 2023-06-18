@@ -12,15 +12,16 @@
 
 #include "../../../includes/minishell.h"
 
-char start_with(char *str, char *set)
+char	start_with(char *str, char *set)
 {
-    if (ft_strchr(set,str[0]))
-        return (str[0]);
-    return (0);
+	if (ft_strchr(set, str[0]))
+		return (str[0]);
+	return (0);
 }
-char end_with(char *str, char *set)
+
+char	end_with(char *str, char *set)
 {
-    if (ft_strchr(set,str[ft_strlen(str) - 1]))
-        return (str[ft_strlen(str) - 1]);
-    return (0);
+	if (ft_strchr(set, str[ft_strlen(str) - 1]))
+		return (str[ft_strlen(str) - 1]);
+	return (0);
 }

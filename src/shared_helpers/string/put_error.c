@@ -1,7 +1,5 @@
 #include "../../../includes/minishell.h"
 
- 
-
 void	put_error(char *message, char *param, int status_code)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -11,7 +9,8 @@ void	put_error(char *message, char *param, int status_code)
 	ft_putstr_fd("\n", 2);
 	g_exit_status = status_code;
 }
-void	put_error_ex(char *message, char *param,char *suffix, int status_code)
+
+void	put_error_ex(char *message, char *param, char *suffix, int status_code)
 {
 	ft_putstr_fd(message, 2);
 	if (param)
@@ -20,10 +19,11 @@ void	put_error_ex(char *message, char *param,char *suffix, int status_code)
 		ft_putstr_fd(suffix, 2);
 	g_exit_status = status_code;
 }
-void  ft_msg_error(char *message,int exit_s)
+
+void	ft_msg_error(char *message, int exit_s)
 {
 	perror(message);
-	if(errno == EACCES)
+	if (errno == EACCES)
 	{
 		g_exit_status = 126;
 		exit(g_exit_status);

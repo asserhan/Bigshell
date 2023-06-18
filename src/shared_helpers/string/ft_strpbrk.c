@@ -12,9 +12,10 @@
 
 #include "../../../includes/minishell.h"
 
-int ft_strpbrk(char *s1, char *s2)
+int	ft_strpbrk(char *s1, char *s2)
 {
-	int i;
+	int	i;
+
 	if (!s1 || !s2)
 		return (1);
 	while (*s1)
