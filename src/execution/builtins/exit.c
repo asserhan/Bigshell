@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:09 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/14 18:57:17 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 23:16:40 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+static int	is_space(int c)
+{
+	return (c == ' ');
+}
+
+int	parse_arg(char *str)
+{
+	int	i;
+	int	digit_count;
+
+	i = 0;
+	digit_count = 0;
+	while (is_space(str[i]))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		digit_count++;
+		i++;
+	}
+	while (is_space(str[i]))
+		i++;
+	if ((str[i] == '\0' && digit_count))
+		return (1);
+	return (0);
+}
 
 void	ft_exit(char **arg)
 {
