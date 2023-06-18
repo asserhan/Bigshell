@@ -31,7 +31,7 @@ void	set_start_vars(t_env *env)
 	path_elem = search_env_elem(env, "PATH");
 	if (!path_elem)
 		update_env_elem(env, "PATH",
-				"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
+			"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
 	env->env_array = env_to_matrix(env->first);
 }
 
@@ -45,6 +45,5 @@ int	init_data(t_exec_context *exContext, char **av, char **env_str)
 	if (!exContext->env)
 		return (1);
 	exContext->fds = NULL;
-	// rl_catch_signals = 0;
 	return (0);
 }

@@ -17,8 +17,7 @@ int	delimiter_check(t_doubly_lst *head)
 	if ((!head->next && !head->prev && ft_strlen(head->cmd) == 1
 			&& ft_strchr("<|>)!", *head->cmd)) || (!head->next
 			&& ft_strchr("<>()|", *head->cmd)) || (head->next && !head->prev
-			&& ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd))
-	)
+			&& ft_strlen(head->cmd) == 1 && ft_strchr("|", *head->cmd)))
 	{
 		put_error("syntax error near unexpected tdoken `", head->cmd, 258);
 		return (1);
@@ -39,7 +38,7 @@ int	check_syntax(t_doubly_lst *head)
 		if (end_with(head->cmd, "><!()") && head->next
 			&& start_with(head->next->cmd, "|"))
 			return (put_error("syntax error near unexpected token `", "|", 258),
-					1);
+				1);
 		if (!head->have_quotes && delimiter_check(head))
 			return (1);
 		head = head->next;

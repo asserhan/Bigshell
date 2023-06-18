@@ -44,10 +44,7 @@ char	*var_expand(char *token, t_exec_context *exContext)
 			{
 				if (ft_strchr("@#*/~%^}:;+-= ", token[i + 1])
 					|| (find_char_index("\"", &token[i + 1]) < 0 && d_quote))
-					{
-						// ft_printf("minishell: %s: bad substitution\n", token);
-						should_expand = 0;
-					}
+					should_expand = 0;
 			}
 			if (should_expand)
 				return (expand(token, i, exContext));

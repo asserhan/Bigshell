@@ -14,13 +14,13 @@
 
 static int	is_directory(t_exec_context *exContext)
 {
-	struct stat	fileStat;
+	struct stat	file_stat;
 
 	if (ft_strchr(exContext->cmds->cmd, '/') && access(exContext->cmds->cmd,
 			X_OK) != -1)
 	{
-		stat(exContext->cmds->cmd, &fileStat);
-		if (S_ISDIR(fileStat.st_mode))
+		stat(exContext->cmds->cmd, &file_stat);
+		if (S_ISDIR(file_stat.st_mode))
 		{
 			(put_error_ex("minishell: ", exContext->cmds->cmd,
 						": is a directory\n", 126));

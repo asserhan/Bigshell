@@ -24,6 +24,7 @@ void	sigint_handler(int sig)
 		rl_redisplay();
 	}
 }
+
 void	sigquit_handler(int sig)
 {
 	if (sig == SIGQUIT)
@@ -34,6 +35,7 @@ void	sigquit_handler(int sig)
 		rl_redisplay();
 	}
 }
+
 void	heredoc_sigint_handler(int sig)
 {
 	if (sig == SIGINT)

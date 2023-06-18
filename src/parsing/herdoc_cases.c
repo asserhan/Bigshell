@@ -6,7 +6,7 @@ char	**heredoc_befor(char *token)
 	int		count;
 
 	count = words_number_delimiters(token,
-									"<>| ");
+			"<>| ");
 	sub_tokens = malloc((count + 1) * sizeof(char *));
 	if (!sub_tokens)
 		return (NULL);

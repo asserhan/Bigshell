@@ -39,6 +39,7 @@ int	char_count(char *str)
 	}
 	return (count);
 }
+
 char	*remove_quotes(char *str)
 {
 	int		i;

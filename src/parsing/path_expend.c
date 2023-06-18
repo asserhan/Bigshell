@@ -26,8 +26,8 @@ char	*path_expand(char *str, char *home)
 	while (str && str[++i])
 	{
 		handle_quotes(&quotes[0], &quotes[1], str[i]);
-		if (!quotes[0] && !quotes[1] && str[i] == '~' && (i == 0 || (str[i
-					- 1] != '$' && str[i - 1] != '\\')))
+		if (!quotes[0] && !quotes[1] && str[i] == '~' && (i == 0
+				|| (str[i - 1] != '$' && str[i - 1] != '\\')))
 		{
 			tmp = ft_substr(str, 0, i);
 			tilde_expansion = ft_strjoin(tmp, home);

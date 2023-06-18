@@ -19,14 +19,12 @@ int	betwen_bracets(int *i, char *str, t_exec_context *exContext,
 	return (0);
 }
 
-
 void	default_case(int *i, char *str, t_exec_context *exContext,
 		char **var_value)
 {
 	int		var_len;
 	char	*sub;
-	int start;
-
+	int		start;
 
 	start = *i;
 	var_len = *i;
@@ -41,11 +39,11 @@ void	default_case(int *i, char *str, t_exec_context *exContext,
 	*i += 1;
 }
 
-void	join_expand_to_str(int *i, int start, char *str, char **var_value,
-		char **result)
+char	*join_expand_to_str(int *i, int start, char *str, char **var_value)
 {
 	int		d_quote;
 	char	*sub;
+	char	*result;
 
 	if (!*var_value)
 		*var_value = ft_strdup("");
@@ -53,22 +51,23 @@ void	join_expand_to_str(int *i, int start, char *str, char **var_value,
 	while (str[start - 1 - d_quote] == '"' && str[*i + d_quote] == '"')
 		d_quote++;
 	sub = ft_substr(str, 0, start - d_quote);
-	*result = ft_strjoin(sub, *var_value);
+	result = ft_strjoin(sub, *var_value);
 	free(sub);
 	free(*var_value);
-	sub = *result;
+	sub = result;
 	if (str[*i] != '\0')
 	{
-		*result = ft_strjoin(*result, &str[*i + d_quote]);
+		result = ft_strjoin(result, &str[*i + d_quote]);
 		free(sub);
 	}
+	return (result);
 }
 
 char	*subtoken(char *str, int i, t_exec_context *exContext)
 {
-	char *var_value;
-	char *result;
-	int start;
+	char	*var_value;
+	char	*result;
+	int		start;
 
 	start = i;
 	var_value = NULL;
@@ -84,6 +83,6 @@ char	*subtoken(char *str, int i, t_exec_context *exContext)
 	}
 	else
 		default_case(&i, str, exContext, &var_value);
-	join_expand_to_str(&i, start, str, &var_value, &result);
+	result = join_expand_to_str(&i, start, str, &var_value);
 	return (result);
 }

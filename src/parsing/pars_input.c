@@ -66,10 +66,11 @@ void	add_cmd_to_args(t_doubly_lst *final_list)
 	while ((tmp))
 	{
 		(tmp)->args = matrix_add_front((tmp)->cmd,
-										(tmp)->args);
+				(tmp)->args);
 		(tmp) = (tmp)->next;
 	}
 }
+
 int	pars_input(t_exec_context *exContext, char *input)
 {
 	char			**tokens;
@@ -91,12 +92,10 @@ int	pars_input(t_exec_context *exContext, char *input)
 	d_lstclear(&cmd_list);
 	if (check_syntax(list_without_quotes))
 		return (d_lstclear(&list_without_quotes), 1);
-	g_exit_status = 0;
 	final_list = convert_list_format(list_without_quotes, exContext);
 	if (!final_list)
 		return (d_lstclear(&list_without_quotes), 1);
 	add_cmd_to_args(final_list);
 	exContext->cmds = final_list;
-	//print_list(final_list);
 	return (d_lstclear(&list_without_quotes), 0);
 }

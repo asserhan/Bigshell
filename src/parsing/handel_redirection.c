@@ -44,18 +44,19 @@ void	handle_input(t_exec_context *exContext, t_doubly_lst *old_list,
 	node->in = fd;
 	add_fd(exContext, fd);
 }
+
 void	handle_output(t_exec_context *exContext, t_doubly_lst *old_list,
 		t_doubly_lst *node)
 {
 	char		*path;
 	char		*dir;
-	struct stat	fileStat;
+	struct stat	file_stat;
 
 	path = old_list->next->cmd;
-	stat(path, &fileStat);
+	stat(path, &file_stat);
 	if (*path == '\0')
 		return (put_error("minishell: No such file or directory: ", path, 1));
-	else if (S_ISDIR(fileStat.st_mode))
+	else if (S_ISDIR(file_stat.st_mode))
 		return (put_error_ex("minishell:", path, ": is a directory\n", 1));
 	else if (ft_strchr(path, '/'))
 	{
@@ -72,16 +73,17 @@ void	handle_output(t_exec_context *exContext, t_doubly_lst *old_list,
 	node->out = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	add_fd(exContext, node->out);
 }
+
 void	handle_append(t_exec_context *exContext, t_doubly_lst *old_list,
 		t_doubly_lst *node)
 {
 	char		*path;
 	char		*dir;
-	struct stat	fileStat;
+	struct stat	file_stat;
 
 	path = old_list->next->next->cmd;
-	stat(path, &fileStat);
-	if (S_ISDIR(fileStat.st_mode))
+	stat(path, &file_stat);
+	if (S_ISDIR(file_stat.st_mode))
 		return (put_error("minishell: is a directory: ", path, 1));
 	else if (*path == '\0')
 		return (put_error("minishell: No such file or directory: ", path, 1));

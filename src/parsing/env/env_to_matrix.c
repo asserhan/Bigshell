@@ -18,7 +18,7 @@ char	**env_to_matrix(t_env_variable *head)
 	t_env_variable	*current;
 	char			**result;
 	int				i;
-	int				nameLength;
+	int				name_length;
 	int				contentLength;
 
 	if (head == NULL)
@@ -37,9 +37,9 @@ char	**env_to_matrix(t_env_variable *head)
 	i = 0;
 	while (current != NULL)
 	{
-		nameLength = ft_strlen(current->name);
+		name_length = ft_strlen(current->name);
 		contentLength = ft_strlen(current->content);
-		result[i] = (char *)malloc((nameLength + contentLength + 2)
+		result[i] = (char *)malloc((name_length + contentLength + 2)
 				* sizeof(char));
 		if (result[i] == NULL)
 		{

@@ -20,7 +20,7 @@ int	redirection_type(t_doubly_lst *list)
 		&& !list->have_quotes)
 		return (APPEND);
 	else if (!ft_strcmp(list->cmd, "<") && !ft_strcmp(list->next->cmd, "<")
-			&& !list->have_quotes)
+		&& !list->have_quotes)
 		return (HERE_DOC);
 	else if (!ft_strcmp(list->cmd, ">") && !list->have_quotes)
 		return (OUT);
@@ -49,6 +49,7 @@ int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
 		(*list) = (*list)->next->next;
 	return (0);
 }
+
 void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 		t_doubly_lst **list)
 {
@@ -64,6 +65,7 @@ void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 			(*list) = (*list)->next;
 	}
 }
+
 int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
 		t_doubly_lst **node, t_exec_context *exContext)
 {
@@ -93,6 +95,7 @@ int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
 	}
 	return (0);
 }
+
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 									t_exec_context *exContext)
 {
@@ -101,6 +104,7 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 
 	head = NULL;
 	node = NULL;
+	g_exit_status = 0;
 	while (list)
 	{
 		create_node(&node, &head, &list);
