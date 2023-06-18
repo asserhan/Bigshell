@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/18 02:52:32 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:43:07 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	get_input(char **input)
 		add_history(*input);
 	return (0);
 }
+
 int	main(int ac, char **av, char **env)
 {
 	char			*input;
