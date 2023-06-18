@@ -43,7 +43,7 @@ int	first_char(char *arg)
 			put_error_ex("export: ", arg, ": export with no option\n", 1);
 		else
 			put_error_ex("minishell:  export: ", arg,
-				": not a valid identifier\n", 1);
+					": not a valid identifier\n", 1);
 		return (1);
 	}
 	return (0);
@@ -51,10 +51,8 @@ int	first_char(char *arg)
 
 int	_export_parse(char *arg)
 {
-	int		j;
-	char	*alpha;
+	int	j;
 
-	alpha = ft_alpha();
 	if (first_char(arg) == 1)
 		return (1);
 	j = 1;
@@ -65,7 +63,7 @@ int	_export_parse(char *arg)
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
 			put_error_ex("minishell:  export: ", arg,
-				": not a valid identifier\n", 1);
+					": not a valid identifier\n", 1);
 			return (1);
 		}
 		j++;
