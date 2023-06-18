@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/18 19:43:07 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:32:47 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	main(int ac, char **av, char **env)
 		if (pars_input(&ex_context, input))
 			continue ;
 		head = ex_context.cmds;
+		print_list(head);
 		execution(&ex_context);
 		d_lstclear(&head);
 		ft_close_fd(&ex_context);
 	}
-	free_env(&(ex_context.env));
-	return (0);
+	return (free_env(&(ex_context.env)), 0);
 }

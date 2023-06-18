@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:19 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/14 20:59:01 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:31:17 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,21 @@ char	*ft_get_cmd_path(t_exec_context *ex_context)
 		free(my_cmd);
 	}
 	return (NULL);
+}
+
+void	ft_wait(int pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 2)
+			ft_putstr_fd("\n", 1);
+		if (WTERMSIG(status) == 3)
+			ft_putstr_fd("Quit: 3\n", 1);
+		g_exit_status = 128 + WTERMSIG(status);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/18 20:16:53 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:30:38 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,6 @@ void	update_underscore(t_exec_context *ex_context)
 	}
 }
 
-void	ft_wait(int pid)
-{
-	int	status;
-
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == 2)
-			ft_putstr_fd("\n", 1);
-		if (WTERMSIG(status) == 3)
-			ft_putstr_fd("Quit: 3\n", 1);
-		g_exit_status = 128 + WTERMSIG(status);
-	}
-}
-
 static void	exec_single(t_exec_context *ex_context)
 {
 	int	fdout;
@@ -116,18 +99,6 @@ static void	exec_single(t_exec_context *ex_context)
 		ft_wait(ex_context->pid);
 		free_matrix(ex_context->cmd_paths);
 	}
-}
-
-void	ft_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
-}
-
-void	ft_ign_signals(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 void	execution(t_exec_context *ex_context)

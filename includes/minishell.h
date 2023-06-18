@@ -4,9 +4,9 @@
 # include "../libft/libft.h"
 # include "./doubly_lst.h"
 # include "./env_var.h"
+# include <stdio.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <sys/stat.h>
@@ -107,6 +107,8 @@ void				add_fd(t_exec_context *ex_context, int fd);
 
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
+void				ft_signals(void);
+void				ft_ign_signals(void);
 /* TODO */
 void				ft_echo(char **arg);
 
@@ -202,7 +204,8 @@ void				sort_env_var(t_env_variable *head);
 void				ft_get_path(t_exec_context *ex_context);
 /*function that join the command with her path */
 char				*ft_get_cmd_path(t_exec_context *ex_context);
-void	dup_pipe(t_exec_context *ex_context, int *k, int *end);
+void				ft_wait(int pid);
+void				dup_pipe(t_exec_context *ex_context, int *k, int *end);
 /*function that excute command in child process*/
 void				ft_execute_child(t_exec_context *ex_context);
 /*excute the program*/

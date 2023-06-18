@@ -54,7 +54,6 @@ int	boucle_file_line(int quotes, t_exec_context *ex_context, char *delimiter,
 		{
 			if (quotes)
 				free(delimiter);
-			//close(end[0]);
 			close(end[1]);
 			return (1);
 		}
