@@ -26,6 +26,13 @@ t_env_variable	*creat_node(char *name, char *content)
 	return (new);
 }
 
+static void	add_back(t_env_variable *tail, t_env_variable *new_node)
+{
+	tail->next = new_node;
+	new_node->prev = tail;
+	tail = new_node;
+}
+
 t_env_variable	*copy_env_var(t_env_variable *head)
 {
 	t_env_variable	*curr;
@@ -47,15 +54,12 @@ t_env_variable	*copy_env_var(t_env_variable *head)
 			tail = new_node;
 		}
 		else
-		{
-			tail->next = new_node;
-			new_node->prev = tail;
-			tail = new_node;
-		}
+			add_back(tail, new_node);
 		curr = curr->next;
 	}
 	return (new_head);
 }
+
 t_env	*copy_env_list(t_exec_context *exContext)
 {
 	t_env	*env;
@@ -67,6 +71,7 @@ t_env	*copy_env_list(t_exec_context *exContext)
 	new_env->size = env->size;
 	return (new_env);
 }
+
 void	sort_env_var(t_env_variable *head)
 {
 	t_env_variable	*curr;

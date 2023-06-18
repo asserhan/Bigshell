@@ -84,8 +84,8 @@ char	*str_to_env_form(char *s1, char *s2)
 
 void	free_env(t_env **env)
 {
-	t_env_variable *tmp;
-	t_env_variable *tmp2;
+	t_env_variable	*tmp;
+	t_env_variable	*tmp2;
 
 	tmp = (*env)->first;
 	while (tmp)

@@ -12,17 +12,38 @@
 
 #include "../../../includes/minishell.h"
 
-char	**env_to_matrix(t_env_variable *head)
+static int	convert(t_env_variable **current, char **result, int *i)
+{
+	int	name_length;
+	int	content_length;
+
+	name_length = ft_strlen((*current)->name);
+	content_length = ft_strlen((*current)->content);
+	result[*i] = (char *)malloc((name_length + content_length + 2)
+			* sizeof(char));
+	if (result[*i] == NULL)
+	{
+		while (*i > 0)
+		{
+			*i = *i - 1;
+			free(result[*i]);
+		}
+		free(result);
+		return (1);
+	}
+	ft_strcpy(result[*i], (*current)->name);
+	ft_strcat(result[*i], "=");
+	ft_strcat(result[*i], (*current)->content);
+	*i = *i + 1;
+	(*current) = (*current)->next;
+	return (0);
+}
+
+int	list_size(t_env_variable *head)
 {
 	int				count;
 	t_env_variable	*current;
-	char			**result;
-	int				i;
-	int				name_length;
-	int				contentLength;
 
-	if (head == NULL)
-		return (NULL);
 	count = 0;
 	current = head;
 	while (current != NULL)
@@ -30,6 +51,19 @@ char	**env_to_matrix(t_env_variable *head)
 		count++;
 		current = current->next;
 	}
+	return (count);
+}
+
+char	**env_to_matrix(t_env_variable *head)
+{
+	int				count;
+	t_env_variable	*current;
+	char			**result;
+	int				i;
+
+	if (head == NULL)
+		return (NULL);
+	count = list_size(head);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (result == NULL)
 		return (NULL);
@@ -37,25 +71,8 @@ char	**env_to_matrix(t_env_variable *head)
 	i = 0;
 	while (current != NULL)
 	{
-		name_length = ft_strlen(current->name);
-		contentLength = ft_strlen(current->content);
-		result[i] = (char *)malloc((name_length + contentLength + 2)
-				* sizeof(char));
-		if (result[i] == NULL)
-		{
-			while (i > 0)
-			{
-				i--;
-				free(result[i]);
-			}
-			free(result);
+		if (convert(&current, result, &i))
 			return (NULL);
-		}
-		ft_strcpy(result[i], current->name);
-		ft_strcat(result[i], "=");
-		ft_strcat(result[i], current->content);
-		i++;
-		current = current->next;
 	}
 	result[count] = NULL;
 	return (result);
