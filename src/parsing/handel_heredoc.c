@@ -54,7 +54,7 @@ int	boucle_file_line(int quotes, t_exec_context *ex_context, char *delimiter,
 		{
 			if (quotes)
 				free(delimiter);
-			close(end[0]);
+			//close(end[0]);
 			close(end[1]);
 			return (1);
 		}
@@ -77,6 +77,8 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	node->is_heredoc = 1;
 	if (pipe(end) == -1)
 		return (perror("pipe"));
+	add_fd(ex_context, end[0]);
+	add_fd(ex_context, end[1]);
 	quotes = 0;
 	if (ft_strchr(old_list->next->next->cmd, '\"'))
 	{
@@ -85,13 +87,6 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	}
 	else
 		delimiter = old_list->next->next->cmd;
-	if (boucle_file_line(quotes, ex_context, delimiter, end)
-		|| g_exit_status == 1)
-	{
-		close(end[0]);
-		close(end[1]);
-		return ;
-	}
+	boucle_file_line(quotes, ex_context, delimiter, end);
 	node->in = end[0];
-	return (add_fd(ex_context, end[0]), add_fd(ex_context, end[1]));
 }
