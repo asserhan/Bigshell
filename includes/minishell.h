@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 22:56:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/18 23:18:53 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 23:23:12 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 extern int			g_exit_status;
 
 /*---MACROS---*/
+# define FALSE 0
+# define TRUE 1
 # define PATH_MAX 1024 /* max bytes in pathname */
 
 /* struct contain all cmnds in a linked list "cmds" and
