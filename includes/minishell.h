@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 22:56:43 by hasserao          #+#    #+#             */
+/*   Updated: 2023/06/18 23:18:53 by hasserao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "../ft_printf/ft_printf.h"
@@ -17,8 +29,6 @@
 extern int			g_exit_status;
 
 /*---MACROS---*/
-# define true 1
-# define false 0
 # define PATH_MAX 1024 /* max bytes in pathname */
 
 /* struct contain all cmnds in a linked list "cmds" and
@@ -31,7 +41,7 @@ typedef struct s_exec_context
 	int				end[2];
 	pid_t			pid;
 	char			**cmd_paths;
-	int is; //unset PATH
+	int				is;
 	int				pipe_num;
 	t_list			*fds;
 	int				**pipe_fd;
@@ -61,7 +71,7 @@ int					count_matrix(char **arr);
 /* Prints out the contents of an array `matrix`,
  * with each row separated by the string `separator`*/
 void				print_matrix(char **matrix, char separator);
-/* Concatenates the rows of two matrices and returns a pointer to the updated matrix */
+/* Concatenates the rows of two matrices */
 char				**matrix_concat(char **matrix, char **back);
 /*Appends a new row to the end of the matrix*/
 char				**matrix_push_back(char **matrix, char *back);
@@ -78,12 +88,14 @@ int					ft_strcmp(char *str1, char *str2);
 
 char				*ft_strcpy(char *dest, const char *src);
 
-/*function return 0 if find in s1 the first occurence of any caracter in s2 else return 1*/
+/*function return 0 if find in s1 the first occurence 
+of any caracter in s2 else return 1*/
 int					ft_strpbrk(char *s1, char *s2);
 
 char				*ft_alpha(void);
 
-/*Searches for the index of the first character in `str` that matches any character in `set`.*/
+/*Searches for the index of the first character in `str` 
+that matches any character in `set`.*/
 int					find_char_index(const char *str, const char *set);
 
 /* change the value of quote depanding on its place*/
@@ -105,7 +117,7 @@ char				*ft_strcat(char *dest, const char *src);
 
 void				add_fd(t_exec_context *ex_context, int fd);
 
-////////////////////////////////////* Parsing*////////////////////////////////////
+/////////////////* Parsing*/////////////////////
 
 void				ft_signals(void);
 void				ft_ign_signals(void);
@@ -117,35 +129,42 @@ int					pars_input(t_exec_context *ex_context, char *input);
 /* split line given by new_line to multiple tokens*/
 char				**split_space(char *line);
 
-/*takes a string 'str' and splits it into multiple tokens based on the provided delimiters*/
+/*takes a string 'str' and splits it into multiple tokens 
+based on the provided delimiters*/
 void				line_to_tokens(char const *line, char *delimiters,
 						char **tokens);
-/* counts the number of words in a given string 'str' based on the provided 'delimiters'.*/
+/* counts the number of words in a given string 'str'
+ based on the provided 'delimiters'.*/
 int					words_number(const char *str, const char *delimiters);
-/*splite all tokens given by split_space() to sub tokens taking expand in consideration */
+/*splite all tokens given by split_space() to sub 
+tokens taking expand in consideration */
 char				**split_tokens(char **tokens, t_exec_context *ex_context);
-/* checks if token have a $ if so it expnded if not it return the token  */
+/* checks if token have a $ if so it expnded 
+if not it return the token  */
 char				*var_expand(char *token, t_exec_context *ex_context);
-/* checks if token have a ~ if so it expnded if not it return the token  */
+/* checks if token have a ~ if so it expnded 
+if not it return the token  */
 char				*path_expand(char *str, char *home);
-/* * Retrieves the value of an environment variable by its name, from the
+/* * Retrieves the value of an environment
+ variable by its name, from the
  * environment list stored in the execution context.
- * If the variable name is enclosed in curly braces, they will be removed before
+ * If the variable name is enclosed in curly braces,
+ * `  they will be removed before
  * searching for the variable.*/
-char	*get_env_value(char *name,
-					t_exec_context *ex_context);
+char				*get_env_value(char *name,
+						t_exec_context *ex_context);
 /* open  the file with name in old_list command and asign the fd to node */
-void	handle_input(t_exec_context *ex_context,
-					t_doubly_lst *old_list,
-					t_doubly_lst *node);
+void				handle_input(t_exec_context *ex_context,
+						t_doubly_lst *old_list,
+						t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void	handle_output(t_exec_context *ex_context,
-					t_doubly_lst *old_list,
-					t_doubly_lst *node);
+void				handle_output(t_exec_context *ex_context,
+						t_doubly_lst *old_list,
+						t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void	handle_append(t_exec_context *ex_context,
-					t_doubly_lst *old_list,
-					t_doubly_lst *node);
+void				handle_append(t_exec_context *ex_context,
+						t_doubly_lst *old_list,
+						t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 						t_exec_context *ex_context);
@@ -160,8 +179,8 @@ int					check_syntax(t_doubly_lst *head);
 char				*subtoken(char *str, int i, t_exec_context *ex_context);
 
 /* convert list o have args and in , out*/
-t_doubly_lst	*convert_list_format(t_doubly_lst *list,
-									t_exec_context *ex_context);
+t_doubly_lst		*convert_list_format(t_doubly_lst *list,
+						t_exec_context *ex_context);
 
 int					words_number_delimiters(char *str, char *delimiters);
 
@@ -178,7 +197,7 @@ void				ft_ign_signals(void);
 char				**heredoc_in_token(char *token);
 char				**heredoc_befor(char *token);
 int					ends_with_heredoc(char **matrix);
-////////////////////////////////////* Builtins*////////////////////////////////////
+////////////////////* Builtins*///////////////////////
 void				ft_env(t_exec_context *ex_context);
 void				ft_export(t_exec_context *ex_context);
 void				ft_unset(t_exec_context *ex_context);
@@ -197,7 +216,7 @@ void				_export_variable(char *arg, t_env *env);
 t_env				*copy_env_list(t_exec_context *ex_context);
 /*sort env variable list*/
 void				sort_env_var(t_env_variable *head);
-////////////////////////////////////* Execution*////////////////////////////////////
+//////////////* Execution*///////////////////
 
 /*fuction that execute builtins*/
 /*get path from enviroment and split it*/
@@ -215,7 +234,7 @@ void				ft_dup(t_doubly_lst *commend);
 /*fuction that close file descriptor*/
 void				ft_close_fd(t_exec_context *ex_context);
 /*fuction that execute  child process*/
-void	ft_child_process(t_exec_context *ex_context,
+void				ft_child_process(t_exec_context *ex_context,
 						int *k,
 						int *end);
 #endif
