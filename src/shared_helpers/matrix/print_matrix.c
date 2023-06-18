@@ -12,17 +12,17 @@
 
 #include "../../../includes/minishell.h"
 
-void print_matrix(char **matrix, char separator)
+void	print_matrix(char **matrix, char separator)
 {
-    int count;
-    int i;
+	int	count;
+	int	i;
 
-    i = 0;
-    count = count_matrix(matrix);
-    while ( i < count )
-    {
-        ft_putstr_fd(matrix[i], 1);
-        ft_putchar_fd(separator, 1);
-        i++;
-    }
+	i = 0;
+	count = count_matrix(matrix);
+	while (i < count)
+	{
+		ft_putstr_fd(matrix[i], 1);
+		ft_putchar_fd(separator, 1);
+		i++;
+	}
 }

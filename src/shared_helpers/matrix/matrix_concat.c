@@ -31,12 +31,11 @@ char	**matrix_concat(char **matrix, char **back)
 		result[i] = ft_strdup(matrix[i]);
 		i++;
 	}
-	i = 0;
-	while (i < back_len)
+	i = -1;
+	while (++i < back_len)
 	{
 		tmp = ft_strdup(back[i]);
 		result[matrix_len + i] = tmp;
-		i++;
 	}
 	result[matrix_len + back_len] = NULL;
 	return (free_matrix(matrix), result);

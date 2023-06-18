@@ -1,11 +1,11 @@
-
 #include "../../../includes/minishell.h"
 
 char	**matrix_add_front(char *str, char **matrix)
 {
-	int i;
-	int len;
-	char **new_matrix;
+	int		i;
+	int		len;
+	char	**new_matrix;
+
 	len = count_matrix(matrix);
 	new_matrix = malloc(sizeof(char *) * (len + 2));
 	if (!new_matrix)

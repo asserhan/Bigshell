@@ -14,10 +14,10 @@
 
 char	**matrix_push_back(char **matrix, char *back)
 {
-	char **new_matrix;
-	char *new_row;
-	int count;
-	int i;
+	char	**new_matrix;
+	char	*new_row;
+	int		count;
+	int		i;
 
 	count = count_matrix(matrix);
 	new_matrix = (char **)ft_calloc((count + 1) + 1, sizeof(char *));
