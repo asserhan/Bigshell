@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doubly_lst.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/18 22:45:52 by otait-ta          #+#    #+#             */
+/*   Updated: 2023/06/18 22:46:14 by otait-ta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DOUBLY_LST_H
 # define DOUBLY_LST_H
 # include "env_var.h"
+
 typedef struct s_doubly_lst
 {
 	char				*cmd;
@@ -8,7 +21,7 @@ typedef struct s_doubly_lst
 	int					in;
 	int					out;
 	int					have_quotes;
-	int 				is_heredoc;
+	int					is_heredoc;
 	struct s_doubly_lst	*next;
 	struct s_doubly_lst	*prev;
 }						t_doubly_lst;
