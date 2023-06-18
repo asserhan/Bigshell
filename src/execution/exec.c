@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:48:35 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/18 02:50:05 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:28:34 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ static void	one_cmd(t_exec_context *ex_context)
 			ft_execute_child(ex_context);
 		else
 		{
-			if (ex_context->cmds->in == 0 && ex_context->cmds->out == 1 && ex_context->cmds->is_heredoc == 0)
+			if (ex_context->cmds->in == 0 && ex_context->cmds->out == 1
+				&& ex_context->cmds->is_heredoc == 0)
 			{
 				put_error_ex("minishell: ", ex_context->cmds->cmd,
-						": command not found\n", 127);
+					": command not found\n", 127);
 			}
 			exit(g_exit_status);
 		}
@@ -66,38 +67,40 @@ static int	mutiple_cmd(t_exec_context *ex_context, int *k)
 	return (pid);
 }
 
-void	update_underScore(t_exec_context *ex_context)
+void	update_underscore(t_exec_context *ex_context)
 {
 	if (!(ex_context->cmds->next))
 	{
 		update_env_elem(ex_context->env, "_",
-				last_element_matrix(ex_context->cmds->args));
+			last_element_matrix(ex_context->cmds->args));
 		free_matrix(ex_context->env->env_array);
 		ex_context->env->env_array = env_to_matrix(ex_context->env->first);
 	}
 }
-void ft_wait(int pid)
+
+void	ft_wait(int pid)
 {
-	int status;
+	int	status;
+
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
-	if(WIFSIGNALED(status))
+	if (WIFSIGNALED(status))
 	{
-		if(WTERMSIG(status) == 2)
+		if (WTERMSIG(status) == 2)
 			ft_putstr_fd("\n", 1);
 		if (WTERMSIG(status) == 3)
 			ft_putstr_fd("Quit: 3\n", 1);
 		g_exit_status = 128 + WTERMSIG(status);
 	}
 }
+
 static void	exec_single(t_exec_context *ex_context)
 {
 	int	fdout;
 	int	fdin;
 
-
-	update_underScore(ex_context);
+	update_underscore(ex_context);
 	if (is_builtin(ex_context->cmds->cmd))
 	{
 		fdout = dup(1);
@@ -120,6 +123,7 @@ void	ft_signals(void)
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 }
+
 void	ft_ign_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
@@ -144,7 +148,7 @@ void	execution(t_exec_context *ex_context)
 	{
 		while (tmp->cmds)
 		{
-			update_underScore(ex_context);
+			update_underscore(ex_context);
 			pid = mutiple_cmd(tmp, &k);
 			tmp->cmds = tmp->cmds->next;
 		}

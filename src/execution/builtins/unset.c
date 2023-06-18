@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:16 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/14 20:57:48 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:41:51 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_valid_arg(char *arg)
 			put_error_ex("unset: ", arg, ": unset with no option\n", 1);
 		else
 			put_error_ex("minishell:  unset: ", arg,
-					": not a valid identifier\n", 1);
+				": not a valid identifier\n", 1);
 		return (1);
 	}
 	j = 1;
@@ -33,7 +33,7 @@ int	is_valid_arg(char *arg)
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
 			put_error_ex("minishell:  unset: ", arg,
-					": not a valid identifier\n", 1);
+				": not a valid identifier\n", 1);
 			return (1);
 		}
 		j++;
@@ -56,7 +56,7 @@ void	ft_unset(t_exec_context *ex_context)
 			if (!is_valid_arg(ex_context->cmds->args[i]))
 			{
 				elem = search_env_elem(ex_context->env,
-										ex_context->cmds->args[i]);
+						ex_context->cmds->args[i]);
 				if (!elem)
 					return ;
 				delete_env_elem(ex_context->env, elem);

@@ -202,6 +202,7 @@ void				sort_env_var(t_env_variable *head);
 void				ft_get_path(t_exec_context *ex_context);
 /*function that join the command with her path */
 char				*ft_get_cmd_path(t_exec_context *ex_context);
+void	dup_pipe(t_exec_context *ex_context, int *k, int *end);
 /*function that excute command in child process*/
 void				ft_execute_child(t_exec_context *ex_context);
 /*excute the program*/

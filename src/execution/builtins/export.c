@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:07:12 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/14 20:53:51 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:40:55 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	first_char(char *arg)
 			put_error_ex("export: ", arg, ": export with no option\n", 1);
 		else
 			put_error_ex("minishell:  export: ", arg,
-					": not a valid identifier\n", 1);
+				": not a valid identifier\n", 1);
 		return (1);
 	}
 	return (0);
@@ -63,7 +63,7 @@ int	_export_parse(char *arg)
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
 			put_error_ex("minishell:  export: ", arg,
-					": not a valid identifier\n", 1);
+				": not a valid identifier\n", 1);
 			return (1);
 		}
 		j++;
