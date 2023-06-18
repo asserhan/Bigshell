@@ -30,17 +30,17 @@ int	redirection_type(t_doubly_lst *list)
 }
 
 int	fill_in_out(t_doubly_lst **list, t_doubly_lst **node,
-		t_exec_context *exContext, int *red_type)
+		t_exec_context *ex_context, int *red_type)
 {
 	*red_type = redirection_type((*list));
 	if (*red_type == APPEND)
-		handle_append(exContext, (*list), *node);
+		handle_append(ex_context, (*list), *node);
 	else if (*red_type == HERE_DOC)
-		handle_heredoc((*list), *node, exContext);
+		handle_heredoc((*list), *node, ex_context);
 	else if (*red_type == OUT)
-		handle_output(exContext, (*list), *node);
+		handle_output(ex_context, (*list), *node);
 	else if (*red_type == IN)
-		handle_input(exContext, (*list), *node);
+		handle_input(ex_context, (*list), *node);
 	if (g_exit_status != 0)
 		return (1);
 	if (*red_type == APPEND || *red_type == HERE_DOC)
@@ -67,7 +67,7 @@ void	create_node(t_doubly_lst **node, t_doubly_lst **head,
 }
 
 int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
-		t_doubly_lst **node, t_exec_context *exContext)
+		t_doubly_lst **node, t_exec_context *ex_context)
 {
 	int		red_type;
 	char	**args;
@@ -76,7 +76,7 @@ int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
 	{
 		if (find_char_index((*list)->cmd, "><") >= 0 && !(*list)->have_quotes)
 		{
-			if (fill_in_out(list, node, exContext, &red_type))
+			if (fill_in_out(list, node, ex_context, &red_type))
 				return (d_lstclear(head), 1);
 			continue ;
 		}
@@ -97,7 +97,7 @@ int	fill_cmd_and_args(t_doubly_lst **head, t_doubly_lst **list,
 }
 
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
-									t_exec_context *exContext)
+									t_exec_context *ex_context)
 {
 	t_doubly_lst	*node;
 	t_doubly_lst	*head;
@@ -108,7 +108,7 @@ t_doubly_lst	*convert_list_format(t_doubly_lst *list,
 	while (list)
 	{
 		create_node(&node, &head, &list);
-		if (fill_cmd_and_args(&head, &list, &node, exContext))
+		if (fill_cmd_and_args(&head, &list, &node, ex_context))
 			return (NULL);
 		if (list && !ft_strcmp(list->cmd, "|"))
 			list = list->next;

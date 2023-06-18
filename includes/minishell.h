@@ -49,7 +49,7 @@ typedef enum s_redir_t
 }					t_redir_t;
 
 /* fill the execContext with initial data*/
-int					init_data(t_exec_context *exContext, char **av,
+int					init_data(t_exec_context *ex_context, char **av,
 						char **env_str);
 
 /*---MATRIX---*/
@@ -103,7 +103,7 @@ int					parse_arg(char *str);
 
 char				*ft_strcat(char *dest, const char *src);
 
-void				add_fd(t_exec_context *exContext, int fd);
+void				add_fd(t_exec_context *ex_context, int fd);
 
 ////////////////////////////////////* Parsing*////////////////////////////////////
 
@@ -111,7 +111,7 @@ void				add_fd(t_exec_context *exContext, int fd);
 void				ft_echo(char **arg);
 
 /* TODO*/
-int					pars_input(t_exec_context *exContext, char *input);
+int					pars_input(t_exec_context *ex_context, char *input);
 /* split line given by new_line to multiple tokens*/
 char				**split_space(char *line);
 
@@ -121,9 +121,9 @@ void				line_to_tokens(char const *line, char *delimiters,
 /* counts the number of words in a given string 'str' based on the provided 'delimiters'.*/
 int					words_number(const char *str, const char *delimiters);
 /*splite all tokens given by split_space() to sub tokens taking expand in consideration */
-char				**split_tokens(char **tokens, t_exec_context *exContext);
+char				**split_tokens(char **tokens, t_exec_context *ex_context);
 /* checks if token have a $ if so it expnded if not it return the token  */
-char				*var_expand(char *token, t_exec_context *exContext);
+char				*var_expand(char *token, t_exec_context *ex_context);
 /* checks if token have a ~ if so it expnded if not it return the token  */
 char				*path_expand(char *str, char *home);
 /* * Retrieves the value of an environment variable by its name, from the
@@ -131,35 +131,35 @@ char				*path_expand(char *str, char *home);
  * If the variable name is enclosed in curly braces, they will be removed before
  * searching for the variable.*/
 char	*get_env_value(char *name,
-					t_exec_context *exContext);
+					t_exec_context *ex_context);
 /* open  the file with name in old_list command and asign the fd to node */
-void	handle_input(t_exec_context *exContext,
+void	handle_input(t_exec_context *ex_context,
 					t_doubly_lst *old_list,
 					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void	handle_output(t_exec_context *exContext,
+void	handle_output(t_exec_context *ex_context,
 					t_doubly_lst *old_list,
 					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
-void	handle_append(t_exec_context *exContext,
+void	handle_append(t_exec_context *ex_context,
 					t_doubly_lst *old_list,
 					t_doubly_lst *node);
 /* open  the file with name in old_list command and asign the fd to node */
 void				handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
-						t_exec_context *exContext);
+						t_exec_context *ex_context);
 
 /* remove quotes from str*/
 char				*remove_quotes(char *str);
 /* expand token*/
-char				*expand_token(char *token, t_exec_context *exContext);
+char				*expand_token(char *token, t_exec_context *ex_context);
 /* check syntax for every node in list*/
 int					check_syntax(t_doubly_lst *head);
 
-char				*subtoken(char *str, int i, t_exec_context *exContext);
+char				*subtoken(char *str, int i, t_exec_context *ex_context);
 
 /* convert list o have args and in , out*/
 t_doubly_lst	*convert_list_format(t_doubly_lst *list,
-									t_exec_context *exContext);
+									t_exec_context *ex_context);
 
 int					words_number_delimiters(char *str, char *delimiters);
 
@@ -177,14 +177,14 @@ char				**heredoc_in_token(char *token);
 char				**heredoc_befor(char *token);
 int					ends_with_heredoc(char **matrix);
 ////////////////////////////////////* Builtins*////////////////////////////////////
-void				ft_env(t_exec_context *exContext);
-void				ft_export(t_exec_context *exContext);
-void				ft_unset(t_exec_context *exContext);
+void				ft_env(t_exec_context *ex_context);
+void				ft_export(t_exec_context *ex_context);
+void				ft_unset(t_exec_context *ex_context);
 void				ft_cd(char **arg, t_env *env);
 int					ft_pwd(void);
 void				ft_exit(char **arg);
 int					is_builtin(char *cmd);
-void				exec_builtins(t_exec_context *exContext);
+void				exec_builtins(t_exec_context *ex_context);
 char				*go_home(t_env *env);
 char				*get_env_path(t_env *env, char *name);
 void				update_pwd(t_env *env, char *name);
@@ -192,26 +192,26 @@ void				update_oldpwd(t_env *env, char *name, char *path);
 
 void				_export_variable(char *arg, t_env *env);
 /* copy env list */
-t_env				*copy_env_list(t_exec_context *exContext);
+t_env				*copy_env_list(t_exec_context *ex_context);
 /*sort env variable list*/
 void				sort_env_var(t_env_variable *head);
 ////////////////////////////////////* Execution*////////////////////////////////////
 
 /*fuction that execute builtins*/
 /*get path from enviroment and split it*/
-void				ft_get_path(t_exec_context *exContext);
+void				ft_get_path(t_exec_context *ex_context);
 /*function that join the command with her path */
-char				*ft_get_cmd_path(t_exec_context *exContext);
+char				*ft_get_cmd_path(t_exec_context *ex_context);
 /*function that excute command in child process*/
-void				ft_execute_child(t_exec_context *exContext);
+void				ft_execute_child(t_exec_context *ex_context);
 /*excute the program*/
-void				execution(t_exec_context *exContext);
+void				execution(t_exec_context *ex_context);
 /*fuction that duplicate in and out to stdin and stdout*/
 void				ft_dup(t_doubly_lst *commend);
 /*fuction that close file descriptor*/
-void				ft_close_fd(t_exec_context *exContext);
+void				ft_close_fd(t_exec_context *ex_context);
 /*fuction that execute  child process*/
-void	ft_child_process(t_exec_context *exContext,
+void	ft_child_process(t_exec_context *ex_context,
 						int *k,
 						int *end);
 #endif

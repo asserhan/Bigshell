@@ -12,16 +12,30 @@
 
 #include "../includes/minishell.h"
 
-int	g_exit_status;
+int			g_exit_status;
 
+static int	get_input(char **input)
+{
+	*input = readline("minishell $ ");
+	if (*input && !**input)
+		return (1);
+	if (!*input)
+	{
+		ft_printf("exit\n");
+		exit(g_exit_status);
+	}
+	if (*input[0] != '\0')
+		add_history(*input);
+	return (0);
+}
 int	main(int ac, char **av, char **env)
 {
 	char			*input;
-	t_exec_context	exContext;
+	t_exec_context	ex_context;
 	t_doubly_lst	*head;
 
 	input = NULL;
-	if (init_data(&exContext, av, env))
+	if (init_data(&ex_context, av, env))
 		exit(1);
 	rl_catch_signals = 0;
 	while (ac)
@@ -30,24 +44,15 @@ int	main(int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		if (input)
 			free(input);
-		input = readline("minishell $ ");
-		if (input && !*input)
+		if (get_input(&input))
 			continue ;
-		if (!input)
-		{
-			ft_printf("exit\n");
-			exit(g_exit_status);
-		}
-		if (input[0] != '\0')
-			add_history(input);
-		if (pars_input(&exContext, input))
+		if (pars_input(&ex_context, input))
 			continue ;
-		head = exContext.cmds;
-		//print_list(head);
-		execution(&exContext);
+		head = ex_context.cmds;
+		execution(&ex_context);
 		d_lstclear(&head);
-		ft_close_fd(&exContext);
+		ft_close_fd(&ex_context);
 	}
-	free_env(&(exContext.env));
+	free_env(&(ex_context.env));
 	return (0);
 }

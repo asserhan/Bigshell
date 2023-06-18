@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-void	join_path(t_exec_context *exContext)
+void	join_path(t_exec_context *ex_context)
 {
 	char	*tmp;
 	int		i;
 
 	i = -1;
-	while (exContext->cmd_paths[++i])
+	while (ex_context->cmd_paths[++i])
 	{
-		tmp = exContext->cmd_paths[i];
-		exContext->cmd_paths[i] = ft_strjoin(tmp, "/");
-		if (!exContext->cmd_paths[i])
+		tmp = ex_context->cmd_paths[i];
+		ex_context->cmd_paths[i] = ft_strjoin(tmp, "/");
+		if (!ex_context->cmd_paths[i])
 		{
-			free_matrix(exContext->cmd_paths);
+			free_matrix(ex_context->cmd_paths);
 			free(tmp);
 			ft_msg_error("Error\n", 1);
 		}
@@ -32,42 +32,42 @@ void	join_path(t_exec_context *exContext)
 	}
 }
 
-void	ft_get_path(t_exec_context *exContext)
+void	ft_get_path(t_exec_context *ex_context)
 {
 	t_env_variable	*envp;
 
-	exContext->cmd_paths = NULL;
-	envp = exContext->env->first;
+	ex_context->cmd_paths = NULL;
+	envp = ex_context->env->first;
 	while (envp)
 	{
-		exContext->paths = search_env_elem(exContext->env, "PATH");
+		ex_context->paths = search_env_elem(ex_context->env, "PATH");
 		envp = envp->next;
 	}
-	if (!exContext->paths)
+	if (!ex_context->paths)
 		return ;
-	exContext->cmd_paths = ft_split(exContext->paths->content, ':');
-	if (!exContext->cmd_paths)
+	ex_context->cmd_paths = ft_split(ex_context->paths->content, ':');
+	if (!ex_context->cmd_paths)
 	{
-		free_matrix(exContext->cmd_paths);
+		free_matrix(ex_context->cmd_paths);
 		ft_msg_error("Error\n", 1);
 	}
-	join_path(exContext);
+	join_path(ex_context);
 }
 
-char	*ft_get_cmd_path(t_exec_context *exContext)
+char	*ft_get_cmd_path(t_exec_context *ex_context)
 {
 	char	*my_cmd;
 	int		i;
 
 	i = -1;
-	if (!exContext->cmd_paths)
-		return (exContext->cmds->cmd);
-	while (exContext->cmd_paths[++i])
+	if (!ex_context->cmd_paths)
+		return (ex_context->cmds->cmd);
+	while (ex_context->cmd_paths[++i])
 	{
-		my_cmd = ft_strjoin(exContext->cmd_paths[i], exContext->cmds->cmd);
+		my_cmd = ft_strjoin(ex_context->cmd_paths[i], ex_context->cmds->cmd);
 		if (access(my_cmd, F_OK | X_OK) == 0)
 		{
-			free(exContext->cmds->cmd);
+			free(ex_context->cmds->cmd);
 			return (my_cmd);
 		}
 		free(my_cmd);

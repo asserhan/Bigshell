@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	betwen_bracets(int *i, char *str, t_exec_context *exContext,
+int	betwen_bracets(int *i, char *str, t_exec_context *ex_context,
 		char **var_value)
 {
 	int		var_len;
@@ -10,7 +10,7 @@ int	betwen_bracets(int *i, char *str, t_exec_context *exContext,
 	if (var_len >= 0)
 	{
 		sub = ft_substr(&str[*i + 2], 0, var_len);
-		*var_value = get_env_value(sub, exContext);
+		*var_value = get_env_value(sub, ex_context);
 		free(sub);
 		*i += var_len + 3;
 	}
@@ -19,7 +19,7 @@ int	betwen_bracets(int *i, char *str, t_exec_context *exContext,
 	return (0);
 }
 
-void	default_case(int *i, char *str, t_exec_context *exContext,
+void	default_case(int *i, char *str, t_exec_context *ex_context,
 		char **var_value)
 {
 	int		var_len;
@@ -34,7 +34,7 @@ void	default_case(int *i, char *str, t_exec_context *exContext,
 	if (var_len == -1)
 		var_len = ft_strlen(&str[start + 1]);
 	sub = ft_substr(&str[start + 1], 0, var_len);
-	*var_value = get_env_value(sub, exContext);
+	*var_value = get_env_value(sub, ex_context);
 	free(sub);
 	*i += 1;
 }
@@ -63,7 +63,7 @@ char	*join_expand_to_str(int *i, int start, char *str, char **var_value)
 	return (result);
 }
 
-char	*subtoken(char *str, int i, t_exec_context *exContext)
+char	*subtoken(char *str, int i, t_exec_context *ex_context)
 {
 	char	*var_value;
 	char	*result;
@@ -73,7 +73,7 @@ char	*subtoken(char *str, int i, t_exec_context *exContext)
 	var_value = NULL;
 	if (str[i + 1] == '{')
 	{
-		if (betwen_bracets(&i, str, exContext, &var_value) == 1)
+		if (betwen_bracets(&i, str, ex_context, &var_value) == 1)
 			return (NULL);
 	}
 	else if (str[i + 1] == '?')
@@ -82,7 +82,7 @@ char	*subtoken(char *str, int i, t_exec_context *exContext)
 		i += 2;
 	}
 	else
-		default_case(&i, str, exContext, &var_value);
+		default_case(&i, str, ex_context, &var_value);
 	result = join_expand_to_str(&i, start, str, &var_value);
 	return (result);
 }

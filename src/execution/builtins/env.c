@@ -12,9 +12,9 @@
 
 #include "../../../includes/minishell.h"
 
-static int	ft_unset_path(t_exec_context *exContext, t_doubly_lst *cmd)
+static int	ft_unset_path(t_exec_context *ex_context, t_doubly_lst *cmd)
 {
-	if (exContext->is == 1)
+	if (ex_context->is == 1)
 	{
 		put_error_ex("minishell: ", cmd->args[0],
 			": No such file or directory\n", 127);
@@ -23,20 +23,20 @@ static int	ft_unset_path(t_exec_context *exContext, t_doubly_lst *cmd)
 	return (0);
 }
 
-void	ft_env(t_exec_context *exContext)
+void	ft_env(t_exec_context *ex_context)
 {
 	t_doubly_lst	*cmds;
 
-	cmds = exContext->cmds;
-	if (ft_unset_path(exContext, cmds))
+	cmds = ex_context->cmds;
+	if (ft_unset_path(ex_context, cmds))
 		return ;
 	if (count_matrix(cmds->args) == 1)
-		print_env(exContext->env, 1);
+		print_env(ex_context->env, 1);
 	else
 	{
 		if (ft_strcmp(cmds->args[1], "--") == 0 || start_with(cmds->args[1],
 				";"))
-			print_env(exContext->env, 1);
+			print_env(ex_context->env, 1);
 		else if (start_with(cmds->args[1], "="))
 			put_error_ex("env: ", cmds->args[1], ": Invalid argument\n", 127);
 		else if (start_with(cmds->args[1], "-"))

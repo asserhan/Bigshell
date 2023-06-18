@@ -35,15 +35,15 @@ void	set_start_vars(t_env *env)
 	env->env_array = env_to_matrix(env->first);
 }
 
-int	init_data(t_exec_context *exContext, char **av, char **env_str)
+int	init_data(t_exec_context *ex_context, char **av, char **env_str)
 {
 	(void)av;
-	exContext->cmds = NULL;
-	exContext->env = env_to_list(env_str);
-	set_start_vars(exContext->env);
+	ex_context->cmds = NULL;
+	ex_context->env = env_to_list(env_str);
+	set_start_vars(ex_context->env);
 	g_exit_status = 0;
-	if (!exContext->env)
+	if (!ex_context->env)
 		return (1);
-	exContext->fds = NULL;
+	ex_context->fds = NULL;
 	return (0);
 }

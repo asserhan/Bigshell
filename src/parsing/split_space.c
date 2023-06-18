@@ -94,8 +94,8 @@ char	**split_space(char *line)
 
 	words = words_number(line, " ");
 	if (words < 0)
-		return (put_error("minishell: error while searching for a \
-		 corresponding quotation mark. `", NULL, 2), NULL);
+		return (put_error("minishell: error while searching for a "
+				"corresponding quotation mark. `", NULL, 2), NULL);
 	tokens = malloc((words + 1) * sizeof(char *));
 	if (tokens == NULL)
 		return (NULL);

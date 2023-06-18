@@ -60,13 +60,13 @@ t_env_variable	*copy_env_var(t_env_variable *head)
 	return (new_head);
 }
 
-t_env	*copy_env_list(t_exec_context *exContext)
+t_env	*copy_env_list(t_exec_context *ex_context)
 {
 	t_env	*env;
 	t_env	*new_env;
 
 	new_env = ft_calloc(sizeof(t_env), 1);
-	env = exContext->env;
+	env = ex_context->env;
 	new_env->first = copy_env_var(env->first);
 	new_env->size = env->size;
 	return (new_env);

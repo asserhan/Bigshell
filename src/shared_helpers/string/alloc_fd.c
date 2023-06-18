@@ -11,10 +11,10 @@ int	*alloc_fd(int fd)
 	return (fd_tab);
 }
 
-void	add_fd(t_exec_context *exContext, int fd)
+void	add_fd(t_exec_context *ex_context, int fd)
 {
 	t_list	*fd_node;
 
 	fd_node = ft_lstnew(alloc_fd(fd));
-	ft_lstadd_back(&exContext->fds, fd_node);
+	ft_lstadd_back(&ex_context->fds, fd_node);
 }

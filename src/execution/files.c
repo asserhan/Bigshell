@@ -26,15 +26,15 @@ void	ft_dup(t_doubly_lst *commend)
 	}
 }
 
-void	ft_close_fd(t_exec_context *exContext)
+void	ft_close_fd(t_exec_context *ex_context)
 {
 	t_list	*tmp;
 
-	tmp = exContext->fds;
+	tmp = ex_context->fds;
 	while (tmp)
 	{
 		close(((int *)tmp->content)[0]);
 		tmp = tmp->next;
 	}
-	ft_lstclear(&(exContext->fds), free);
+	ft_lstclear(&(ex_context->fds), free);
 }

@@ -29,7 +29,7 @@ int	words_number_delimiters(char *str, char *delimiters)
 }
 
 int	split_with_del(char ***final_tokens, char **tokens,
-		t_exec_context *exContext, int *i)
+		t_exec_context *ex_context, int *i)
 {
 	char	**sub_tokens;
 	char	*line_expended;
@@ -39,7 +39,7 @@ int	split_with_del(char ***final_tokens, char **tokens,
 		sub_tokens = heredoc_befor(tokens[*i]);
 	else
 	{
-		line_expended = expand_token(tokens[*i], exContext);
+		line_expended = expand_token(tokens[*i], ex_context);
 		if (!line_expended)
 			return (1);
 		count = words_number_delimiters(line_expended, "<>| ");
@@ -54,7 +54,7 @@ int	split_with_del(char ***final_tokens, char **tokens,
 	return (0);
 }
 
-char	**split_tokens(char **tokens, t_exec_context *exContext)
+char	**split_tokens(char **tokens, t_exec_context *ex_context)
 {
 	char	**final_tokens;
 	int		command_count;
@@ -65,7 +65,7 @@ char	**split_tokens(char **tokens, t_exec_context *exContext)
 	final_tokens = NULL;
 	while (i < command_count)
 	{
-		if (split_with_del(&final_tokens, tokens, exContext, &i))
+		if (split_with_del(&final_tokens, tokens, ex_context, &i))
 			return (NULL);
 		i++;
 	}

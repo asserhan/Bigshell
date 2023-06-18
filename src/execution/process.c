@@ -12,74 +12,74 @@
 
 #include "../../includes/minishell.h"
 
-static int	is_directory(t_exec_context *exContext)
+static int	is_directory(t_exec_context *ex_context)
 {
 	struct stat	file_stat;
 
-	if (ft_strchr(exContext->cmds->cmd, '/') && access(exContext->cmds->cmd,
+	if (ft_strchr(ex_context->cmds->cmd, '/') && access(ex_context->cmds->cmd,
 			X_OK) != -1)
 	{
-		stat(exContext->cmds->cmd, &file_stat);
+		stat(ex_context->cmds->cmd, &file_stat);
 		if (S_ISDIR(file_stat.st_mode))
 		{
-			(put_error_ex("minishell: ", exContext->cmds->cmd,
+			(put_error_ex("minishell: ", ex_context->cmds->cmd,
 						": is a directory\n", 126));
-			d_lstdelone(&(exContext->cmds), exContext->cmds);
+			d_lstdelone(&(ex_context->cmds), ex_context->cmds);
 			return (1);
 		}
-		else if (access(exContext->cmds->cmd, F_OK) == -1)
+		else if (access(ex_context->cmds->cmd, F_OK) == -1)
 		{
-			(put_error_ex("minishell: ", exContext->cmds->cmd,
+			(put_error_ex("minishell: ", ex_context->cmds->cmd,
 						": No such file or directory\n", 127));
-			d_lstdelone(&(exContext->cmds), exContext->cmds);
+			d_lstdelone(&(ex_context->cmds), ex_context->cmds);
 			return (1);
 		}
 	}
 	return (0);
 }
 
-void	ft_execute_child(t_exec_context *exContext)
+void	ft_execute_child(t_exec_context *ex_context)
 {
-	if (is_directory(exContext))
+	if (is_directory(ex_context))
 		exit(g_exit_status);
-	if (exContext->paths && ft_strchr(exContext->cmds->cmd, '/') == NULL)
+	if (ex_context->paths && ft_strchr(ex_context->cmds->cmd, '/') == NULL)
 	{
-		exContext->cmds->cmd = ft_get_cmd_path(exContext);
-		free_matrix(exContext->cmd_paths);
+		ex_context->cmds->cmd = ft_get_cmd_path(ex_context);
+		free_matrix(ex_context->cmd_paths);
 	}
 	else
-		free_matrix(exContext->cmd_paths);
-	if (!exContext->cmds->cmd)
+		free_matrix(ex_context->cmd_paths);
+	if (!ex_context->cmds->cmd)
 	{
-		put_error_ex("minishell: ", exContext->cmds->cmd, "command not found\n",
+		put_error_ex("minishell: ", ex_context->cmds->cmd, "command not found\n",
 				127);
-		free(exContext->cmds->cmd);
+		free(ex_context->cmds->cmd);
 		exit(127);
 	}
-	execve(exContext->cmds->cmd, exContext->cmds->args,
-			exContext->env->env_array);
+	execve(ex_context->cmds->cmd, ex_context->cmds->args,
+			ex_context->env->env_array);
 	ft_msg_error("minishell", 127);
 	exit(g_exit_status);
 }
 
-static void	ft_run(t_exec_context *exContext)
+static void	ft_run(t_exec_context *ex_context)
 {
-	ft_get_path(exContext);
-	ft_dup(exContext->cmds);
-	ft_execute_child(exContext);
+	ft_get_path(ex_context);
+	ft_dup(ex_context->cmds);
+	ft_execute_child(ex_context);
 }
-void	ft_empty_cmd(t_exec_context *exContext)
+void	ft_empty_cmd(t_exec_context *ex_context)
 {
-	if (exContext->cmds->in == 0 && exContext->cmds->out == 1
-		&& exContext->cmds->is_heredoc == 0)
+	if (ex_context->cmds->in == 0 && ex_context->cmds->out == 1
+		&& ex_context->cmds->is_heredoc == 0)
 	{
-		put_error_ex("minishell: ", exContext->cmds->cmd,
+		put_error_ex("minishell: ", ex_context->cmds->cmd,
 				": command not found\n", 127);
 	}
 }
-void	ft_child_process(t_exec_context *exContext, int *k, int *end)
+void	ft_child_process(t_exec_context *ex_context, int *k, int *end)
 {
-	if (!exContext->cmds->next)
+	if (!ex_context->cmds->next)
 		dup2(*k, 0);
 	else
 	{
@@ -90,20 +90,20 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 	}
 	close(end[0]);
 	close(end[1]);
-	if (exContext->cmds->cmd[0] != '\0')
+	if (ex_context->cmds->cmd[0] != '\0')
 	{
-		if (is_builtin(exContext->cmds->cmd))
+		if (is_builtin(ex_context->cmds->cmd))
 		{
-			ft_dup(exContext->cmds);
-			exec_builtins(exContext);
+			ft_dup(ex_context->cmds);
+			exec_builtins(ex_context);
 			exit(0);
 		}
 		else
-			ft_run(exContext);
+			ft_run(ex_context);
 	}
 	else
 	{
-		ft_empty_cmd(exContext);
+		ft_empty_cmd(ex_context);
 		exit(g_exit_status);
 	}
 }

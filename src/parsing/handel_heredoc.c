@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
+int	fill_line(int quotes, t_exec_context *ex_context, char *delimiter, int *end)
 {
 	char	*line;
 	char	*tmp;
@@ -29,7 +29,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	if (!quotes)
 	{
 		tmp = line;
-		line = expand_token(line, exContext);
+		line = expand_token(line, ex_context);
 		if (line != tmp)
 			free(tmp);
 	}
@@ -41,7 +41,7 @@ int	fill_line(int quotes, t_exec_context *exContext, char *delimiter, int *end)
 	return (0);
 }
 
-int	boucle_file_line(int quotes, t_exec_context *exContext, char *delimiter,
+int	boucle_file_line(int quotes, t_exec_context *ex_context, char *delimiter,
 		int *end)
 {
 	int	result;
@@ -49,7 +49,7 @@ int	boucle_file_line(int quotes, t_exec_context *exContext, char *delimiter,
 	g_exit_status = 0;
 	while (g_exit_status != 1)
 	{
-		result = fill_line(quotes, exContext, delimiter, end);
+		result = fill_line(quotes, ex_context, delimiter, end);
 		if (result == -1)
 		{
 			if (quotes)
@@ -67,7 +67,7 @@ int	boucle_file_line(int quotes, t_exec_context *exContext, char *delimiter,
 }
 
 void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
-		t_exec_context *exContext)
+		t_exec_context *ex_context)
 {
 	int		end[2];
 	char	*delimiter;
@@ -85,7 +85,7 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 	}
 	else
 		delimiter = old_list->next->next->cmd;
-	if (boucle_file_line(quotes, exContext, delimiter, end)
+	if (boucle_file_line(quotes, ex_context, delimiter, end)
 		|| g_exit_status == 1)
 	{
 		close(end[0]);
@@ -93,5 +93,5 @@ void	handle_heredoc(t_doubly_lst *old_list, t_doubly_lst *node,
 		return ;
 	}
 	node->in = end[0];
-	return (add_fd(exContext, end[0]), add_fd(exContext, end[1]));
+	return (add_fd(ex_context, end[0]), add_fd(ex_context, end[1]));
 }

@@ -71,7 +71,7 @@ void	add_cmd_to_args(t_doubly_lst *final_list)
 	}
 }
 
-int	pars_input(t_exec_context *exContext, char *input)
+int	pars_input(t_exec_context *ex_context, char *input)
 {
 	char			**tokens;
 	char			**final_tokens;
@@ -82,7 +82,7 @@ int	pars_input(t_exec_context *exContext, char *input)
 	tokens = split_space(input);
 	if (!tokens)
 		return (1);
-	final_tokens = split_tokens(tokens, exContext);
+	final_tokens = split_tokens(tokens, ex_context);
 	free_matrix(tokens);
 	if (!final_tokens)
 		return (1);
@@ -92,10 +92,10 @@ int	pars_input(t_exec_context *exContext, char *input)
 	d_lstclear(&cmd_list);
 	if (check_syntax(list_without_quotes))
 		return (d_lstclear(&list_without_quotes), 1);
-	final_list = convert_list_format(list_without_quotes, exContext);
+	final_list = convert_list_format(list_without_quotes, ex_context);
 	if (!final_list)
 		return (d_lstclear(&list_without_quotes), 1);
 	add_cmd_to_args(final_list);
-	exContext->cmds = final_list;
+	ex_context->cmds = final_list;
 	return (d_lstclear(&list_without_quotes), 0);
 }

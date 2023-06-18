@@ -24,7 +24,7 @@ int	is_valid_arg(char *arg)
 			put_error_ex("unset: ", arg, ": unset with no option\n", 1);
 		else
 			put_error_ex("minishell:  unset: ", arg,
-				": not a valid identifier\n", 1);
+					": not a valid identifier\n", 1);
 		return (1);
 	}
 	j = 1;
@@ -33,7 +33,7 @@ int	is_valid_arg(char *arg)
 		if (!ft_isdigit(arg[j]) && !ft_isalpha(arg[j]) && arg[j] != '_')
 		{
 			put_error_ex("minishell:  unset: ", arg,
-				": not a valid identifier\n", 1);
+					": not a valid identifier\n", 1);
 			return (1);
 		}
 		j++;
@@ -41,27 +41,27 @@ int	is_valid_arg(char *arg)
 	return (0);
 }
 
-void	ft_unset(t_exec_context *exContext)
+void	ft_unset(t_exec_context *ex_context)
 {
 	int				i;
 	t_env_variable	*elem;
 
-	if (count_matrix(exContext->cmds->args) == 1)
+	if (count_matrix(ex_context->cmds->args) == 1)
 		return ;
 	else
 	{
 		i = 1;
-		while (exContext->cmds->args[i])
+		while (ex_context->cmds->args[i])
 		{
-			if (!is_valid_arg(exContext->cmds->args[i]))
+			if (!is_valid_arg(ex_context->cmds->args[i]))
 			{
-				elem = search_env_elem(exContext->env,
-						exContext->cmds->args[i]);
+				elem = search_env_elem(ex_context->env,
+										ex_context->cmds->args[i]);
 				if (!elem)
 					return ;
-				delete_env_elem(exContext->env, elem);
-				if (ft_strcmp(exContext->cmds->args[i], "PATH") == 0)
-					exContext->is = 1;
+				delete_env_elem(ex_context->env, elem);
+				if (ft_strcmp(ex_context->cmds->args[i], "PATH") == 0)
+					ex_context->is = 1;
 			}
 			else
 				return ;

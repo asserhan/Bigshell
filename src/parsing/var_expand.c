@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-char	*expand(char *token, int i, t_exec_context *exContext)
+char	*expand(char *token, int i, t_exec_context *ex_context)
 {
 	char	*new_token;
 
-	new_token = subtoken(token, i, exContext);
+	new_token = subtoken(token, i, ex_context);
 	if (!new_token)
 		return (NULL);
 	free(token);
 	token = NULL;
-	return (var_expand(new_token, exContext));
+	return (var_expand(new_token, ex_context));
 }
 
-char	*var_expand(char *token, t_exec_context *exContext)
+char	*var_expand(char *token, t_exec_context *ex_context)
 {
 	int	s_quote;
 	int	d_quote;
@@ -47,13 +47,13 @@ char	*var_expand(char *token, t_exec_context *exContext)
 					should_expand = 0;
 			}
 			if (should_expand)
-				return (expand(token, i, exContext));
+				return (expand(token, i, ex_context));
 		}
 	}
 	return (token);
 }
 
-char	*expand_token(char *token, t_exec_context *exContext)
+char	*expand_token(char *token, t_exec_context *ex_context)
 {
 	char	*result;
 	char	*path;
@@ -61,8 +61,8 @@ char	*expand_token(char *token, t_exec_context *exContext)
 	char	*token_dup;
 
 	token_dup = ft_strdup(token);
-	expand = var_expand(token_dup, exContext);
-	path = get_env_value("HOME", exContext);
+	expand = var_expand(token_dup, ex_context);
+	path = get_env_value("HOME", ex_context);
 	result = path_expand(expand, path);
 	free(path);
 	if (result != expand)
