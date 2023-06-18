@@ -6,7 +6,7 @@
 /*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:35:43 by hasserao          #+#    #+#             */
-/*   Updated: 2023/06/17 22:00:24 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/18 02:38:15 by hasserao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,15 @@ static void	ft_run(t_exec_context *exContext)
 	ft_dup(exContext->cmds);
 	ft_execute_child(exContext);
 }
-
+void	ft_empty_cmd(t_exec_context *exContext)
+{
+	if (exContext->cmds->in == 0 && exContext->cmds->out == 1
+		&& exContext->cmds->is_heredoc == 0)
+	{
+		put_error_ex("minishell: ", exContext->cmds->cmd,
+				": command not found\n", 127);
+	}
+}
 void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 {
 	if (!exContext->cmds->next)
@@ -95,12 +103,7 @@ void	ft_child_process(t_exec_context *exContext, int *k, int *end)
 	}
 	else
 	{
-		if (exContext->cmds->in == 0 && exContext->cmds->out == 1
-			&& exContext->cmds->is_heredoc == 0)
-		{
-			put_error_ex("minishell: ", exContext->cmds->cmd,
-					": command not found\n", 127);
-		}
+		ft_empty_cmd(exContext);
 		exit(g_exit_status);
 	}
 }
