@@ -2,7 +2,7 @@
 
 void	d_lstclear(t_doubly_lst **lst)
 {
-	t_doubly_lst *temp;
+	t_doubly_lst	*temp;
 
 	if (!lst)
 		return ;

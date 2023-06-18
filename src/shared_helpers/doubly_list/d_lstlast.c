@@ -14,7 +14,7 @@
 
 t_doubly_lst	*d_lstlast(t_doubly_lst *lst)
 {
-	t_doubly_lst *tmp;
+	t_doubly_lst	*tmp;
 
 	tmp = lst;
 	if (!tmp)

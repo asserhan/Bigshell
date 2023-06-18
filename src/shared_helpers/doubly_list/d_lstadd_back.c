@@ -1,4 +1,3 @@
-
 #include "../../../includes/minishell.h"
 
 void	d_lstadd_back(t_doubly_lst **lst, t_doubly_lst *new)
