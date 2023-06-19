@@ -6,7 +6,7 @@
 /*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:32:00 by otait-ta          #+#    #+#             */
-/*   Updated: 2023/06/19 13:47:25 by otait-ta         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:03:12 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int			g_exit_status;
 
 static int	get_input(char **input)
 {
-	ft_printf("");
-	*input = readline("\033[1;32m minishell $ \033[0m");
+	*input = readline("minishell $ ");
 	printf("\033[0m");
 	if (*input && !**input)
 		return (1);
