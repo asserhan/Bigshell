@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hasserao <hasserao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: otait-ta <otait-ta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 21:54:34 by hasserao          #+#    #+#             */
-/*   Updated: 2023/05/23 11:22:54 by hasserao         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:37:35 by otait-ta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ t_env_variable	*creat_node(char *name, char *content)
 	return (new);
 }
 
-static void	add_back(t_env_variable *tail, t_env_variable *new_node)
+static void	add_back(t_env_variable **tail, t_env_variable *new_node)
 {
-	tail->next = new_node;
-	new_node->prev = tail;
-	tail = new_node;
+
+	(*tail)->next = new_node;
+	new_node->prev = *tail;
+	*tail = new_node;
 }
 
 t_env_variable	*copy_env_var(t_env_variable *head)
@@ -50,13 +51,15 @@ t_env_variable	*copy_env_var(t_env_variable *head)
 		new_node = creat_node(curr->name, curr->content);
 		if (new_head == NULL)
 		{
+		
 			new_head = new_node;
 			tail = new_node;
 		}
 		else
-			add_back(tail, new_node);
+			add_back(&tail, new_node);
 		curr = curr->next;
 	}
+	
 	return (new_head);
 }
 
@@ -67,7 +70,9 @@ t_env	*copy_env_list(t_exec_context *ex_context)
 
 	new_env = ft_calloc(sizeof(t_env), 1);
 	env = ex_context->env;
+		
 	new_env->first = copy_env_var(env->first);
+
 	new_env->size = env->size;
 	return (new_env);
 }
